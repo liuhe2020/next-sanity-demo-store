@@ -1,0 +1,54 @@
+// require @tailwindcss/aspect-ratio for next Image to fill container responsively without setting width & height
+
+import Image from 'next/image';
+import Link from 'next/link';
+import urlFor from '../utils/image';
+
+// const bgCSS =
+//   'before:w-full before:h-[150%] before:translate-y-1/2 before:bg-zinc-100 before:absolute before:bottom-0 before:left-0 before:rounded-tl-[100rem] before:rounded-tr-[100rem] before:-z-10 before:transition-all before:duration-500 before:ease-[in-out] hover:before:bg-zinc-200 hover:before:rounded-none hover:before:translate-y-0';
+
+const bgCSS =
+  'before:w-full before:h-full before:bg-stone-100 before:absolute before:bottom-0 before:left-0 before:-z-10 before:transition-all before:duration-500 before:ease-[in-out] hover:before:bg-stone-200';
+
+export default function ProductCard({ product }) {
+  return (
+    <Link href={`/${product.category}/${product.slug.current}`}>
+      <div
+        className={`${bgCSS} relative cursor-pointer overflow-hidden rounded-2xl flex flex-col items-center p-[4vw] lg:p-10`}
+      >
+        <div className='aspect-w-1 aspect-h-1 w-full'>
+          <Image
+            src={urlFor(product.images[0]).url()}
+            alt={product.name}
+            layout='fill'
+            objectFit='contain'
+          />
+        </div>
+        <div className='flex flex-col justify-between h-full'>
+          <h3 className='font-medium text-sm mb-4 lg:text-base lg:mb-8'>
+            {product.name}
+          </h3>
+          <ul className=''>
+            {product.description.map((el, index) => (
+              <li className='flex mb-1 lg:mb-2' key={index}>
+                <svg
+                  className='mr-2 mt-1'
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='10'
+                  height='10'
+                  viewBox='0 0 24 24'
+                >
+                  <path d='M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 6c-3.313 0-6 2.687-6 6s2.687 6 6 6c3.314 0 6-2.687 6-6s-2.686-6-6-6z' />
+                </svg>
+                <p className='flex-1 text-xs lg:text-sm'>{el}</p>
+              </li>
+            ))}
+          </ul>
+          <p className='text-medium mt-4 lg:text-base lg:mt-6'>
+            £{product.price.toFixed(2)}
+          </p>
+        </div>
+      </div>
+    </Link>
+  );
+}
