@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useStore } from '../store/store';
 
-export default function basket() {
+export default function shoppingBag() {
   const handleChange = (e) => {
     console.log(e.target.value);
   };
+  const shoppingBag = useStore((state) => state.items);
+  console.log(shoppingBag);
 
   return (
     <section className='mt-3 p-6 text-sm md:text-base'>

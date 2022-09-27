@@ -148,7 +148,7 @@ export default function Header({ navToggle, setNavToggle }) {
               </Menu.Items>
             </Transition>
           </Menu>
-          <Link href='/basket'>
+          <Link href='/shopping-bag'>
             <div className='cursor-pointer ml-1.5'>
               <svg
                 className='hover:fill-white'
