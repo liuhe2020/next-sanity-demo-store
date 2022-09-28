@@ -3,11 +3,13 @@ import Link from 'next/link';
 import { useStore } from '../store/store';
 
 export default function shoppingBag() {
-  const handleChange = (e) => {
-    console.log(e.target.value);
-  };
+  const handleChange = (e) => {};
   const shoppingBag = useStore((state) => state.items);
   console.log(shoppingBag);
+
+  const handleOnBlur = (e) => {
+    console.log(e.target.value);
+  };
 
   return (
     <section className='mt-3 p-6 text-sm md:text-base'>
@@ -52,6 +54,7 @@ export default function shoppingBag() {
                   className='mx-2 border text-center w-8'
                   type='text'
                   onChange={handleChange}
+                  onBlur={handleOnBlur}
                 />
                 <svg
                   className='fill-current text-stone-600 w-3 cursor-pointer hover:text-black'

@@ -7,7 +7,7 @@ import { useStore } from '../../store/store';
 const classNames = (...classes) => classes.filter(Boolean).join(' ');
 
 export default function Product({ product }) {
-  const addToCart = useStore((state) => state.addTocart);
+  const addToBag = useStore((state) => state.addToBag);
 
   return (
     <>
@@ -128,7 +128,7 @@ export default function Product({ product }) {
           <section aria-labelledby='options-heading'>
             <div className='mt-10'>
               <button
-                onClick={() => addToCart(product)}
+                onClick={() => addToBag(product)}
                 className='w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500'
               >
                 Add to bag
