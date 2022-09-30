@@ -1,0 +1,51 @@
+{
+  "total": 199,
+  "totalQty": 1,
+  "items": [
+    {
+      "_createdAt": "2022-09-18T18:43:33Z",
+      "_id": "513f1f7b-2bfa-4df1-a68c-d1e11bc67d2e",
+      "_rev": "Ic1Z2QdvD4m7Z8I4cH4Yls",
+      "_type": "product",
+      "_updatedAt": "2022-09-26T09:27:26Z",
+      "brand": "Unknown",
+      "category": "accessories",
+      "categoryRef": {
+        "_ref": "4b388322-17cf-4705-b68f-a980540f83a9",
+        "_type": "reference"
+      },
+      "countInStock": 999,
+      "description": [
+        "1.3 in AMOLED Display",
+        "FlyTiger 300 High End Chipset",
+        "GPS, NFC, Bluetooth 4.2, WiFi, 6G Connectivity",
+        "Wear OS Biodroid System",
+        "Smart Engage AI Features"
+      ],
+      "images": [
+        {
+          "_key": "7fd970fa1070",
+          "_type": "image",
+          "asset": {
+            "_ref": "image-b279fd954b4b8b77d6d183163318935326b16a39-450x450-png",
+            "_type": "reference"
+          }
+        },
+        {
+          "_key": "1b34143ea281",
+          "_type": "image",
+          "asset": {
+            "_ref": "image-b279fd954b4b8b77d6d183163318935326b16a39-450x450-png",
+            "_type": "reference"
+          }
+        }
+      ],
+      "name": "Unknown Navigator X Smartwatch",
+      "numReviews": 17,
+      "price": 199,
+      "rating": 4.9,
+      "slug": { "_type": "slug", "current": "unknown-navigator-x-smartwatch" },
+      "quantity": 1
+    }
+  ]
+}

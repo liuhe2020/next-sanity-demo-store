@@ -1,6 +1,5 @@
-import create from 'zustand';
-import { persist } from 'zustand/middleware';
 import Cookies from 'js-cookie';
+import create from 'zustand';
 
 const handleAddToBag = (items, nextItem) => {
   // check if item to be added already exists
@@ -15,21 +14,6 @@ const handleAddToBag = (items, nextItem) => {
   return [...items, { ...nextItem, quantity: 1 }];
 };
 
-// const handleAddToBag = (items, nextItem) => {
-//   // check if item to be added already exists
-//   if (items.find((item) => item._id === nextItem._id)) {
-//     // map through the items and update the quantity of the targeted item
-//     const newItems = items.map((item) =>
-//       item._id === nextItem._id
-//         ? { ...item, quantity: item.quantity + 1 }
-//         : item
-//     );
-//     Cookies.set('shoppingBag', JSON.stringify(newItems));
-//   }
-//   const newItems = [...items, { ...nextItem, quantity: 1 }];
-//   return newItems;
-// };
-
 const handleReduceFromBag = (items, nextItem) => {
   // locate item with matching id
   const targetItem = items.find((item) => item._id === nextItem._id);
@@ -43,41 +27,60 @@ const handleReduceFromBag = (items, nextItem) => {
   );
 };
 
-const useStore = create(
-  persist((set, get) => ({
-    total: 0,
-    totalqty: 0,
-    items: [],
+const handleUpdateQuantity = (items, nextItem, quantity) => {
+  // update quantity of target item
+  const newBag = items.map((item) =>
+    item._id === nextItem._id ? { ...item, quantity } : item
+  );
+  // remove item if quantity = 0
+  const updatedBag = newBag.filter((item) => item.quantity !== 0);
+  return {
+    total: updatedBag.reduce((a, item) => a + item.quantity * item.price),
+    totalQty: updatedBag.reduce((a, item) => a + item.quantity),
+    items: updatedBag,
+  };
+};
 
-    addToBag: (nextItem) => {
-      set((state) => ({
-        totalqty: state.totalqty + 1,
-        total: state.total + parseFloat(nextItem.price),
-        items: handleAddToBag(state.items, nextItem),
-      }));
-    },
+const useStore = create((set, get) => ({
+  total: 0,
+  totalQty: 0,
+  items: [],
 
-    updateBag: ({ nextItem, mycart }) => {
-      set((state) => ({
-        totalqty: state.totalqty + 1,
-        total: state.total + parseFloat(nextItem.price),
-        items: mycart,
-      }));
-    },
+  addToBag: (nextItem) => {
+    set((state) => ({
+      totalQty: state.totalQty + 1,
+      total: state.total + parseFloat(nextItem.price),
+      items: handleAddToBag(state.items, nextItem),
+    }));
+  },
 
-    clearBag: () => set({ totalqty: 0, total: 0, items: [] }),
+  reduceFromBag: (nextItem) => {
+    set((state) => ({
+      totalQty: state.totalQty - 1,
+      total: state.total - parseFloat(nextItem.price),
+      items: handleReduceFromBag(state.items, nextItem),
+    }));
+  },
 
-    removeFromBag: (nextItem) =>
-      set((state) => ({
-        total: state.total - nextItem.price * nextItem.quantity,
-        totalqty: state.totalqty - nextItem.quantity,
-        items: state.items.filter((item) => item._id !== nextItem._id),
-      })),
-  })),
-  {
-    name: 'food-storage', // unique name
-    getStorage: () => sessionStorage,
-  }
+  updateQuantity: (nextItem, quantity) => {
+    set((state) => handleUpdateQuantity(state.items, nextItem, quantity));
+  },
+
+  clearBag: () => set({ totalQty: 0, total: 0, items: [] }),
+
+  removeFromBag: (nextItem) =>
+    set((state) => ({
+      total: state.total - nextItem.price * nextItem.quantity,
+      totalQty: state.totalQty - nextItem.quantity,
+      items: state.items.filter((item) => item._id !== nextItem._id),
+    })),
+
+  hydrateBag: (bag) => set(() => bag),
+}));
+
+// listen to items change in store and update the cookies
+const unsub = useStore.subscribe((state) =>
+  Cookies.set('NSDS-bag', JSON.stringify(state))
 );
 
 export { useStore };

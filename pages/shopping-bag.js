@@ -1,15 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import ShoppingBagItem from '../components/ShoppingBagItem';
 import { useStore } from '../store/store';
 
 export default function shoppingBag() {
-  const handleChange = (e) => {};
-  const shoppingBag = useStore((state) => state.items);
-  console.log(shoppingBag);
-
-  const handleOnBlur = (e) => {
-    console.log(e.target.value);
-  };
+  const { total, totalQty, items } = useStore();
 
   return (
     <section className='mt-3 p-6 text-sm md:text-base'>
@@ -21,63 +16,27 @@ export default function shoppingBag() {
           Continue Shopping
         </div>
       </Link>
-
       <div className='flex flex-col mx-auto max-w-[600px] lg:max-w-[730px] xl:max-w-[860px]'>
         <div className='w-full mb-20'>
           <div className='flex justify-between font-medium border-b pb-8'>
             <h1 className='text-xl'>Shopping Bag</h1>
-            <h2 className='text-lg'>3 Items</h2>
+            <h2 className='text-lg'>{totalQty}</h2>
           </div>
-
-          <div className='w-full flex items-center mt-4'>
-            <div className='flex flex-1 items-center mr-10'>
-              <div className='relative flex justify-center w-[100px] h-[100px] sm:w-[150px] sm:h-[150px]'>
-                <Image
-                  src='/images/products/alpha_f22.png'
-                  alt=''
-                  layout='fill'
-                  objectFit='contain'
-                  objectPosition='center'
-                />
-              </div>
-              <h3 className='flex-1'>Unknown CoolBook x17 Pro</h3>
-            </div>
-            <div className='flex flex-col items-end'>
-              <div className='flex mb-3 mt-3'>
-                <svg
-                  className='fill-current text-stone-600 w-3 cursor-pointer hover:text-black'
-                  viewBox='0 0 448 512'
-                >
-                  <path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-                </svg>
-                <input
-                  className='mx-2 border text-center w-8'
-                  type='text'
-                  onChange={handleChange}
-                  onBlur={handleOnBlur}
-                />
-                <svg
-                  className='fill-current text-stone-600 w-3 cursor-pointer hover:text-black'
-                  viewBox='0 0 448 512'
-                >
-                  <path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-                </svg>
-              </div>
-              <span className='font-medium text-sm'>£400.00</span>
-            </div>
-          </div>
+          {items?.map((item) => (
+            <ShoppingBagItem key={item._id} item={item} />
+          ))}
         </div>
 
         <div className='w-full'>
           <h1 className='font-medium text-xl border-b pb-8'>Order Summary</h1>
           <div className='flex justify-between mt-10 mb-5 font-medium'>
-            <span className=''>Items 3</span>
-            <span className=''>£400.00</span>
+            <span className=''>Subtotal</span>
+            <span className=''>£{total.toFixed(2)}</span>
           </div>
           <div>
             <label className='font-medium inline-block mb-3'>Shipping</label>
             <select className='block p-2 text-stone-600 w-full'>
-              <option>Standard shipping - $10.00</option>
+              <option>Standard shipping - £4.99</option>
             </select>
           </div>
           <div className='py-10'>
@@ -96,8 +55,8 @@ export default function shoppingBag() {
           </button>
           <div className='border-t mt-8'>
             <div className='flex font-medium justify-between py-6'>
-              <span>Total cost</span>
-              <span>$600</span>
+              <span>Total</span>
+              <span>£{total.toFixed(2)}</span>
             </div>
             <button className='bg-indigo-500 font-medium hover:bg-indigo-600 py-3 text-white w-full'>
               Check out

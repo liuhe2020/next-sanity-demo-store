@@ -30,7 +30,7 @@ export default function Product({ product }) {
 
             <div className='flex items-center'>
               <p className='text-lg text-gray-900 sm:text-xl'>
-                {product.price}
+                £{product.price.toFixed(2)}
               </p>
 
               <div className='ml-4 pl-4 border-l border-gray-300'>

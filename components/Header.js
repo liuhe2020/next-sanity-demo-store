@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
+import { useStore } from '../store/store';
 
 const navigation = [
   { name: 'Laptops', href: '/laptops', current: false },
@@ -18,6 +19,8 @@ function classNames(...classes) {
 }
 
 export default function Header({ navToggle, setNavToggle }) {
+  const { totalQty } = useStore();
+
   // lock window scroll when mobile menu is open
   useEffect(() => {
     if (navToggle)
@@ -93,7 +96,7 @@ export default function Header({ navToggle, setNavToggle }) {
         </ul>
 
         <div className='flex mt-1.5'>
-          <Menu as='div' className='relative'>
+          <Menu as='div' className='relative mr-1.5'>
             <div>
               <Menu.Button className=''>
                 <span className='sr-only'>Open user menu</span>
@@ -149,9 +152,9 @@ export default function Header({ navToggle, setNavToggle }) {
             </Transition>
           </Menu>
           <Link href='/shopping-bag'>
-            <div className='cursor-pointer ml-1.5'>
+            <div className='cursor-pointer relative group'>
               <svg
-                className='hover:fill-white'
+                className='group-hover:fill-white'
                 fill='#d6d3d1'
                 xmlns='http://www.w3.org/2000/svg'
                 width='26.5'
@@ -160,6 +163,11 @@ export default function Header({ navToggle, setNavToggle }) {
               >
                 <path d='M16 6v-2c0-2.209-1.791-4-4-4s-4 1.791-4 4v2h-5v18h18v-18h-5zm-7-2c0-1.654 1.346-3 3-3s3 1.346 3 3v2h-6v-2zm10 18h-14v-14h3v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h6v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h3v14z' />
               </svg>
+              {totalQty !== 0 && (
+                <span className='absolute text-xs font-semibold top-[10px] left-1/2 -translate-x-1/2  text-stone-300 group-hover:text-white'>
+                  {totalQty > 99 ? 99 : totalQty}
+                </span>
+              )}
             </div>
           </Link>
         </div>
