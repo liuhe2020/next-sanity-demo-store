@@ -6,31 +6,35 @@ import urlFor from '../utils/image';
 export default function ShoppingBagItem({ item }) {
   // quantity local state for component level change and then update to store state
   const [quantity, setQuantity] = useState(item.quantity);
-  const updateQuantity = useStore((state) => state.updateQuantity);
-
-  console.log(item);
+  const { addToBag, reduceFromBag, updateQuantity } = useStore();
 
   const handleOnChange = (e) => {
+    // e.target.value is type string, need to work with numbers, but react can't parse NaN hence setQuantity to empty string to stop error
+    if (e.target.value === '') return setQuantity('');
     // convert input string to number and limit to 2 chars
     const value = parseFloat(e.target.value.slice(0, 2));
     // limit max quantity per item to 99
-    if (value > 99) setQuantity(99);
+    if (value > 99) return setQuantity(99);
     setQuantity(value);
   };
 
-  const handleIncrement = () => {
+  const handleOnBlur = (e) => {
+    // show previous quantity if there isn't a number in the input field
+    if (e.target.value === '') return setQuantity(item.quantity);
+    updateQuantity(item, quantity);
+  };
+
+  const handleIncrement = async () => {
     if (quantity < 99) {
       setQuantity((prev) => prev + 1);
+      addToBag(item);
     }
   };
 
   const handleDecrement = () => {
     setQuantity((prev) => prev - 1);
+    reduceFromBag(item);
   };
-
-  useEffect(() => {
-    updateQuantity(item, quantity);
-  }, [quantity]);
 
   return (
     <div className='w-full flex items-center mt-4'>
@@ -58,6 +62,7 @@ export default function ShoppingBagItem({ item }) {
           <input
             className='mx-2 border text-center w-8'
             type='number'
+            onBlur={handleOnBlur}
             onChange={handleOnChange}
             value={quantity}
           />
@@ -69,7 +74,9 @@ export default function ShoppingBagItem({ item }) {
             <path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
           </svg>
         </div>
-        <span className='font-medium text-sm'>£{item.price.toFixed(2)}</span>
+        <span className='font-medium text-sm'>
+          £{(item.price * item.quantity).toFixed(2)}
+        </span>
       </div>
     </div>
   );
