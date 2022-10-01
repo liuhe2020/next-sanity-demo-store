@@ -27,16 +27,16 @@ const handleReduceFromBag = (items, nextItem) => {
   );
 };
 
-const handleUpdateQuantity = (items, nextItem, quantity) => {
+const handleUpdateQuantity = (items, nextItem, qty) => {
   // update quantity of target item
   const newBag = items.map((item) =>
-    item._id === nextItem._id ? { ...item, quantity } : item
+    item._id === nextItem._id ? { ...item, quantity: qty } : item
   );
   // remove item if quantity = 0
   const updatedBag = newBag.filter((item) => item.quantity !== 0);
   return {
-    total: updatedBag.reduce((a, item) => a + item.quantity * item.price),
-    totalQty: updatedBag.reduce((a, item) => a + item.quantity),
+    total: updatedBag.reduce((a, item) => a + item.quantity * item.price, 0),
+    totalQty: updatedBag.reduce((a, item) => a + item.quantity, 0),
     items: updatedBag,
   };
 };
@@ -49,7 +49,7 @@ const useStore = create((set, get) => ({
   addToBag: (nextItem) => {
     set((state) => ({
       totalQty: state.totalQty + 1,
-      total: state.total + parseFloat(nextItem.price),
+      total: state.total + nextItem.price,
       items: handleAddToBag(state.items, nextItem),
     }));
   },
@@ -57,16 +57,14 @@ const useStore = create((set, get) => ({
   reduceFromBag: (nextItem) => {
     set((state) => ({
       totalQty: state.totalQty - 1,
-      total: state.total - parseFloat(nextItem.price),
+      total: state.total - nextItem.price,
       items: handleReduceFromBag(state.items, nextItem),
     }));
   },
 
-  updateQuantity: (nextItem, quantity) => {
-    set((state) => handleUpdateQuantity(state.items, nextItem, quantity));
+  updateQuantity: (nextItem, qty) => {
+    set((state) => handleUpdateQuantity(state.items, nextItem, qty));
   },
-
-  clearBag: () => set({ totalQty: 0, total: 0, items: [] }),
 
   removeFromBag: (nextItem) =>
     set((state) => ({
@@ -74,6 +72,8 @@ const useStore = create((set, get) => ({
       totalQty: state.totalQty - nextItem.quantity,
       items: state.items.filter((item) => item._id !== nextItem._id),
     })),
+
+  clearBag: () => set(() => ({ totalQty: 0, total: 0, items: [] })),
 
   hydrateBag: (bag) => set(() => bag),
 }));

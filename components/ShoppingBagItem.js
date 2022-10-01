@@ -4,15 +4,32 @@ import { useStore } from '../store/store';
 import urlFor from '../utils/image';
 
 export default function ShoppingBagItem({ item }) {
-  const [quantity, setQuantity] = useState(0);
-  const { addToBag, reduceFromBag, updateQuantity, removeFromBag } = useStore();
+  // quantity local state for component level change and then update to store state
+  const [quantity, setQuantity] = useState(item.quantity);
+  const updateQuantity = useStore((state) => state.updateQuantity);
 
-  const handleOnBlur = (e) => updateQuantity(item, quantity);
-  const handleChange = (e) =>
-    e.target.value > 99 ? setQuantity(99) : setQuantity(e.target.value);
+  console.log(item);
+
+  const handleOnChange = (e) => {
+    // convert input string to number and limit to 2 chars
+    const value = parseFloat(e.target.value.slice(0, 2));
+    // limit max quantity per item to 99
+    if (value > 99) setQuantity(99);
+    setQuantity(value);
+  };
+
+  const handleIncrement = () => {
+    if (quantity < 99) {
+      setQuantity((prev) => prev + 1);
+    }
+  };
+
+  const handleDecrement = () => {
+    setQuantity((prev) => prev - 1);
+  };
 
   useEffect(() => {
-    setQuantity(item.quantity);
+    updateQuantity(item, quantity);
   }, [quantity]);
 
   return (
@@ -32,7 +49,7 @@ export default function ShoppingBagItem({ item }) {
       <div className='flex flex-col items-end'>
         <div className='flex mb-3 mt-3'>
           <svg
-            onClick={() => reduceFromBag(item)}
+            onClick={handleDecrement}
             className='fill-current text-stone-600 w-3 cursor-pointer hover:text-black'
             viewBox='0 0 448 512'
           >
@@ -40,13 +57,12 @@ export default function ShoppingBagItem({ item }) {
           </svg>
           <input
             className='mx-2 border text-center w-8'
-            type='text'
-            onChange={handleChange}
-            onBlur={handleOnBlur}
+            type='number'
+            onChange={handleOnChange}
             value={quantity}
           />
           <svg
-            onClick={() => addToBag(item)}
+            onClick={handleIncrement}
             className='fill-current text-stone-600 w-3 cursor-pointer hover:text-black'
             viewBox='0 0 448 512'
           >

@@ -6,6 +6,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* remove default html arrows on number input field */
+@layer utilities {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    @apply appearance-none;
+  }
+}
+
 html,
 body {
   padding: 0;

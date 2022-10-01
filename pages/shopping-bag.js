@@ -4,7 +4,7 @@ import ShoppingBagItem from '../components/ShoppingBagItem';
 import { useStore } from '../store/store';
 
 export default function shoppingBag() {
-  const { total, totalQty, items } = useStore();
+  const { total, totalQty, items, clearBag } = useStore();
 
   return (
     <section className='mt-3 p-6 text-sm md:text-base'>
@@ -58,7 +58,10 @@ export default function shoppingBag() {
               <span>Total</span>
               <span>£{total.toFixed(2)}</span>
             </div>
-            <button className='bg-indigo-500 font-medium hover:bg-indigo-600 py-3 text-white w-full'>
+            <button
+              onClick={() => clearBag()}
+              className='bg-indigo-500 font-medium hover:bg-indigo-600 py-3 text-white w-full'
+            >
               Check out
             </button>
           </div>
