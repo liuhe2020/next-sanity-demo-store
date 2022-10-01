@@ -3,7 +3,7 @@ import Link from 'next/link';
 import ShoppingBagItem from '../components/ShoppingBagItem';
 import { useStore } from '../store/store';
 
-export default function shoppingBag() {
+export default function ShoppingBag() {
   const { total, totalQty, items, clearBag } = useStore();
 
   return (
