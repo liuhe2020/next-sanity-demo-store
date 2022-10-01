@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.7.2",
     "@sanity/client": "^3.4.1",
     "@sanity/image-url": "^1.0.1",
+    "bcrypt": "^5.0.1",
     "js-cookie": "^3.0.1",
     "next": "12.2.5",
     "react": "18.2.0",
