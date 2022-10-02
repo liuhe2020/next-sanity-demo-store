@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
-import client from '../../../utils/client';
+import mySanityClient from '../../../utils/client';
 
 // export default async function handler(req, res) {
 //   const user = await client.fetch(`*[_type == "user" && email == $email][0]`, {
@@ -14,13 +14,7 @@ import client from '../../../utils/client';
 //       email: user.email,
 //       isAdmin: user.isAdmin,
 //     });
-//     res.send({
-//       _id: user._id,
-//       name: user.name,
-//       email: user.email,
-//       isAdmin: user.isAdmin,
-//       token,
-//     });
+//     res.send();
 //   } else {
 //     res.status(401).send({ message: 'Invalid email or password' });
 //   }
@@ -39,11 +33,21 @@ export default NextAuth({
       type: 'credentials',
       credentials: {},
       async authorize(credentials, req) {
+        // credentials is an object containing email & password from the reqeust body
         const { email, password } = credentials;
-        if (!email || !password) throw new Error('Missing email/password');
-        if (email === 'john@gmail.com' && password === 'password')
-          return { username: 'John', id: '123' };
-        throw new Error('Incorrect username/password');
+        // fetch user from sanity
+        const user = await mySanityClient.fetch(
+          `*[_type == "user" && email == '${email}'][0]`
+        );
+        // authenticate user
+        if (user) {
+          // bcrypt.compare(password, user.password, (err, res) => {
+          //   if (res) return user;
+          //   return null;
+          // });
+          return user;
+        }
+        return null;
       },
     }),
   ],

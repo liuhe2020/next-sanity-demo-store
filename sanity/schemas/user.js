@@ -24,10 +24,5 @@ export default {
       title: 'Bag',
       type: 'string',
     },
-    {
-      name: 'isAdmin',
-      title: 'Is Admin',
-      type: 'boolean',
-    },
   ],
 };

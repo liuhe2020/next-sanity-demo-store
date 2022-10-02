@@ -16,6 +16,7 @@ export default function SignIn() {
       password,
       redirect: false,
     });
+    console.log(response);
   };
 
   const handleChange = (e) => {
