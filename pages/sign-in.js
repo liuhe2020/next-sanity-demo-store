@@ -1,6 +1,19 @@
 // require('@tailwindcss/forms')
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
 
 export default function SignIn() {
+  const [values, setValues] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleSubmit = (e) => {};
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
   return (
     <section className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
@@ -11,7 +24,7 @@ export default function SignIn() {
 
       <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
         <div className='bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10'>
-          <form className='space-y-6' action='#' method='POST'>
+          <form className='space-y-6' onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor='email'
@@ -27,6 +40,7 @@ export default function SignIn() {
                   autoComplete='email'
                   required
                   className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
+                  onChange={handleChange}
                 />
               </div>
             </div>
