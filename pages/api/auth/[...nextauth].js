@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
-import { signToken } from '../../../utils/auth';
 import client from '../../../utils/client';
 
 // export default async function handler(req, res) {

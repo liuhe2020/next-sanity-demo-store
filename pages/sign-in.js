@@ -8,7 +8,15 @@ export default function SignIn() {
     password: '',
   });
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = values;
+    const response = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
+  };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -60,6 +68,7 @@ export default function SignIn() {
                   autoComplete='current-password'
                   required
                   className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
+                  onChange={handleChange}
                 />
               </div>
             </div>

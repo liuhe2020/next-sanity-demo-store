@@ -3,8 +3,12 @@ import '../styles/globals.css';
 import Cookies from 'js-cookie';
 import Layout from '../components/Layout';
 import { useStore } from '../store/store';
+import { SessionProvider } from 'next-auth/react';
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const { hydrateBag } = useStore();
 
   // hydrate shopping bag on load from cookies
@@ -14,8 +18,10 @@ export default function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <SessionProvider session={session}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </SessionProvider>
   );
 }
