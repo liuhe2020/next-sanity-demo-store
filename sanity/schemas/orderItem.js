@@ -9,17 +9,17 @@ export default {
       type: 'string',
     },
     {
-      title: 'quantity',
+      title: 'Quantity',
       name: 'quantity',
       type: 'number',
     },
     {
-      title: 'image',
+      title: 'Image',
       name: 'image',
       type: 'string',
     },
     {
-      title: 'price',
+      title: 'Price',
       name: 'price',
       type: 'number',
     },

@@ -1,20 +1,20 @@
 export default {
-  title: 'paymentResult',
+  title: 'payment Result',
   name: 'paymentResult',
   type: 'object',
   fields: [
     {
-      title: 'id',
+      title: 'ID',
       name: 'id',
       type: 'string',
     },
     {
-      title: 'status',
+      title: 'Status',
       name: 'status',
       type: 'string',
     },
     {
-      title: 'email_address',
+      title: 'Email Address',
       name: 'email_address',
       type: 'string',
     },

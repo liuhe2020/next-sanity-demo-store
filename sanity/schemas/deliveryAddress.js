@@ -1,30 +1,30 @@
 export default {
-  title: 'Shipping Address',
-  name: 'shippingAddress',
+  title: 'Delivery Address',
+  name: 'deliveryAddress',
   type: 'object',
   fields: [
     {
-      title: 'fullName',
+      title: 'Full Name',
       name: 'fullName',
       type: 'string',
     },
     {
-      title: 'address',
+      title: 'Address',
       name: 'address',
       type: 'string',
     },
     {
-      title: 'city',
+      title: 'City',
       name: 'city',
       type: 'string',
     },
     {
-      title: 'postalCode',
-      name: 'postalCode',
+      title: 'Postcode',
+      name: 'postcode',
       type: 'string',
     },
     {
-      title: 'country',
+      title: 'Country',
       name: 'country',
       type: 'string',
     },

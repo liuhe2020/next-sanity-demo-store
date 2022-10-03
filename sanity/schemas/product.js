@@ -38,7 +38,7 @@ export default {
     },
     {
       name: 'categoryRef',
-      title: 'CategoryRef',
+      title: 'Category Ref',
       type: 'reference',
       to: [{ type: 'category' }],
     },
@@ -50,12 +50,12 @@ export default {
 
     {
       name: 'numReviews',
-      title: 'NumReviews',
+      title: 'Number Of Reviews',
       type: 'number',
     },
     {
       name: 'countInStock',
-      title: 'CountInStock',
+      title: 'Stock Count',
       type: 'number',
     },
   ],
