@@ -3,7 +3,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
-import { useStore } from '../store/store';
+import useStore from '../store/store';
 
 const navigation = [
   { name: 'Laptops', href: '/laptops', current: false },

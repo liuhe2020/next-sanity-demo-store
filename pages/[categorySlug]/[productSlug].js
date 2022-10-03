@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { Tab } from '@headlessui/react';
 import mySanityClient from '../../utils/client';
 import urlFor from '../../utils/image';
-import { useStore } from '../../store/store';
+import useStore from '../../store/store';
 
 const classNames = (...classes) => classes.filter(Boolean).join(' ');
 

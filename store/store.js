@@ -79,8 +79,15 @@ const useStore = create((set, get) => ({
 }));
 
 // listen to items change in store and update the cookies
-const unsub = useStore.subscribe((state) =>
-  Cookies.set('NSDS-bag', JSON.stringify(state))
-);
+const unsub = useStore.subscribe((state) => {
+  // const { data: session, status } = useSession();
+  // if (session) {
+  //   await mySanityClient
+  //     .patch(session.user._id) // Document ID to patch
+  //     .set({ bag: JSON.stringify(state) }) // Shallow merge
+  //     .commit(); // Perform the patch and return a promise
+  // }
+  Cookies.set('NSDS-bag', JSON.stringify(state));
+});
 
-export { useStore };
+export default useStore;
