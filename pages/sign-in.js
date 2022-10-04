@@ -1,15 +1,15 @@
 // require('@tailwindcss/forms')
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import Cookies from 'js-cookie';
-import mySanityClient from '../utils/client';
+import { useRouter } from 'next/router';
 
 export default function SignIn() {
   const [values, setValues] = useState({
     email: '',
     password: '',
-    redirect: false,
   });
+
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,28 +17,12 @@ export default function SignIn() {
     const response = await signIn('credentials', {
       email,
       password,
+      redirect: false,
     });
 
-    if (response.status !== 200) return;
+    if (response.status === 200) router.back();
 
-    // const localShoppingBag = Cookies.get('NSDS-bag');
-
-    // if (localShoppingBag) {
-    //   const parsedBag = JSON.parse(localShoppingBag);
-    //   // update user shopping bag on sanity from cookies if there are items inside cookies
-    //   if (parsedBag.total != 0) {
-    //     await mySanityClient
-    //       .patch(session.user._id)
-    //       .set({ bag: JSON.stringify(parsedBag) })
-    //       .commit();
-    //   }
-    //   return;
-    // }
-
-    // if (session.user.bag) {
-    //   const userShoppingBag = JSON.parse(session.user.bag);
-    //   if (userShoppingBag.total !== 0) hydrateBag(session.user.bag);
-    // }
+    console.log('incorrect user');
   };
 
   const handleChange = (e) => {

@@ -1,5 +1,7 @@
 import Cookies from 'js-cookie';
 import create from 'zustand';
+import { getSession } from 'next-auth/react';
+import mySanityClient from '../utils/client';
 
 const handleAddToBag = (items, nextItem) => {
   // check if item to be added already exists
@@ -66,16 +68,36 @@ const useStore = create((set, get) => ({
     set((state) => handleUpdateQuantity(state.items, nextItem, qty));
   },
 
-  removeFromBag: (nextItem) =>
-    set((state) => ({
-      total: state.total - nextItem.price * nextItem.quantity,
-      totalQty: state.totalQty - nextItem.quantity,
-      items: state.items.filter((item) => item._id !== nextItem._id),
-    })),
+  // removeFromBag: (nextItem) =>
+  //   set((state) => ({
+  //     total: state.total - nextItem.price * nextItem.quantity,
+  //     totalQty: state.totalQty - nextItem.quantity,
+  //     items: state.items.filter((item) => item._id !== nextItem._id),
+  //   })),
 
   clearBag: () => set(() => ({ totalQty: 0, total: 0, items: [] })),
 
   hydrateBag: (bag) => set(() => bag),
 }));
+
+// need session for store subscription function below
+let session;
+const fetchSession = async () => {
+  const res = await getSession();
+  session = res;
+};
+fetchSession();
+
+// listen to items change in store and update the shopping bag cookies
+const sub = useStore.subscribe(async (state) => {
+  Cookies.set('NSDS-bag', JSON.stringify(state));
+  // update user shopping bag on sanity when signed in
+  if (session) {
+    await mySanityClient
+      .patch(session.user._id)
+      .set({ bag: JSON.stringify(state) })
+      .commit();
+  }
+});
 
 export default useStore;

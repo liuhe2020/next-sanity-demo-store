@@ -13,9 +13,9 @@ export default function MyApp({
   const hydrateBag = useStore((state) => state.hydrateBag);
 
   // SHOPPING BAG HYDRATION FLOW
-  // if local -> get bag from cookie
-  //          -> and user -> get bag from cookie
-  // if no local -> no user -> do nothing
+  // if cookies -> get bag from cookies
+  //          -> and user -> get bag from cookies
+  // if no cookies -> no user -> do nothing
   //             -> and user -> get bag from sanity
   useEffect(() => {
     const getClientSession = async () => {
@@ -39,19 +39,8 @@ export default function MyApp({
         hydrateBag(JSON.parse(clientSession.user.bag));
     };
     getClientSession();
+    console.log('reload');
   }, []);
-
-  // listen to items change in store and update the shopping bag cookies
-  const sub = useStore.subscribe((state) => {
-    // const { data: session, status } = useSession();
-    // if (session) {
-    //   await mySanityClient
-    //     .patch(session.user._id) // Document ID to patch
-    //     .set({ bag: JSON.stringify(state) }) // Shallow merge
-    //     .commit(); // Perform the patch and return a promise
-    // }
-    Cookies.set('NSDS-bag', JSON.stringify(state));
-  });
 
   return (
     <SessionProvider session={session}>
