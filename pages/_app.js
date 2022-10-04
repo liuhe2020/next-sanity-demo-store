@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/globals.css';
 import { SessionProvider, getSession } from 'next-auth/react';
 import Cookies from 'js-cookie';
@@ -21,7 +21,6 @@ export default function MyApp({
     const getClientSession = async () => {
       // fetch session from next auth
       const clientSession = await getSession();
-
       if (Cookies.get('NSDS-bag')) {
         const localShoppingBag = JSON.parse(Cookies.get('NSDS-bag'));
         // update user bag when sign in
@@ -40,7 +39,7 @@ export default function MyApp({
         hydrateBag(JSON.parse(clientSession.user.bag));
     };
     getClientSession();
-  }, [session]);
+  }, []);
 
   // listen to items change in store and update the shopping bag cookies
   const sub = useStore.subscribe((state) => {
