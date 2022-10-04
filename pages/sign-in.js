@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function SignIn() {
   const [values, setValues] = useState({
@@ -30,7 +31,7 @@ export default function SignIn() {
   };
 
   return (
-    <section className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
+    <section className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-stone-50'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
         <h2 className='mt-6 text-center text-3xl font-extrabold text-stone-800'>
           Sign in to Next Sanity Demo Store
@@ -186,6 +187,27 @@ export default function SignIn() {
                     />
                   </svg>
                 </a>
+              </div>
+            </div>
+
+            <div className='mt-6'>
+              <div className='relative'>
+                <div className='absolute inset-0 flex items-center'>
+                  <div className='w-full border-t border-stone-300' />
+                </div>
+                <div className='relative flex justify-center text-sm'>
+                  <span className='px-2 bg-white text-stone-500'>
+                    Don't have an account?
+                  </span>
+                </div>
+              </div>
+
+              <div className='mt-6'>
+                <Link href='/register'>
+                  <a className='w-full inline-flex justify-center py-2 px-4 border border-stone-300 rounded-md shadow-sm bg-white text-sm font-medium text-stone-500 hover:bg-stone-100'>
+                    Create new account
+                  </a>
+                </Link>
               </div>
             </div>
           </div>

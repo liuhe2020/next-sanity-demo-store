@@ -14,7 +14,7 @@ export default function Register() {
   const handleSubmit = (e) => {};
 
   return (
-    <section className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
+    <section className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-stone-50'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
         <h2 className='mt-6 text-center text-3xl font-extrabold text-stone-800'>
           Create New Account
@@ -127,7 +127,7 @@ export default function Register() {
             </div>
 
             <div className='mt-6'>
-              <Link href='#'>
+              <Link href='/sign-in'>
                 <a className='w-full inline-flex justify-center py-2 px-4 border border-stone-300 rounded-md shadow-sm bg-white text-sm font-medium text-stone-500 hover:bg-stone-100'>
                   Sign in
                 </a>

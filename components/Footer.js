@@ -3,7 +3,7 @@ export default function Footer() {
   const year = today.getFullYear();
 
   return (
-    <footer>
+    <footer className=''>
       <p className='max-w-2xl mx-auto text-center text-gray-500 text-xs pt-10 sm:text-sm md:pt-20 lg:pb-10'>
         &copy; {year} Next Sanity Demo Store
         <br />

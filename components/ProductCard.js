@@ -15,7 +15,7 @@ export default function ProductCard({ product }) {
     <Link href={`/${product.category}/${product.slug.current}`}>
       <a>
         <div
-          className={`${bgCSS} relative cursor-pointer overflow-hidden rounded-2xl flex flex-col items-center p-[4vw] lg:p-10`}
+          className={`${bgCSS} relative cursor-pointer overflow-hidden rounded-2xl flex flex-col items-center p-[4vw] lg:p-10 h-full`}
         >
           <div className='aspect-w-1 aspect-h-1 w-full'>
             <Image
