@@ -13,20 +13,24 @@ export default function MainBanner() {
         </h2>
         <div className='mt-8 text-base lg:mt-16 lg:font-medium'>
           <Link href='/laptops'>
-            <button
-              type='button'
-              className='text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:from-purple-600 focus:to-pink-600 rounded-lg px-4 py-1.5 text-center lg:px-5 lg:py-2'
-            >
-              Learn more
-            </button>
+            <a>
+              <button
+                type='button'
+                className='text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:from-purple-600 focus:to-pink-600 rounded-lg px-4 py-1.5 text-center lg:px-5 lg:py-2'
+              >
+                Learn more
+              </button>
+            </a>
           </Link>
           <Link href='/laptops'>
-            <button
-              type='button'
-              className='text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:from-pink-600 focus:to-orange-500 rounded-lg px-4 py-1.5 text-center ml-4 lg:ml-6 lg:px-5 lg:py-2'
-            >
-              Shop now
-            </button>
+            <a>
+              <button
+                type='button'
+                className='text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:from-pink-600 focus:to-orange-500 rounded-lg px-4 py-1.5 text-center ml-4 lg:ml-6 lg:px-5 lg:py-2'
+              >
+                Shop now
+              </button>
+            </a>
           </Link>
         </div>
       </div>

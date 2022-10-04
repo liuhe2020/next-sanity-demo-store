@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useStore } from '../store/store';
+import useStore from '../store/store';
 import urlFor from '../utils/image';
 
 export default function ShoppingBagItem({ item }) {
@@ -60,7 +60,7 @@ export default function ShoppingBagItem({ item }) {
             <path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
           </svg>
           <input
-            className='mx-2 border text-center w-8'
+            className='mx-2 border border-stone-600 text-center w-8 p-0 rounded'
             type='number'
             onBlur={handleOnBlur}
             onChange={handleOnChange}

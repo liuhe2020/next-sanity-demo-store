@@ -48,7 +48,9 @@ export default function Header({ navToggle, setNavToggle }) {
               'hover:text-white font-medium text-center py-4 px-4 border-stone-500'
             )}
           >
-            <Link href={el.href}>{el.name}</Link>
+            <Link href={el.href}>
+              <a>{el.name}</a>
+            </Link>
           </li>
         ))}
       </ul>
@@ -72,11 +74,13 @@ export default function Header({ navToggle, setNavToggle }) {
 
         {/* logo */}
         <Link href='/'>
-          <img
-            className='h-7 cursor-pointer absolute top-5 left-0 right-0 mx-auto md:static md:mx-0 opacity-90'
-            src='/images/nsds_logo.png'
-            alt='nsds logo'
-          ></img>
+          <a>
+            <img
+              className='h-7 cursor-pointer absolute top-5 left-0 right-0 mx-auto md:static md:mx-0 opacity-90'
+              src='/images/nsds_logo.png'
+              alt='nsds logo'
+            ></img>
+          </a>
         </Link>
 
         {/* desktop menu */}
@@ -90,7 +94,9 @@ export default function Header({ navToggle, setNavToggle }) {
                 'hover:text-white font-medium'
               )}
             >
-              <Link href={el.href}>{el.name}</Link>
+              <Link href={el.href}>
+                <a>{el.name}</a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -124,51 +130,55 @@ export default function Header({ navToggle, setNavToggle }) {
               <Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href='/sign-in'
-                      className={classNames(
-                        active ? 'bg-stone-100' : '',
-                        'block px-4 py-2 text-sm text-stone-700'
-                      )}
-                    >
-                      Sign in
-                    </a>
+                    <Link href='/sign-in'>
+                      <a
+                        className={classNames(
+                          active ? 'bg-stone-100' : '',
+                          'block px-4 py-2 text-sm text-stone-700'
+                        )}
+                      >
+                        Sign in
+                      </a>
+                    </Link>
                   )}
                 </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href='/register'
-                      className={classNames(
-                        active ? 'bg-stone-100' : '',
-                        'block px-4 py-2 text-sm text-stone-700'
-                      )}
-                    >
-                      Register
-                    </a>
+                    <Link href='/register'>
+                      <a
+                        className={classNames(
+                          active ? 'bg-stone-100' : '',
+                          'block px-4 py-2 text-sm text-stone-700'
+                        )}
+                      >
+                        Register
+                      </a>
+                    </Link>
                   )}
                 </Menu.Item>
               </Menu.Items>
             </Transition>
           </Menu>
           <Link href='/shopping-bag'>
-            <div className='cursor-pointer relative group'>
-              <svg
-                className='group-hover:fill-white'
-                fill='#d6d3d1'
-                xmlns='http://www.w3.org/2000/svg'
-                width='26.5'
-                height='26.5'
-                viewBox='0 0 24 24'
-              >
-                <path d='M16 6v-2c0-2.209-1.791-4-4-4s-4 1.791-4 4v2h-5v18h18v-18h-5zm-7-2c0-1.654 1.346-3 3-3s3 1.346 3 3v2h-6v-2zm10 18h-14v-14h3v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h6v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h3v14z' />
-              </svg>
-              {totalQty !== 0 && (
-                <span className='absolute text-xs font-semibold top-[10px] left-1/2 -translate-x-1/2  text-stone-300 group-hover:text-white'>
-                  {totalQty > 99 ? 99 : totalQty}
-                </span>
-              )}
-            </div>
+            <a>
+              <div className='cursor-pointer relative group'>
+                <svg
+                  className='group-hover:fill-white'
+                  fill='#d6d3d1'
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='26.5'
+                  height='26.5'
+                  viewBox='0 0 24 24'
+                >
+                  <path d='M16 6v-2c0-2.209-1.791-4-4-4s-4 1.791-4 4v2h-5v18h18v-18h-5zm-7-2c0-1.654 1.346-3 3-3s3 1.346 3 3v2h-6v-2zm10 18h-14v-14h3v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h6v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h3v14z' />
+                </svg>
+                {totalQty !== 0 && (
+                  <span className='absolute text-xs font-semibold top-[10px] left-1/2 -translate-x-1/2  text-stone-300 group-hover:text-white'>
+                    {totalQty > 99 ? 99 : totalQty}
+                  </span>
+                )}
+              </div>
+            </a>
           </Link>
         </div>
       </nav>
