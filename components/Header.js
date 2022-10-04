@@ -1,6 +1,7 @@
 // hamburger menu https://github.com/theMosaad/tailwindcss-delicious-hamburgers
 
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, forwardRef } from 'react';
+import { useSession, signOut } from 'next-auth/react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import useStore from '../store/store';
@@ -13,13 +14,26 @@ const navigation = [
   { name: 'Accessories', href: '/accessories', current: false },
 ];
 
+// headlessui intergration with next.js
+const MyLink = forwardRef((props, ref) => {
+  let { href, children, ...rest } = props;
+  return (
+    <Link href={href}>
+      <a ref={ref} {...rest}>
+        {children}
+      </a>
+    </Link>
+  );
+});
+
 // tailwind class name helper
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 export default function Header({ navToggle, setNavToggle }) {
-  const { totalQty } = useStore();
+  const totalQty = useStore((state) => state.totalQty);
+  const { data: session } = useSession();
 
   // lock window scroll when mobile menu is open
   useEffect(() => {
@@ -127,33 +141,34 @@ export default function Header({ navToggle, setNavToggle }) {
               leaveFrom='transform opacity-100 scale-100'
               leaveTo='transform opacity-0 scale-95'
             >
-              <Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+              <Menu.Items className='absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 <Menu.Item>
                   {({ active }) => (
-                    <Link href='/sign-in'>
-                      <a
+                    <MyLink href={session ? '/account' : '/sign-in'}>
+                      <button
                         className={classNames(
                           active ? 'bg-stone-100' : '',
-                          'block px-4 py-2 text-sm text-stone-700'
+                          'block w-full text-left px-4 py-2 text-sm text-stone-700'
                         )}
                       >
-                        Sign in
-                      </a>
-                    </Link>
+                        {session ? 'Account' : 'Sign in'}
+                      </button>
+                    </MyLink>
                   )}
                 </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
-                    <Link href='/register'>
-                      <a
+                    <MyLink href={session ? '/account' : '/register'}>
+                      <button
+                        onClick={() => session && signOut()}
                         className={classNames(
                           active ? 'bg-stone-100' : '',
-                          'block px-4 py-2 text-sm text-stone-700'
+                          'block w-full text-left px-4 py-2 text-sm text-stone-700'
                         )}
                       >
-                        Register
-                      </a>
-                    </Link>
+                        {session ? 'Sign out' : 'Register'}
+                      </button>
+                    </MyLink>
                   )}
                 </Menu.Item>
               </Menu.Items>
