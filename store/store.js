@@ -89,7 +89,7 @@ const fetchSession = async () => {
 fetchSession();
 
 // listen to items change in store and update the shopping bag cookies
-const sub = useStore.subscribe(async (state) => {
+const unsub = useStore.subscribe(async (state) => {
   Cookies.set('NSDS-bag', JSON.stringify(state));
   // update user shopping bag on sanity when signed in
   if (session) {
