@@ -1,17 +1,46 @@
-import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function Register() {
   const [values, setValues] = useState({
+    name: '',
     email: '',
     password: '',
+    confirmPassword: '',
   });
+
+  const router = useRouter();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (values.password !== values.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    (async () => {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (response.status !== 200) {
+        alert('Failed to register');
+        return;
+      }
+
+      // router.push('/');
+    })();
+  };
 
   return (
     <section className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-stone-50'>
