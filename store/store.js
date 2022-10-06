@@ -80,24 +80,4 @@ const useStore = create((set, get) => ({
   hydrateBag: (bag) => set(() => bag),
 }));
 
-// need session for store subscription function below
-let session;
-const fetchSession = async () => {
-  const res = await getSession();
-  session = res;
-};
-fetchSession();
-
-// listen to items change in store and update the shopping bag cookies
-const unsub = useStore.subscribe(async (state) => {
-  Cookies.set('NSDS-bag', JSON.stringify(state));
-  // update user shopping bag on sanity when signed in
-  if (session) {
-    await mySanityClient
-      .patch(session.user._id)
-      .set({ bag: JSON.stringify(state) })
-      .commit();
-  }
-});
-
 export default useStore;
