@@ -37,8 +37,7 @@ export default function Register() {
         alert('Failed to register');
         return;
       }
-
-      // router.push('/');
+      alert('Registration successful');
     })();
   };
 

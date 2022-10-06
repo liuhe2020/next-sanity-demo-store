@@ -22,28 +22,22 @@ export default NextAuth({
         const userData = await mySanityClient.fetch(
           `*[_type == "user" && email == '${email}'][0]`
         );
-        const user = {
-          _id: userData._id,
-          name: userData.name,
-          email: userData.email,
-          bag: userData.bag,
-        };
-        return user;
+
         // authenticate user
-        // if (userData) {
-        //   bcrypt.compare(password, userData.password, (err, res) => {
-        //     const user = {
-        //       _id: userData._id,
-        //       name: userData.name,
-        //       email: userData.email,
-        //       bag: userData.bag,
-        //     };
-        //     if (res) return user;
-        //     return null;
-        //   });
-        //   return user;
-        // }
-        // return null;
+        if (userData) {
+          const matching = await bcrypt.compare(password, userData.password);
+          if (matching) {
+            const user = {
+              _id: userData._id,
+              name: userData.name,
+              email: userData.email,
+              bag: userData.bag,
+            };
+            return user;
+          }
+          return null;
+        }
+        return null;
       },
     }),
   ],

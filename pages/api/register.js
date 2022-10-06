@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     `*[_type == "user" && email == '${req.body.email}'][0]`
   );
 
-  if (existingUser) return res.status(200).send('User already exist');
+  if (existingUser) return res.status(409).send('User already exist');
 
   // hashing password
   const salt = await bcrypt.genSalt(10);
