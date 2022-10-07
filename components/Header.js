@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useState, forwardRef } from 'react';
 import { useSession, signOut } from 'next-auth/react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import useStore from '../store/store';
 
@@ -144,7 +144,11 @@ export default function Header({ navToggle, setNavToggle }) {
               <Menu.Items className='absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 <Menu.Item>
                   {({ active }) => (
-                    <MyLink href={session ? '/account' : '/sign-in'}>
+                    <MyLink
+                      href={
+                        session ? `/account/${session.user._id}` : '/sign-in'
+                      }
+                    >
                       <button
                         className={classNames(
                           active ? 'bg-stone-100' : '',
@@ -158,7 +162,7 @@ export default function Header({ navToggle, setNavToggle }) {
                 </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
-                    <MyLink href={session ? '/account' : '/register'}>
+                    <MyLink href={session ? '#' : '/register'}>
                       <button
                         onClick={() => session && signOut()}
                         className={classNames(

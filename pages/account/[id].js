@@ -1,9 +1,25 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import mySanityClient from '../../utils/client';
+import Orders from '../../components/Account/Orders';
+import Profile from '../../components/Account/Profile';
+import Password from '../../components/Account/Password';
+import Router from 'next/router';
+
+const sideNav = [{ name: 'Orders' }, { name: 'Profile' }, { name: 'Password' }];
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
 
 export default function index({ id }) {
+  const [view, setView] = useState('Orders');
+
+  const handleView = (e) => {
+    setView(e.target.innerText);
+  };
+
   const { data: session, status } = useSession({
     required: true,
   });
@@ -12,16 +28,59 @@ export default function index({ id }) {
     return 'Loading or not authenticated...';
   }
 
+  // redirect user to the correct signed in user
+  if (session.user._id !== id) {
+    Router.replace(`/account/${session.user._id}`);
+  }
+
   return (
     <>
       <Head>
         <title>{`Next Sanity Demo Store | `}</title>
       </Head>
-      <p>{id}</p>
+      <main className='relative bg-stone-50 w-full'>
+        <div className='max-w-screen-lg mx-auto p-2 sm:p-4 lg:my-10'>
+          <div className='bg-white rounded-lg shadow overflow-hidden'>
+            <div className='divide-y divide-stone-200 md:flex md:divide-y-0 md:divide-x min-h-[80vh]'>
+              <aside className='py-6 md:w-[200px]'>
+                <ul className='space-y-1'>
+                  {sideNav.map((item) => (
+                    <li
+                      onClick={handleView}
+                      key={item.name}
+                      className={classNames(
+                        item.name === view
+                          ? 'bg-blue-50 border-blue-600 text-blue-700 hover:bg-blue-50 hover:text-blue-700'
+                          : 'border-transparent text-stone-900 hover:bg-stone-50 hover:text-stone-900',
+                        'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm md:text-base font-medium'
+                      )}
+                    >
+                      {/* <item.icon
+                        className={classNames(
+                          item.current
+                            ? 'text-blue-500 group-hover:text-blue-500'
+                            : 'text-stone-400 group-hover:text-stone-500',
+                          'flex-shrink-0 -ml-1 mr-3 h-6 w-6'
+                        )}
+                        aria-hidden='true'
+                      /> */}
+                      <span className='truncate'>{item.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              </aside>
+              {view === 'Orders' && <Orders />}
+              {view === 'Profile' && <Profile user={session.user} />}
+              {view === 'Password' && <Password />}
+            </div>
+          </div>
+        </div>
+      </main>
     </>
   );
 }
 
+// using getStaticPaths to generate all users routes
 export async function getStaticPaths() {
   const users = await mySanityClient.fetch(`*[_type == "user"]`);
 
@@ -37,6 +96,7 @@ export async function getStaticPaths() {
   };
 }
 
+// return only user id from getStaticProps which is used for client side checks
 export async function getStaticProps({ params }) {
   const { id } = params;
   return { props: { id } };
