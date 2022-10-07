@@ -159,11 +159,9 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   // fetch the product with matching slug
-  const productArray = await mySanityClient.fetch(
-    `*[slug.current == '${params.productSlug}']`
+  const product = await mySanityClient.fetch(
+    `*[slug.current == '${params.productSlug}'][0]`
   );
-
-  const product = productArray[0];
 
   return {
     props: { product },
