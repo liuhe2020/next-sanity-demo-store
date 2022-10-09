@@ -50,7 +50,7 @@ export default function index({ id }) {
                       key={item.name}
                       className={classNames(
                         item.name === view
-                          ? 'bg-blue-50 border-blue-600 text-blue-700 hover:bg-blue-50 hover:text-blue-700'
+                          ? 'bg-indigo-50 border-indigo-600 text-indigo-700 hover:bg-indigo-50 hover:text-indigo-700'
                           : 'border-transparent text-stone-900 hover:bg-stone-50 hover:text-stone-900',
                         'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm md:text-base font-medium'
                       )}
@@ -58,7 +58,7 @@ export default function index({ id }) {
                       {/* <item.icon
                         className={classNames(
                           item.current
-                            ? 'text-blue-500 group-hover:text-blue-500'
+                            ? 'text-indigo-500 group-hover:text-indigo-500'
                             : 'text-stone-400 group-hover:text-stone-500',
                           'flex-shrink-0 -ml-1 mr-3 h-6 w-6'
                         )}

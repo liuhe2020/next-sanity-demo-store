@@ -60,12 +60,16 @@ export default function ShoppingBag() {
               <span>Total</span>
               <span>£{total.toFixed(2)}</span>
             </div>
-            <button
-              onClick={() => clearBag()}
-              className='bg-indigo-500 font-medium hover:bg-indigo-600 py-3 text-white w-full'
-            >
-              Check out
-            </button>
+            <Link href='/checkout'>
+              <a>
+                <button
+                  onClick={() => clearBag()}
+                  className='bg-indigo-500 font-medium hover:bg-indigo-600 py-3 text-white w-full'
+                >
+                  Continue to checkout
+                </button>
+              </a>
+            </Link>
           </div>
         </div>
       </div>

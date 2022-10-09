@@ -1,7 +1,7 @@
 import paypal from '@paypal/checkout-server-sdk';
 
 export default async function handler(req, res) {
-  const clientId = process.env.PAYPAL_CLIENT_ID;
+  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
   const clientSecret = process.env.PAYPAL_SECRET;
   const environment = new paypal.core.SandboxEnvironment(
     clientId,
@@ -10,8 +10,8 @@ export default async function handler(req, res) {
   const client = new paypal.core.PayPalHttpClient(environment);
 
   const storeItems = new Map([
-    [1, { price: 100, name: 'Learn React Today' }],
-    [2, { price: 200, name: 'Learn CSS Today' }],
+    [1, { price: 1, name: 'Learn React Today' }],
+    [2, { price: 2, name: 'Learn CSS Today' }],
   ]);
 
   const request = new paypal.orders.OrdersCreateRequest();
