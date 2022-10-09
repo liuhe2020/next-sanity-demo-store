@@ -36,7 +36,7 @@ export default function index({ id }) {
   return (
     <>
       <Head>
-        <title>{`Next Sanity Demo Store | `}</title>
+        <title>{`Next Sanity Demo Store | Account - ${session.user.name}`}</title>
       </Head>
       <main className='relative bg-stone-50 w-full'>
         <div className='max-w-screen-lg mx-auto p-2 sm:p-4 lg:my-10'>
@@ -69,9 +69,9 @@ export default function index({ id }) {
                   ))}
                 </ul>
               </aside>
-              {view === 'Orders' && <Orders />}
+              {view === 'Orders' && <Orders user={session.user} />}
               {view === 'Profile' && <Profile user={session.user} />}
-              {view === 'Password' && <Password />}
+              {view === 'Password' && <Password user={session.user} />}
             </div>
           </div>
         </div>

@@ -27,7 +27,7 @@ export default function Profile({ user }) {
           Profile
         </h2>
 
-        <div className='mt-6'>
+        <div className='mt-10'>
           <label
             htmlFor='name'
             className='block text-sm font-medium text-stone-500'
