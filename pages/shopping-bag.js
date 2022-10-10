@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import ShoppingBagItem from '../components/ShoppingBagItem';
 import useStore from '../store/store';
