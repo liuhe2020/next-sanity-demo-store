@@ -1,22 +1,11 @@
 import { PayPalButtons } from '@paypal/react-paypal-js';
-
-const products = [
-  {
-    id: 1,
-    name: 'Micro Backpack',
-    href: '#',
-    price: '$70.00',
-    color: 'Moss',
-    size: '5L',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/checkout-page-04-product-01.jpg',
-    imageAlt:
-      'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
-  },
-  // More products...
-];
+import Image from 'next/image';
+import useStore from '../store/store';
+import urlFor from '../utils/image';
 
 export default function checkout() {
+  const { total, totalQty, items } = useStore();
+
   const createOrder = () => {
     return fetch('/api/paypal', {
       method: 'POST',
@@ -51,65 +40,69 @@ export default function checkout() {
 
   return (
     <div className='bg-white max-w-screen-lg mx-auto you'>
-      <div className='relative grid grid-cols-1 gap-x-16 max-w-7xl mx-auto lg:px-8 lg:grid-cols-2 xl:gap-x-48'>
-        <h1 className='sr-only'>Order information</h1>
+      <div className='relative grid grid-cols-1 gap-x-16 max-w-7xl mx-auto lg:px-2 lg:grid-cols-2 xl:gap-x-32'>
+        <h1 className='sr-only'>Order summary</h1>
         <section
           aria-labelledby='summary-heading'
-          className='bg-gray-50 pt-16 pb-10 px-4 sm:px-6 lg:px-0 lg:pb-16 lg:bg-transparent lg:row-start-1 lg:col-start-2'
+          className='bg-stone-50 pt-16 pb-10 px-4 sm:px-6 lg:px-0 lg:pb-16 lg:bg-transparent lg:row-start-1 lg:col-start-2'
         >
           <div className='max-w-lg mx-auto lg:max-w-none'>
             <h2
               id='summary-heading'
-              className='text-lg font-medium text-gray-900'
+              className='text-lg font-medium text-stone-900'
             >
               Order summary
             </h2>
 
             <ul
               role='list'
-              className='text-sm font-medium text-gray-900 divide-y divide-gray-200'
+              className='text-sm font-medium text-stone-900 divide-y divide-stone-200'
             >
-              {products.map((product) => (
-                <li
-                  key={product.id}
-                  className='flex items-start py-6 space-x-4'
-                >
-                  <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
-                    className='flex-none w-20 h-20 rounded-md object-center object-cover'
-                  />
-                  <div className='flex-auto space-y-1'>
-                    <h3>{product.name}</h3>
-                    <p className='text-gray-500'>{product.color}</p>
-                    <p className='text-gray-500'>{product.size}</p>
+              {items.map((item) => (
+                <li key={item._id} className='flex py-6 space-x-4 lg:space-x-6'>
+                  <div className='flex flex-1 space-x-4'>
+                    <div className='relative flex justify-center min-w-[75px] w-[75px] h-[75px] sm:w-[120px] sm:h-[120px]'>
+                      <Image
+                        src={urlFor(item.images[0]).url()}
+                        alt=''
+                        layout='fill'
+                        objectFit='contain'
+                        objectPosition='center'
+                      />
+                    </div>
+                    <div className='space-y-2 mt-2 sm:mt-4'>
+                      <h3>{item.name}</h3>
+                      <p className='text-stone-500 text-xs'>
+                        Qty: {item.quantity}
+                      </p>
+                    </div>
                   </div>
-                  <p className='flex-none text-base font-medium'>
-                    {product.price}
+                  <p className='font-medium mt-2 sm:mt-4'>
+                    £{(item.price * item.quantity).toFixed(2)}
                   </p>
                 </li>
               ))}
             </ul>
 
-            <dl className='text-sm font-medium text-gray-900 space-y-6 border-t border-gray-200 pt-6 lg:block'>
+            <dl className='text-sm font-medium text-stone-900 space-y-6 border-t border-stone-200 pt-6 lg:block'>
               <div className='flex items-center justify-between'>
-                <dt className='text-gray-600'>Subtotal</dt>
-                <dd>$320.00</dd>
+                <dt className='text-stone-600'>Subtotal</dt>
+                <dd></dd>
               </div>
 
               <div className='flex items-center justify-between'>
-                <dt className='text-gray-600'>Shipping</dt>
-                <dd>$15.00</dd>
+                <dt className='text-stone-600'>Shipping</dt>
+                <dd></dd>
               </div>
 
               <div className='flex items-center justify-between'>
-                <dt className='text-gray-600'>Taxes</dt>
-                <dd>$26.80</dd>
+                <dt className='text-stone-600'>Taxes</dt>
+                <dd></dd>
               </div>
 
-              <div className='flex items-center justify-between border-t border-gray-200 pt-6'>
+              <div className='flex items-center justify-between border-t border-stone-200 pt-6'>
                 <dt className='text-base'>Total</dt>
-                <dd className='text-base'>$361.80</dd>
+                <dd className='text-base'>£{total.toFixed(2)}</dd>
               </div>
             </dl>
           </div>
@@ -117,10 +110,10 @@ export default function checkout() {
 
         <form className='pt-16 pb-36 px-4 sm:px-6 lg:pb-16 lg:px-0 lg:row-start-1 lg:col-start-1'>
           <div className='max-w-lg mx-auto lg:max-w-none'>
-            <section aria-labelledby='contact-info-heading'>
+            <section aria-labelledby='contact-details-heading'>
               <h2
                 id='contact-info-heading'
-                className='text-lg font-medium text-gray-900'
+                className='text-lg font-medium text-stone-900'
               >
                 Contact details
               </h2>
@@ -128,7 +121,7 @@ export default function checkout() {
               <div className='mt-6'>
                 <label
                   htmlFor='name'
-                  className='block text-sm font-medium text-gray-700'
+                  className='block text-sm font-medium text-stone-700'
                 >
                   Full name
                 </label>
@@ -137,14 +130,14 @@ export default function checkout() {
                   id='name'
                   name='name'
                   autoComplete='name'
-                  className='block mt-2 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                  className='block mt-2 w-full border-stone-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                 />
               </div>
 
               <div className='mt-6'>
                 <label
                   htmlFor='email'
-                  className='block text-sm font-medium text-gray-700'
+                  className='block text-sm font-medium text-stone-700'
                 >
                   Email address
                 </label>
@@ -153,14 +146,14 @@ export default function checkout() {
                   id='email'
                   name='email'
                   autoComplete='email'
-                  className='block mt-2 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                  className='block mt-2 w-full border-stone-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                 />
               </div>
 
               <div className='mt-6'>
                 <label
                   htmlFor='phone'
-                  className='block text-sm font-medium text-gray-700'
+                  className='block text-sm font-medium text-stone-700'
                 >
                   Phone
                 </label>
@@ -169,7 +162,7 @@ export default function checkout() {
                   id='phone'
                   name='phone'
                   autoComplete='phone'
-                  className='block mt-2 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                  className='block mt-2 w-full border-stone-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                 />
               </div>
             </section>
@@ -177,7 +170,7 @@ export default function checkout() {
             <section aria-labelledby='shipping-heading' className='mt-10'>
               <h2
                 id='shipping-heading'
-                className='text-lg font-medium text-gray-900'
+                className='text-lg font-medium text-stone-900'
               >
                 Shipping address
               </h2>
@@ -186,7 +179,7 @@ export default function checkout() {
                 <div className='sm:col-span-3'>
                   <label
                     htmlFor='company'
-                    className='block text-sm font-medium text-gray-700'
+                    className='block text-sm font-medium text-stone-700'
                   >
                     Company
                   </label>
@@ -195,7 +188,7 @@ export default function checkout() {
                       type='text'
                       id='company'
                       name='company'
-                      className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                      className='block w-full border-stone-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                     />
                   </div>
                 </div>
@@ -203,7 +196,7 @@ export default function checkout() {
                 <div className='sm:col-span-3'>
                   <label
                     htmlFor='address'
-                    className='block text-sm font-medium text-gray-700'
+                    className='block text-sm font-medium text-stone-700'
                   >
                     Address
                   </label>
@@ -213,7 +206,7 @@ export default function checkout() {
                       id='address'
                       name='address'
                       autoComplete='street-address'
-                      className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                      className='block w-full border-stone-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                     />
                   </div>
                 </div>
@@ -221,7 +214,7 @@ export default function checkout() {
                 <div className='sm:col-span-3'>
                   <label
                     htmlFor='apartment'
-                    className='block text-sm font-medium text-gray-700'
+                    className='block text-sm font-medium text-stone-700'
                   >
                     Apartment, suite, etc.
                   </label>
@@ -230,7 +223,7 @@ export default function checkout() {
                       type='text'
                       id='apartment'
                       name='apartment'
-                      className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                      className='block w-full border-stone-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                     />
                   </div>
                 </div>
@@ -238,7 +231,7 @@ export default function checkout() {
                 <div>
                   <label
                     htmlFor='city'
-                    className='block text-sm font-medium text-gray-700'
+                    className='block text-sm font-medium text-stone-700'
                   >
                     City
                   </label>
@@ -248,7 +241,7 @@ export default function checkout() {
                       id='city'
                       name='city'
                       autoComplete='address-level2'
-                      className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                      className='block w-full border-stone-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                     />
                   </div>
                 </div>
@@ -256,7 +249,7 @@ export default function checkout() {
                 <div>
                   <label
                     htmlFor='region'
-                    className='block text-sm font-medium text-gray-700'
+                    className='block text-sm font-medium text-stone-700'
                   >
                     State / Province
                   </label>
@@ -266,7 +259,7 @@ export default function checkout() {
                       id='region'
                       name='region'
                       autoComplete='address-level1'
-                      className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                      className='block w-full border-stone-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                     />
                   </div>
                 </div>
@@ -274,7 +267,7 @@ export default function checkout() {
                 <div>
                   <label
                     htmlFor='postal-code'
-                    className='block text-sm font-medium text-gray-700'
+                    className='block text-sm font-medium text-stone-700'
                   >
                     Postal code
                   </label>
@@ -284,7 +277,7 @@ export default function checkout() {
                       id='postal-code'
                       name='postal-code'
                       autoComplete='postal-code'
-                      className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                      className='block w-full border-stone-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                     />
                   </div>
                 </div>

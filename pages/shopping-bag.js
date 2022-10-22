@@ -63,10 +63,7 @@ export default function ShoppingBag() {
             </div>
             <Link href='/checkout'>
               <a>
-                <button
-                  onClick={() => clearBag()}
-                  className='bg-indigo-500 font-medium hover:bg-indigo-600 py-3 text-white w-full'
-                >
+                <button className='bg-indigo-500 font-medium hover:bg-indigo-600 py-3 text-white w-full'>
                   Continue to checkout
                 </button>
               </a>
