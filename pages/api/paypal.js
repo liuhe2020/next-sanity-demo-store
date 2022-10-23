@@ -8,17 +8,11 @@ export default async function handler(req, res) {
     clientSecret
   );
   const client = new paypal.core.PayPalHttpClient(environment);
-
-  const storeItems = new Map([
-    [1, { price: 1, name: 'Learn React Today' }],
-    [2, { price: 2, name: 'Learn CSS Today' }],
-  ]);
-
   const request = new paypal.orders.OrdersCreateRequest();
 
-  const total = req.body.items.reduce((sum, item) => {
-    return sum + storeItems.get(item.id).price * item.quantity;
-  }, 0);
+  // const total = req.body.reduce((sum, item) => {
+  //   return sum + storeItems.get(item.id).price * item.quantity;
+  // }, 0);
 
   request.prefer('return=representation');
 
@@ -28,32 +22,32 @@ export default async function handler(req, res) {
       {
         amount: {
           currency_code: 'GBP',
-          value: total,
-          breakdown: {
-            item_total: {
-              currency_code: 'GBP',
-              value: total,
-            },
-          },
+          value: '6',
+          // breakdown: {
+          //   item_total: {
+          //     currency_code: 'GBP',
+          //     value: '19',
+          //   },
+          // },
         },
-        items: req.body.items.map((item) => {
-          const storeItem = storeItems.get(item.id);
-          return {
-            name: storeItem.name,
-            unit_amount: {
-              currency_code: 'GBP',
-              value: storeItem.price,
-            },
-            quantity: item.quantity,
-          };
-        }),
+        // items: req.body.order.map((item) => {
+        //   return {
+        //     name: item.id,
+        //     unit_amount: {
+        //       currency_code: 'GBP',
+        //       value: 2,
+        //     },
+        //     quantity: item.quantity,
+        //   };
+        // }),
       },
     ],
   });
 
   try {
     const order = await client.execute(request);
-    res.json({ id: order.result.id });
+    console.log(order);
+    res.json({ orderID: order.result.id });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

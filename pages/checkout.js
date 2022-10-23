@@ -6,36 +6,36 @@ import urlFor from '../utils/image';
 export default function checkout() {
   const { total, totalQty, items } = useStore();
 
+  // send order to backend
   const createOrder = () => {
+    const order = items.map((item) => ({
+      id: item._id,
+      quantity: item.quantity,
+    }));
+
     return fetch('/api/paypal', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        items: [
-          {
-            id: 1,
-            quantity: 2,
-          },
-          { id: 2, quantity: 3 },
-        ],
-      }),
+      body: JSON.stringify({}),
     })
       .then((res) => {
-        if (res.ok) return res.json();
-        return res.json().then((json) => Promise.reject(json));
+        return res.json();
       })
-      .then(({ id }) => {
-        return id;
+      .catch(() => {
+        alert('Error');
       })
-      .catch((e) => {
-        console.error(e.error);
+      .then((data) => {
+        return data.orderID; // make sure to use the same key name for order ID on the client and server
       });
   };
 
   const onApprove = (data, actions) => {
-    return actions.order.capture();
+    return actions.order.capture().then((details) => {
+      const name = details.payer.name.given_name;
+      alert(`Transaction completed by ${name}`);
+    });
   };
 
   return (
@@ -283,7 +283,7 @@ export default function checkout() {
                 </div>
               </div>
             </section>
-            <PayPalButtons />
+            <PayPalButtons createOrder={createOrder} />
           </div>
         </form>
       </div>
