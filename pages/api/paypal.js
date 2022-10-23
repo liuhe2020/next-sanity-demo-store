@@ -1,4 +1,5 @@
 import paypal from '@paypal/checkout-server-sdk';
+import mySanityClient from '../../utils/client';
 
 export default async function handler(req, res) {
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
@@ -10,9 +11,21 @@ export default async function handler(req, res) {
   const client = new paypal.core.PayPalHttpClient(environment);
   const request = new paypal.orders.OrdersCreateRequest();
 
-  // const total = req.body.reduce((sum, item) => {
-  //   return sum + storeItems.get(item.id).price * item.quantity;
-  // }, 0);
+  const items = await Promise.all(
+    req.body.map(async (item) => {
+      const product = await mySanityClient.fetch(
+        `*[_type == 'product' && _id == '${item.id}'][0]`
+      );
+      return {
+        name: product.name,
+        unit_amount: {
+          currency_code: 'GBP',
+          value: product.price.toString(), // value must be string for paypal to work
+        },
+        quantity: item.quantity,
+      };
+    })
+  );
 
   request.prefer('return=representation');
 
@@ -22,24 +35,27 @@ export default async function handler(req, res) {
       {
         amount: {
           currency_code: 'GBP',
-          value: '6',
-          // breakdown: {
-          //   item_total: {
-          //     currency_code: 'GBP',
-          //     value: '19',
-          //   },
-          // },
+          value: '100',
+          breakdown: {
+            item_total: {
+              /* Required when including the items array */
+              currency_code: 'GBP',
+              value: '100',
+            },
+          },
         },
-        // items: req.body.order.map((item) => {
-        //   return {
-        //     name: item.id,
-        //     unit_amount: {
-        //       currency_code: 'GBP',
-        //       value: 2,
-        //     },
-        //     quantity: item.quantity,
-        //   };
-        // }),
+        items: [
+          {
+            name: 'First Product Name' /* Shows within upper-right dropdown during payment approval */,
+            description:
+              'Optional descriptive text..' /* Item details will also be in the completed paypal.com transaction view */,
+            unit_amount: {
+              currency_code: 'GBP',
+              value: '50',
+            },
+            quantity: '2',
+          },
+        ],
       },
     ],
   });

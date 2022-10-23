@@ -18,7 +18,7 @@ export default function checkout() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({}),
+      body: JSON.stringify(order),
     })
       .then((res) => {
         return res.json();
