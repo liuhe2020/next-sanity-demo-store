@@ -10,10 +10,11 @@ export default async function handler(req, res) {
   );
   const client = new paypal.core.PayPalHttpClient(environment);
   const request = new paypal.orders.OrdersCreateRequest();
+  const clientOrder = req.body;
 
   // check items from client and match prices from sanity
   const items = await Promise.all(
-    req.body.map(async (item) => {
+    clientOrder.map(async (item) => {
       const product = await mySanityClient.fetch(
         `*[_type == 'product' && _id == '${item.id}'][0]`
       );
