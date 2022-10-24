@@ -11,6 +11,7 @@ export default async function handler(req, res) {
   const client = new paypal.core.PayPalHttpClient(environment);
   const request = new paypal.orders.OrdersCreateRequest();
 
+  // check items from client and match prices from sanity
   const items = await Promise.all(
     req.body.map(async (item) => {
       const product = await mySanityClient.fetch(
@@ -27,6 +28,15 @@ export default async function handler(req, res) {
     })
   );
 
+  // calculate total
+  const total = items
+    .reduce(
+      (a, item) => a + item.quantity * parseInt(item.unit_amount.value),
+      0
+    )
+    .toString();
+
+  // paypal request
   request.prefer('return=representation');
 
   request.requestBody({
@@ -35,34 +45,22 @@ export default async function handler(req, res) {
       {
         amount: {
           currency_code: 'GBP',
-          value: '100',
+          value: total,
+          /* breakdown required when including the items array */
           breakdown: {
             item_total: {
-              /* Required when including the items array */
               currency_code: 'GBP',
-              value: '100',
+              value: total,
             },
           },
         },
-        items: [
-          {
-            name: 'First Product Name' /* Shows within upper-right dropdown during payment approval */,
-            description:
-              'Optional descriptive text..' /* Item details will also be in the completed paypal.com transaction view */,
-            unit_amount: {
-              currency_code: 'GBP',
-              value: '50',
-            },
-            quantity: '2',
-          },
-        ],
+        items: items,
       },
     ],
   });
 
   try {
     const order = await client.execute(request);
-    console.log(order);
     res.json({ orderID: order.result.id });
   } catch (e) {
     res.status(500).json({ error: e.message });

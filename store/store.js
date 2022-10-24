@@ -1,7 +1,4 @@
-import Cookies from 'js-cookie';
 import create from 'zustand';
-import { getSession } from 'next-auth/react';
-import mySanityClient from '../utils/client';
 
 const handleAddToBag = (items, nextItem) => {
   // check if item to be added already exists
@@ -67,13 +64,6 @@ const useStore = create((set, get) => ({
   updateQuantity: (nextItem, qty) => {
     set((state) => handleUpdateQuantity(state.items, nextItem, qty));
   },
-
-  // removeFromBag: (nextItem) =>
-  //   set((state) => ({
-  //     total: state.total - nextItem.price * nextItem.quantity,
-  //     totalQty: state.totalQty - nextItem.quantity,
-  //     items: state.items.filter((item) => item._id !== nextItem._id),
-  //   })),
 
   clearBag: () => set(() => ({ totalQty: 0, total: 0, items: [] })),
 

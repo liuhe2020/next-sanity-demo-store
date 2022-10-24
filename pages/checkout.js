@@ -13,7 +13,7 @@ export default function checkout() {
       quantity: item.quantity,
     }));
 
-    return fetch('/api/paypal', {
+    return fetch('/api/createOrder', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
