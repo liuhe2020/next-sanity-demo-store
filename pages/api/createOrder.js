@@ -1,15 +1,10 @@
-import paypal from '@paypal/checkout-server-sdk';
 import mySanityClient from '../../utils/client';
+import generateAccessToken from '../../utils/accessToken';
 
 export default async function handler(req, res) {
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
   const clientSecret = process.env.PAYPAL_SECRET;
-  const environment = new paypal.core.SandboxEnvironment(
-    clientId,
-    clientSecret
-  );
-  const client = new paypal.core.PayPalHttpClient(environment);
-  const request = new paypal.orders.OrdersCreateRequest();
+  const base = 'https://api-m.sandbox.paypal.com';
   const clientOrder = req.body;
 
   // check items from client and match prices from sanity
@@ -38,32 +33,35 @@ export default async function handler(req, res) {
     .toString();
 
   // paypal request
-  request.prefer('return=representation');
+  const accessToken = await generateAccessToken(clientId, clientSecret, base);
 
-  request.requestBody({
-    intent: 'CAPTURE',
-    purchase_units: [
-      {
-        amount: {
-          currency_code: 'GBP',
-          value: total,
-          /* breakdown required when including the items array */
-          breakdown: {
-            item_total: {
-              currency_code: 'GBP',
-              value: total,
+  const response = await fetch(`${base}/v2/checkout/orders`, {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      intent: 'CAPTURE',
+      purchase_units: [
+        {
+          amount: {
+            currency_code: 'GBP',
+            value: total,
+            /* breakdown required when including the items array */
+            breakdown: {
+              item_total: {
+                currency_code: 'GBP',
+                value: total,
+              },
             },
           },
+          items: items,
         },
-        items: items,
-      },
-    ],
+      ],
+    }),
   });
-
-  try {
-    const order = await client.execute(request);
-    res.json({ orderID: order.result.id });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  const order = await response.json();
+  console.log(order);
+  res.json(order);
 }

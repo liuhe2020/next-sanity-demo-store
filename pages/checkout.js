@@ -26,8 +26,8 @@ export default function checkout() {
       return;
     }
 
-    const { orderID } = await response.json();
-    return orderID;
+    const { id } = await response.json();
+    return id;
   };
 
   const onApprove = async (data) => {
@@ -45,8 +45,8 @@ export default function checkout() {
       return;
     }
 
-    const data = await response.json();
-    console.log(data);
+    const dataObj = await response.json();
+    console.log(dataObj);
     // .then((res) => {
     //   return res.json();
     // })
