@@ -1,35 +1,35 @@
-import paypal from '@paypal/checkout-server-sdk';
+import generateAccessToken from '../../utils/accessToken';
 import mySanityClient from '../../utils/client';
 
 export default async function handler(req, res) {
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
   const clientSecret = process.env.PAYPAL_SECRET;
-  const environment = new paypal.core.SandboxEnvironment(
-    clientId,
-    clientSecret
+  const base = 'https://api-m.sandbox.paypal.com';
+  const orderId = req.body;
+
+  console.log(orderId);
+
+  // paypal request
+  const accessToken = await generateAccessToken(clientId, clientSecret, base);
+
+  const response = await fetch(
+    `${base}/v2/checkout/orders/${orderId}/capture`,
+    {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
   );
-  const client = new paypal.core.PayPalHttpClient(environment);
-  const request = new paypal.orders.OrdersCaptureRequest(orderID);
-  const orderID = req.body.orderID;
-  console.log(orderID);
 
-  request.requestBody({});
-
-  try {
-    const capture = await client.execute(request);
-    console.log(`Response: ${JSON.stringify(capture)}`);
-    console.log(`Capture: ${JSON.stringify(capture.result)}`);
-    const result = capture.result;
-    const resJson = {
-      result,
-    };
-    res.json(resJson);
-    // return capture.result;
-  } catch (err) {
-    // Handle any errors from the call
-    console.error(err);
-    return res.send(500);
+  if (response.status === 200 || response.status === 201) {
+    const data = await response.json();
+    return res.status(200).json(data);
   }
+
+  const errorMessage = await response.text();
+  throw new Error(errorMessage);
 }
 
 // Update payment to PAID status once completed

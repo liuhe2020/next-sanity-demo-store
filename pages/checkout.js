@@ -31,13 +31,14 @@ export default function checkout() {
   };
 
   const onApprove = async (data) => {
-    console.log('capturing');
+    console.log('onApprove');
+
     const response = await fetch('/api/captureOrder', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ orderID: data.orderID }),
+      body: JSON.stringify(data.orderID),
     });
 
     if (response.status !== 200) {
@@ -45,8 +46,8 @@ export default function checkout() {
       return;
     }
 
-    const dataObj = await response.json();
-    console.log(dataObj);
+    const orderData = await response.json();
+    console.log(orderData);
     // .then((res) => {
     //   return res.json();
     // })
@@ -324,7 +325,7 @@ export default function checkout() {
                 </div>
               </div>
             </section>
-            <PayPalButtons createOrder={createOrder} />
+            <PayPalButtons createOrder={createOrder} onApprove={onApprove} />
           </div>
         </form>
       </div>

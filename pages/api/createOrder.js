@@ -61,7 +61,12 @@ export default async function handler(req, res) {
       ],
     }),
   });
-  const order = await response.json();
-  console.log(order);
-  res.json(order);
+
+  if (response.status === 200 || response.status === 201) {
+    const order = await response.json();
+    return res.status(200).json(order);
+  }
+
+  const errorMessage = await response.text();
+  throw new Error(errorMessage);
 }
