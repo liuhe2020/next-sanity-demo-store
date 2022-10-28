@@ -19,6 +19,11 @@ export default {
       type: 'string',
     },
     {
+      title: 'County',
+      name: 'county',
+      type: 'string',
+    },
+    {
       title: 'Postcode',
       name: 'postcode',
       type: 'string',

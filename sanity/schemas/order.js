@@ -23,29 +23,14 @@ export default {
       type: 'number',
     },
     {
-      name: 'deliveryFee',
-      title: 'Delivery Fee',
+      name: 'postage',
+      title: 'Postage',
       type: 'number',
     },
     {
       name: 'orderTotal',
       title: 'Order Total',
       type: 'number',
-    },
-    {
-      name: 'paymentMethod',
-      title: 'Payment Method',
-      type: 'string',
-    },
-    {
-      title: 'Delivery Address',
-      name: 'deliveryAddress',
-      type: 'deliveryAddress',
-    },
-    {
-      title: 'Payment Result',
-      name: 'paymentResult',
-      type: 'paymentResult',
     },
     {
       title: 'Order Items',
@@ -59,29 +44,19 @@ export default {
       ],
     },
     {
-      title: 'Payment received',
-      name: 'isPaid',
-      type: 'boolean',
+      title: 'Delivery Address',
+      name: 'deliveryAddress',
+      type: 'deliveryAddress',
     },
     {
-      title: 'Payment Date',
-      name: 'paidAt',
-      type: 'datetime',
+      title: 'Payment Detail',
+      name: 'paymentDetail',
+      type: 'paymentDetail',
     },
     {
-      title: 'Delivered',
-      name: 'isDelivered',
-      type: 'boolean',
-    },
-    {
-      title: 'Delivery Date',
-      name: 'deliveredAt',
-      type: 'datetime',
-    },
-    {
-      title: 'Order Date',
-      name: 'createdAt',
-      type: 'datetime',
+      title: 'Shipment Detail',
+      name: 'shipmentDetail',
+      type: 'shipmentDetail',
     },
   ],
 };

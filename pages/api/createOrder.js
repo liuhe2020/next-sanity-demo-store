@@ -2,6 +2,8 @@ import mySanityClient from '../../utils/client';
 import generateAccessToken from '../../utils/accessToken';
 
 export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).send('Not allowed');
+
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
   const clientSecret = process.env.PAYPAL_SECRET;
   const base = 'https://api-m.sandbox.paypal.com';
@@ -64,6 +66,7 @@ export default async function handler(req, res) {
 
   if (response.status === 200 || response.status === 201) {
     const order = await response.json();
+    console.log(order);
     return res.status(200).json(order);
   }
 
