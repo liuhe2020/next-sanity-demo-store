@@ -10,6 +10,7 @@ export default function checkout() {
   const createOrder = async () => {
     const order = items.map((item) => ({
       id: item._id,
+      name: item.name,
       quantity: item.quantity,
     }));
 
@@ -31,8 +32,7 @@ export default function checkout() {
   };
 
   const onApprove = async (data) => {
-    console.log('onApprove');
-
+    console.log(data);
     const response = await fetch('/api/captureOrder', {
       method: 'POST',
       headers: {
@@ -47,7 +47,7 @@ export default function checkout() {
     }
 
     const orderData = await response.json();
-    console.log(orderData);
+    // console.log(orderData);
     // .then((res) => {
     //   return res.json();
     // })

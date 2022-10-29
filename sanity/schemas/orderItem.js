@@ -9,11 +9,6 @@ export default {
       type: 'string',
     },
     {
-      title: 'Quantity',
-      name: 'quantity',
-      type: 'number',
-    },
-    {
       title: 'Image',
       name: 'image',
       type: 'string',
@@ -21,6 +16,11 @@ export default {
     {
       title: 'Price',
       name: 'price',
+      type: 'number',
+    },
+    {
+      title: 'Quantity',
+      name: 'quantity',
       type: 'number',
     },
   ],

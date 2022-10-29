@@ -10,7 +10,7 @@ import order from './order';
 import orderItem from './orderItem';
 import deliveryAddress from './deliveryAddress';
 import shipment from './shipment';
-import paymentDetails from './paymentDetails';
+import paymentDetail from './paymentDetail';
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -25,7 +25,7 @@ export default createSchema({
     user,
     order,
     orderItem,
-    paymentDetails,
+    paymentDetail,
     deliveryAddress,
     shipment,
   ]),

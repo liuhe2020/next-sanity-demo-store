@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import mySanityClient from '../../utils/client';
 import generateAccessToken from '../../utils/accessToken';
 
@@ -16,11 +17,7 @@ export default async function handler(req, res) {
         `*[_type == 'product' && _id == '${item.id}'][0]`
       );
       return {
-        name: product.name,
-        unit_amount: {
-          currency_code: 'GBP',
-          value: product.price.toString(), // value must be string for paypal to work
-        },
+        ...product,
         quantity: item.quantity,
       };
     })
@@ -34,8 +31,31 @@ export default async function handler(req, res) {
     )
     .toString();
 
+  // store new order in sanity
+  const sanityOrder = (id) => ({
+    _type: 'order',
+    name: id,
+    orderItems: items.map((item) => ({
+      name: item.name,
+      _key: uuidv4(),
+      quantity: item.quantity,
+    })),
+    paymentDetail: {
+      paid: false,
+    },
+  });
+
   // paypal request
   const accessToken = await generateAccessToken(clientId, clientSecret, base);
+
+  const paypalItems = items.map((item) => ({
+    name: item.name,
+    unit_amount: {
+      currency_code: 'GBP',
+      value: item.price.toString(), // value must be string for paypal to work
+    },
+    quantity: item.quantity,
+  }));
 
   const response = await fetch(`${base}/v2/checkout/orders`, {
     method: 'post',
@@ -58,7 +78,7 @@ export default async function handler(req, res) {
               },
             },
           },
-          items: items,
+          items: paypalItems,
         },
       ],
     }),
@@ -66,6 +86,8 @@ export default async function handler(req, res) {
 
   if (response.status === 200 || response.status === 201) {
     const order = await response.json();
+    const { id } = order;
+    const createOrder = await mySanityClient.create(sanityOrder(id));
     console.log(order);
     return res.status(200).json(order);
   }

@@ -4,6 +4,11 @@ export default {
   type: 'object',
   fields: [
     {
+      title: 'Paid',
+      name: 'paid',
+      type: 'boolean',
+    },
+    {
       title: 'Paypal Transaction ID',
       name: 'paypalTransactionId',
       type: 'string',

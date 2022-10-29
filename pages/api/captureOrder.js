@@ -12,14 +12,6 @@ export default async function handler(req, res) {
   console.log(orderId);
 
   // store order in sanity
-  // const newOrder = {
-  //   _type: 'order',
-  //   name: req.body.name,
-  //   email: req.body.email,
-  //   password: hashedPassword,
-  // };
-
-  // const createUser = await mySanityClient.create(newUser);
 
   // paypal request
   const accessToken = await generateAccessToken(clientId, clientSecret, base);

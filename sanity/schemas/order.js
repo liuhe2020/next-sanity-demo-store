@@ -3,6 +3,7 @@ export default {
   title: 'Order',
   type: 'document',
   fields: [
+    { name: 'name', title: 'Paypal Capture ID', type: 'string' },
     {
       title: 'User',
       name: 'user',
