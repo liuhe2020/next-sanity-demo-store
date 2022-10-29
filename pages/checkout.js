@@ -10,7 +10,6 @@ export default function checkout() {
   const createOrder = async () => {
     const order = items.map((item) => ({
       id: item._id,
-      name: item.name,
       quantity: item.quantity,
     }));
 
@@ -32,7 +31,6 @@ export default function checkout() {
   };
 
   const onApprove = async (data) => {
-    console.log(data);
     const response = await fetch('/api/captureOrder', {
       method: 'POST',
       headers: {

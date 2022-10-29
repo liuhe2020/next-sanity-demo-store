@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import mySanityClient from '../../utils/client';
 import generateAccessToken from '../../utils/accessToken';
+import urlFor from '../../utils/image';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Not allowed');
@@ -23,22 +24,16 @@ export default async function handler(req, res) {
     })
   );
 
-  // calculate total
-  const total = items
-    .reduce(
-      (a, item) => a + item.quantity * parseInt(item.unit_amount.value),
-      0
-    )
-    .toString();
-
   // store new order in sanity
   const sanityOrder = (id) => ({
     _type: 'order',
     name: id,
     orderItems: items.map((item) => ({
       name: item.name,
-      _key: uuidv4(),
+      price: item.price,
+      image: urlFor(item.images[0]).url(),
       quantity: item.quantity,
+      _key: uuidv4(),
     })),
     paymentDetail: {
       paid: false,
@@ -56,6 +51,14 @@ export default async function handler(req, res) {
     },
     quantity: item.quantity,
   }));
+
+  // calculate total
+  const total = paypalItems
+    .reduce(
+      (a, item) => a + item.quantity * parseInt(item.unit_amount.value),
+      0
+    )
+    .toString();
 
   const response = await fetch(`${base}/v2/checkout/orders`, {
     method: 'post',
