@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import mySanityClient from '../../utils/client';
 import generateAccessToken from '../../utils/accessToken';
 import urlFor from '../../utils/image';
@@ -24,31 +23,15 @@ export default async function handler(req, res) {
     })
   );
 
-  // store new order in sanity
-  const sanityOrder = (id) => ({
-    _type: 'order',
-    name: id,
-    _id: id,
-    orderItems: items.map((item) => ({
-      name: item.name,
-      price: item.price,
-      image: urlFor(item.images[0]).url(),
-      quantity: item.quantity,
-      _key: uuidv4(),
-    })),
-    paymentDetail: {
-      paid: false,
-    },
-  });
-
   // paypal order create
   const accessToken = await generateAccessToken(clientId, clientSecret, base);
 
   const paypalItems = items.map((item) => ({
     name: item.name,
+    description: urlFor(item.images[0]).url(), // store img url in description key
     unit_amount: {
       currency_code: 'GBP',
-      value: item.price.toString(), // value must be string for paypal to work
+      value: item.price.toString(), // all values must be string in paypal api
     },
     quantity: item.quantity,
   }));
@@ -90,9 +73,6 @@ export default async function handler(req, res) {
 
   if (response.status === 200 || response.status === 201) {
     const order = await response.json();
-    const { id } = order;
-    const createOrder = await mySanityClient.create(sanityOrder(id));
-    // console.log(order);
     return res.status(200).json(order);
   }
 

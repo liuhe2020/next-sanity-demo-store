@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
   const accessToken = await generateAccessToken(clientId, clientSecret, base);
 
-  const response = await fetch(`${base}/v2/checkout/orders/1MP34373A3693041M`, {
+  const response = await fetch(`${base}/v2/checkout/orders/92F13938C72170058`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

@@ -3,7 +3,7 @@ export default {
   title: 'Order',
   type: 'document',
   fields: [
-    { name: 'name', title: 'Paypal Capture ID', type: 'string' },
+    { name: 'name', title: 'Paypal Order ID', type: 'string' },
     {
       title: 'User',
       name: 'user',
@@ -12,11 +12,6 @@ export default {
       options: {
         disableNew: true,
       },
-    },
-    {
-      name: 'userName',
-      title: 'User Name',
-      type: 'string',
     },
     {
       name: 'orderSubtotal',

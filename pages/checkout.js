@@ -44,8 +44,8 @@ export default function checkout() {
       return;
     }
 
-    const orderData = await response.json();
-    console.log(orderData);
+    const captureData = await response.json();
+    console.log('Payment approved');
   };
 
   return (
