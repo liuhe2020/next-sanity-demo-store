@@ -62,7 +62,7 @@ export default async function handler(req, res) {
     .toString();
 
   const response = await fetch(`${base}/v2/checkout/orders`, {
-    method: 'post',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,

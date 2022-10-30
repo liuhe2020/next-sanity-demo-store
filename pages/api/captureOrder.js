@@ -36,7 +36,7 @@ export default async function handler(req, res) {
   const response = await fetch(
     `${base}/v2/checkout/orders/${orderId}/capture`,
     {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
@@ -46,16 +46,15 @@ export default async function handler(req, res) {
 
   if (response.status === 200 || response.status === 201) {
     const data = await response.json();
-    // console.log(data);
+    console.log(data.purchase_units[0]);
     const updateOrder = await mySanityClient
       .patch(orderId)
       .set(sanityOrder(data))
       .commit();
-    const updateRes = await updateOrder;
-    console.log(updateRes);
     return res.status(200).json(data);
   }
 
   const errorMessage = await response.text();
+  const deleteOrder = await mySanityClient.delete(orderId);
   throw new Error(errorMessage);
 }
