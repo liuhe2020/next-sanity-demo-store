@@ -9,11 +9,28 @@ export default async function handler(req, res) {
   const base = 'https://api-m.sandbox.paypal.com';
   const orderId = req.body;
 
-  console.log(orderId);
+  // helper to output order update object for sanity
+  const sanityOrder = (order) => ({
+    orderTotal: parseInt(
+      order.purchase_units[0].payments.captures[0].amount.value
+    ),
+    deliveryAddress: {
+      fullName: order.purchase_units[0].shipping.name.full_name,
+      address: `${order.purchase_units[0].shipping.address.address_line_1}, ${order.purchase_units[0].shipping.address.address_line_2}`,
+      city: order.purchase_units[0].shipping.address.admin_area_2,
+      county: order.purchase_units[0].shipping.address.admin_area_1,
+      postcode: order.purchase_units[0].shipping.address.postal_code,
+      country: order.purchase_units[0].shipping.address.country_code,
+    },
+    paymentDetail: {
+      paid: false,
+      paypalTransactionId: order.purchase_units[0].payments.captures[0].id,
+      paypalEmail: order.payment_source.paypal.email_address,
+      paymentDate: order.purchase_units[0].payments.captures[0].create_time,
+    },
+  });
 
-  // store order in sanity
-
-  // paypal request
+  // paypal payment capture
   const accessToken = await generateAccessToken(clientId, clientSecret, base);
 
   const response = await fetch(
@@ -29,7 +46,13 @@ export default async function handler(req, res) {
 
   if (response.status === 200 || response.status === 201) {
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
+    const updateOrder = await mySanityClient
+      .patch(orderId)
+      .set(sanityOrder(data))
+      .commit();
+    const updateRes = await updateOrder;
+    console.log(updateRes);
     return res.status(200).json(data);
   }
 

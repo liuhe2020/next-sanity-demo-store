@@ -28,6 +28,7 @@ export default async function handler(req, res) {
   const sanityOrder = (id) => ({
     _type: 'order',
     name: id,
+    _id: id,
     orderItems: items.map((item) => ({
       name: item.name,
       price: item.price,
@@ -40,7 +41,7 @@ export default async function handler(req, res) {
     },
   });
 
-  // paypal request
+  // paypal order create
   const accessToken = await generateAccessToken(clientId, clientSecret, base);
 
   const paypalItems = items.map((item) => ({
@@ -91,7 +92,7 @@ export default async function handler(req, res) {
     const order = await response.json();
     const { id } = order;
     const createOrder = await mySanityClient.create(sanityOrder(id));
-    console.log(order);
+    // console.log(order);
     return res.status(200).json(order);
   }
 

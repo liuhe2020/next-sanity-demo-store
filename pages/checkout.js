@@ -45,37 +45,7 @@ export default function checkout() {
     }
 
     const orderData = await response.json();
-    // console.log(orderData);
-    // .then((res) => {
-    //   return res.json();
-    // })
-    // .catch((details) => {
-    //   return history.push('/error');
-    // })
-    // .then((details) => {
-    //   const { result } = details;
-    //   const { id, payer, purchase_units } = result;
-    //   const transactionId = purchase_units[0].payments.captures[0].id;
-    //   const transactionDate =
-    //     purchase_units[0].payments.captures[0].create_time;
-    //   const name = payer.name.given_name + payer.name.surname;
-    //   const email = payer.email_address;
-    //   const address = payer.address.country_code;
-    //   const transactionAmount =
-    //     purchase_units[0].payments.captures[0].amount.value;
-    //   console.log('Successful payment');
-    //   return history.push({
-    //     pathname: `/success/${purchase_units[0].payments.captures[0].id}`,
-    //     state: {
-    //       transactionDate: transactionDate,
-    //       transactionId: transactionId,
-    //       name: name,
-    //       email: email,
-    //       address: address,
-    //       transactionAmount: transactionAmount,
-    //     },
-    //   });
-    // });
+    console.log(orderData);
   };
 
   return (
