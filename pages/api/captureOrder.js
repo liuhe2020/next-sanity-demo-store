@@ -34,6 +34,7 @@ export default async function handler(req, res) {
     },
     paymentDetail: {
       paypalTransactionId: capture.purchase_units[0].payments.captures[0].id,
+      paypalName: capture.payment_source.paypal.name,
       paypalEmail: capture.payment_source.paypal.email_address,
       paymentDate: capture.purchase_units[0].payments.captures[0].create_time,
     },

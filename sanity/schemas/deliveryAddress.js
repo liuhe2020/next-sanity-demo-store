@@ -33,5 +33,15 @@ export default {
       name: 'country',
       type: 'string',
     },
+    {
+      title: 'Email',
+      name: 'email',
+      type: 'string',
+    },
+    {
+      title: 'Phone',
+      name: 'phone',
+      type: 'string',
+    },
   ],
 };

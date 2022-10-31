@@ -9,6 +9,11 @@ export default {
       type: 'string',
     },
     {
+      title: 'Paypal Name',
+      name: 'paypalName',
+      type: 'string',
+    },
+    {
       title: 'Paypal Email',
       name: 'paypalEmail',
       type: 'string',
