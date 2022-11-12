@@ -69,7 +69,8 @@ export default async function handler(req, res) {
     const createSanityOrder = await mySanityClient.create(
       sanityOrder(orderData, captureData)
     );
-    return res.status(200).json(captureData);
+    // return res.status(200).json(captureData);
+    return res.status(200).json(sanityOrder(orderData, captureData));
   }
 
   const errorMessage = await captureRes.text();

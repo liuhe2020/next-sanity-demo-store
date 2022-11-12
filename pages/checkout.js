@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import Image from 'next/image';
 import useStore from '../store/store';
 import urlFor from '../utils/image';
+import Confirmation from '../components/Checkout/Confirmation';
 
 export default function checkout() {
   const { total, totalQty, items } = useStore();
+  const [order, setOrder] = useState();
 
   // send order to backend
   const createOrder = async () => {
@@ -46,8 +49,10 @@ export default function checkout() {
 
     const captureData = await response.json();
     console.log(captureData);
-    console.log('Payment approved');
+    setOrder(captureData);
   };
+
+  if (order) return <Confirmation order={order} />;
 
   return (
     <div className='bg-white max-w-screen-lg mx-auto you'>
