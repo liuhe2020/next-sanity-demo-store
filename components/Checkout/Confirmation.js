@@ -21,13 +21,12 @@ export default function Confirmation({ order }) {
           <p className='mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl'>
             Thank you.
           </p>
-          <p className='mt-2 text-base text-gray-500'>
+          <p className='mt-6 text-base text-gray-500'>
             We will send a confirmation and delivery update to your email
             address.
           </p>
-          <p className='mt-2 text-base text-gray-500'>
-            Order ID <span className='text-indigo-600'>{order.name}</span>
-          </p>
+          <p className='mt-6 text-sm font-semibold text-gray-500'>Order ID</p>
+          <p className='mt-2 text-indigo-600'>{order.name}</p>
         </div>
 
         <section
