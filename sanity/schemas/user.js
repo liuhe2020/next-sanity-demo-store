@@ -33,5 +33,16 @@ export default {
       title: 'Bag',
       type: 'string',
     },
+    {
+      name: 'orders',
+      title: 'Orders',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'order' }],
+        },
+      ],
+    },
   ],
 };
