@@ -69,7 +69,7 @@ export default function index({ id }) {
                   ))}
                 </ul>
               </aside>
-              {view === 'Orders' && <Orders user={session.user} />}
+              {view === 'Orders' && <Orders orders={session.user.orders} />}
               {view === 'Profile' && <Profile user={session.user} />}
               {view === 'Password' && <Password user={session.user} />}
             </div>

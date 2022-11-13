@@ -20,7 +20,7 @@ export default NextAuth({
         const { email, password } = credentials;
         // fetch user from sanity
         const userData = await mySanityClient.fetch(
-          `*[_type == "user" && email == '${email}'][0]`
+          `*[_type == "user" && email == '${email}'][0]{_id, name, email, password, bag, orders[]->}`
         );
 
         // authenticate user
@@ -32,6 +32,7 @@ export default NextAuth({
               name: userData.name,
               email: userData.email,
               bag: userData.bag,
+              orders: userData.orders,
             };
             return user;
           }
