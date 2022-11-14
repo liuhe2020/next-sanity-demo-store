@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 export default function Register() {
+  const { data: session } = useSession();
+  const router = useRouter();
+
   const [values, setValues] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
-
-  const router = useRouter();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -40,6 +42,11 @@ export default function Register() {
       alert('Registration successful');
     })();
   };
+
+  if (session) {
+    router.replace(`/account/${session.user._id}`);
+    return;
+  }
 
   return (
     <section className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-stone-50'>

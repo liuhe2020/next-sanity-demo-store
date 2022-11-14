@@ -3,14 +3,15 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 export default function SignIn() {
+  const { data: session } = useSession();
+  const router = useRouter();
   const [values, setValues] = useState({
     email: '',
     password: '',
   });
-
-  const router = useRouter();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -28,7 +29,14 @@ export default function SignIn() {
     if (response.status === 200) return router.back();
 
     alert('Incorrect email or password');
+
+    return router.back();
   };
+
+  if (session) {
+    router.replace(`/account/${session.user._id}`);
+    return;
+  }
 
   return (
     <section className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-stone-50'>

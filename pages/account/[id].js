@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import mySanityClient from '../../utils/client';
 import Orders from '../../components/Account/Orders';
 import Profile from '../../components/Account/Profile';
 import Password from '../../components/Account/Password';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 const sideNav = [{ name: 'Orders' }, { name: 'Profile' }, { name: 'Password' }];
 
@@ -15,6 +15,7 @@ function classNames(...classes) {
 
 export default function index({ id }) {
   const [view, setView] = useState('Orders');
+  const router = useRouter();
 
   const handleView = (e) => {
     setView(e.target.innerText);
@@ -30,7 +31,7 @@ export default function index({ id }) {
 
   // redirect user to the correct signed in user
   if (session.user._id !== id) {
-    Router.replace(`/account/${session.user._id}`);
+    router.replace(`/account/${session.user._id}`);
   }
 
   return (
