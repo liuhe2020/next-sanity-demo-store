@@ -8,7 +8,7 @@ export default function index({ products, category }) {
       <Head>
         <title>{`Next Sanity Demo Store | ${category.name}`}</title>
       </Head>
-      <div className='max-w-screen-lg grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-3 lg:gap-2.5 p-2 mx-auto'>
+      <div className='max-w-screen-lg grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-3 lg:gap-2.5 p-2 mx-auto my-12'>
         {products.map((product, index) => (
           <ProductCard product={product} key={index} />
         ))}

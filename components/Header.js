@@ -53,14 +53,13 @@ export default function Header({ navToggle, setNavToggle }) {
           'absolute w-full h-[100vh] bg-black top-0 pt-16 transition duration-500 ease-in-out md:hidden'
         )}
       >
-        <ul className=' flex flex-col p-8'>
+        <ul className=' flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500'>
           {navigation.map((el, index) => (
             <li
               key={index}
               className={classNames(
                 el.current ? 'text-white' : 'text-stone-300',
-                index !== navigation.length - 1 && 'border-b-[1px]',
-                'hover:text-white font-medium text-center py-4 px-4 border-stone-500'
+                'hover:text-white font-medium text-center py-4'
               )}
             >
               <Link href={el.href}>
@@ -101,13 +100,12 @@ export default function Header({ navToggle, setNavToggle }) {
           </Link>
 
           {/* desktop menu */}
-          <ul className='hidden md:flex'>
+          <ul className='hidden md:flex space-x-8'>
             {navigation.map((el, index) => (
               <li
                 key={index}
                 className={classNames(
                   el.current ? 'text-white' : 'text-stone-300',
-                  index !== navigation.length - 1 && 'mr-8',
                   'hover:text-white font-medium'
                 )}
               >
