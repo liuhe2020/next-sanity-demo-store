@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function MainBanner() {
   return (
-    <section className='bg-black text-white w-full h-[530px] flex flex-col items-center overflow-hidden md:h-[750px] lg:h-[1000px]'>
+    <section className='pt-16 bg-black text-white w-full h-[530px] flex flex-col items-center overflow-hidden md:h-[750px] lg:h-[1000px]'>
       <div className='flex flex-col justify-center items-center my-16 md:my-24'>
         <h2 className='text-4xl font-semibold md:text-5xl lg:text-7xl'>
           Beast Mode

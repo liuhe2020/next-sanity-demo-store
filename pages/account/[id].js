@@ -39,7 +39,7 @@ export default function index({ id }) {
       <Head>
         <title>{`Next Sanity Demo Store | Account - ${session.user.name}`}</title>
       </Head>
-      <main className='relative bg-stone-50 w-full'>
+      <div className='pt-16 min-h-[80vh] relative bg-stone-50 w-full'>
         <div className='max-w-screen-lg mx-auto p-2 sm:p-4 lg:my-10'>
           <div className='bg-white rounded-lg shadow overflow-hidden'>
             <div className='divide-y divide-stone-200 md:flex md:divide-y-0 md:divide-x min-h-[80vh]'>
@@ -76,7 +76,7 @@ export default function index({ id }) {
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </>
   );
 }

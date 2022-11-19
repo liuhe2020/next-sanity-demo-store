@@ -49,7 +49,7 @@ export default function Register() {
   }
 
   return (
-    <section className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-stone-50'>
+    <section className='pt-16 min-h-[80vh] flex flex-col justify-center sm:px-6 lg:px-8 bg-stone-50'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
         <h2 className='mt-6 text-center text-3xl font-extrabold text-stone-800'>
           Create New Account

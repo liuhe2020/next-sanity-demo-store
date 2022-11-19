@@ -45,7 +45,7 @@ export default function Header({ navToggle, setNavToggle }) {
   }, [navToggle]);
 
   return (
-    <header className='sticky top-0 h-16 z-10'>
+    <header className='fixed top-0 h-16 z-10 w-full'>
       {/* mobile menu */}
       <div
         className={classNames(

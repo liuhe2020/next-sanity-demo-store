@@ -4,9 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import urlFor from '../utils/image';
 
-// const bgCSS =
-//   'before:w-full before:h-[150%] before:translate-y-1/2 before:bg-zinc-100 before:absolute before:bottom-0 before:left-0 before:rounded-tl-[100rem] before:rounded-tr-[100rem] before:-z-10 before:transition-all before:duration-500 before:ease-[in-out] hover:before:bg-zinc-200 hover:before:rounded-none hover:before:translate-y-0';
-
 const bgCSS =
   'before:w-full before:h-full before:bg-stone-100 before:absolute before:bottom-0 before:left-0 before:-z-10 before:transition-all before:duration-500 before:ease-[in-out] hover:before:bg-stone-200';
 
