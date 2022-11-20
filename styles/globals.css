@@ -1,5 +1,7 @@
 /* google font inter */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+/* react image gallery package */
+@import '~react-image-gallery/styles/css/image-gallery.css';
 
 /* Layer directives of tailwind CSS */
 @tailwind base;

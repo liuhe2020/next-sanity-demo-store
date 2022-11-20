@@ -23,7 +23,7 @@ export async function getStaticPaths() {
   const categories = await mySanityClient.fetch(`*[_type == "category"]`);
 
   const paths = categories.map((category) => ({
-    params: { categorySlug: category.slug.current },
+    params: { category: category.slug.current },
   }));
 
   return {
@@ -47,7 +47,7 @@ export async function getStaticProps({ params }) {
   //   `*[_type == 'product' && references('${category._id}')]`
   // );
 
-  const category = params.categorySlug;
+  const category = params.category;
 
   const products = await mySanityClient.fetch(`*[category == '${category}']`);
 
