@@ -1,6 +1,6 @@
 // hamburger menu https://github.com/theMosaad/tailwindcss-delicious-hamburgers
 
-import { Fragment, useEffect, useState, forwardRef } from 'react';
+import { Fragment, useEffect, forwardRef } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
