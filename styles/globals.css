@@ -41,3 +41,36 @@ a {
     background: black;
   }
 }
+
+.image-gallery-slides {
+  background-color: rgb(245 245 244);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.image-gallery-slide {
+  aspect-ratio: 1/1;
+  padding: 10%;
+}
+
+.image-gallery-thumbnails {
+  padding-top: 1rem;
+}
+
+.image-gallery-thumbnail {
+  width: 23.8%;
+  aspect-ratio: 1/1;
+  padding: 2%;
+  background-color: rgb(245 245 244);
+  border-radius: 0.5rem;
+}
+
+.image-gallery-thumbnail:not(:last-child) {
+  margin-right: 1.6%;
+}
+
+.image-gallery-thumbnail.active,
+.image-gallery-thumbnail:focus {
+  border: 3px solid rgb(168 162 158);
+}
