@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import ImageGallery from 'react-image-gallery';
 import mySanityClient from '../../utils/client';
 import urlFor from '../../utils/image';
@@ -21,8 +22,8 @@ export default function Product({ product }) {
         <title>{`Next Sanity Demo Store | ${product.name}`}</title>
       </Head>
       <section className='pt-16'>
-        <div className='py-4 px-4 max-w-screen-lg mx-auto space-y-12 lg:flex lg:flex-row-reverse'>
-          <div className='flex-1'>
+        <div className='max-w-screen-lg py-4 px-4 space-y-12 lg:flex lg:flex-row-reverse'>
+          <div className='flex-1 max-w-xl mx-auto'>
             <ImageGallery
               items={images}
               showNav={false}
@@ -32,13 +33,13 @@ export default function Product({ product }) {
             />
           </div>
 
-          <div className='flex-1'>
+          <div className='flex-1 max-w-xl mx-auto'>
             <div className=''>
-              <h3 className='font-medium text-lg mb-1 lg:text-base lg:mb-8'>
+              <h3 className='font-medium text-xl mb-1 lg:text-base lg:mb-8'>
                 {product.name}
               </h3>
 
-              <div className='flex space-x-2 mb-4 text-xs lg:text-sm'>
+              <div className='flex space-x-2 mb-6 text-xs lg:text-sm'>
                 <div className='flex relative flex-nowrap space-x-1'>
                   {[1, 2, 3, 4, 5].map((el) => (
                     <svg
@@ -63,7 +64,7 @@ export default function Product({ product }) {
                 {product.description.map((el, index) => (
                   <li className='flex mb-1 lg:mb-2' key={index}>
                     <svg
-                      className='mr-2 mt-1'
+                      className='mr-2 mt-2'
                       xmlns='http://www.w3.org/2000/svg'
                       width='10'
                       height='10'
@@ -71,13 +72,26 @@ export default function Product({ product }) {
                     >
                       <path d='M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 6c-3.313 0-6 2.687-6 6s2.687 6 6 6c3.314 0 6-2.687 6-6s-2.686-6-6-6z' />
                     </svg>
-                    <p className='flex-1 text-xs lg:text-sm'>{el}</p>
+                    <p className='flex-1 text-base lg:text-sm'>{el}</p>
                   </li>
                 ))}
               </ul>
-              <p className='text-medium mt-4 lg:text-base lg:mt-6'>
+              <p className='text-xl font-medium mt-6 lg:text-base lg:mt-6'>
                 £{product.price.toFixed(2)}
               </p>
+              <div className='mt-6'>
+                <button
+                  type='submit'
+                  className='w-48 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-2'
+                >
+                  Add to bag
+                </button>
+                <Link href='/checkout'>
+                  <a className='w-48 inline-flex justify-center py-2 px-4 border border-stone-300 rounded-md shadow-sm bg-white text-base font-medium text-stone-500 hover:bg-stone-100'>
+                    Go to checkout
+                  </a>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -42,7 +42,7 @@ export default function ProductCard({ product }) {
                 </li>
               ))}
             </ul>
-            <p className='text-medium mt-4 lg:text-base lg:mt-6'>
+            <p className='font-medium mt-4 lg:text-base lg:mt-6'>
               £{product.price.toFixed(2)}
             </p>
           </div>
