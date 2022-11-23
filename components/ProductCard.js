@@ -12,7 +12,7 @@ export default function ProductCard({ product }) {
     <Link href={`/${product.category}/${product.slug.current}`}>
       <a>
         <div
-          className={`${bgCSS} relative cursor-pointer overflow-hidden rounded-2xl flex flex-col items-center p-[4vw] lg:p-10 h-full`}
+          className={`${bgCSS} relative cursor-pointer overflow-hidden rounded-2xl flex flex-col items-center px-[10%] pb-[10%] lg:p-10 h-full`}
         >
           <div className='aspect-w-1 aspect-h-1 w-full'>
             <Image
@@ -23,7 +23,7 @@ export default function ProductCard({ product }) {
             />
           </div>
           <div className='flex flex-col justify-between h-full'>
-            <h3 className='font-medium text-sm mb-4 lg:text-base lg:mb-8'>
+            <h3 className='font-medium text-base mb-4 min-[400px]:text-xl lg:mb-8'>
               {product.name}
             </h3>
             <ul className=''>
@@ -38,7 +38,7 @@ export default function ProductCard({ product }) {
                   >
                     <path d='M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 6c-3.313 0-6 2.687-6 6s2.687 6 6 6c3.314 0 6-2.687 6-6s-2.686-6-6-6z' />
                   </svg>
-                  <p className='flex-1 text-xs lg:text-sm'>{el}</p>
+                  <p className='flex-1 text-sm lg:text-sm'>{el}</p>
                 </li>
               ))}
             </ul>

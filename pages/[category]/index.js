@@ -9,7 +9,7 @@ export default function index({ products, category }) {
         <title>{`Next Sanity Demo Store | ${category.name}`}</title>
       </Head>
       <section className='pt-16'>
-        <div className='max-w-screen-lg grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-3 lg:gap-2.5 p-2 mx-auto my-8'>
+        <div className='max-w-screen-lg grid grid-cols-1 gap-4 p-4 mx-auto min-[550px]:grid-cols-2 min-[550px]:gap-2.5 lg:grid-cols-3'>
           {products.map((product, index) => (
             <ProductCard product={product} key={index} />
           ))}

@@ -5,8 +5,6 @@ import mySanityClient from '../../utils/client';
 import urlFor from '../../utils/image';
 import useStore from '../../store/store';
 
-const classNames = (...classes) => classes.filter(Boolean).join(' ');
-
 export default function Product({ product }) {
   const addToBag = useStore((state) => state.addToBag);
   const images = product.images.map((image) => ({
