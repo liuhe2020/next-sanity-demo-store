@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import useStore from '../store/store';
 import urlFor from '../utils/image';

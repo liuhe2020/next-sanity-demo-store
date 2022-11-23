@@ -55,6 +55,10 @@ a {
   padding: 10%;
 }
 
+.image-gallery-thumbnails .image-gallery-thumbnails-container {
+  text-align: left;
+}
+
 .image-gallery-thumbnails {
   padding-top: 1rem;
 }

@@ -22,7 +22,7 @@ export default function Product({ product }) {
         <title>{`Next Sanity Demo Store | ${product.name}`}</title>
       </Head>
       <section className='pt-16'>
-        <div className='max-w-screen-lg py-4 px-4 space-y-12 lg:flex lg:flex-row-reverse'>
+        <div className='max-w-screen-lg py-4 px-4 space-y-12 lg:space-y-0 lg:flex lg:mx-auto lg:space-x-6 lg:p-10'>
           <div className='flex-1 max-w-xl mx-auto'>
             <ImageGallery
               items={images}
@@ -33,13 +33,13 @@ export default function Product({ product }) {
             />
           </div>
 
-          <div className='flex-1 max-w-xl mx-auto'>
-            <div className=''>
-              <h3 className='font-medium text-xl mb-1 lg:text-base lg:mb-8'>
+          <div className='flex-1 max-w-xl mx-auto lg:flex lg:items-center'>
+            <div className='lg:p-[10%]'>
+              <h3 className='font-medium text-xl mb-1 lg:text-2xl lg:mb-2'>
                 {product.name}
               </h3>
 
-              <div className='flex space-x-2 mb-6 text-xs lg:text-sm'>
+              <div className='flex space-x-2 mb-6 text-xs lg:text-sm lg:mb-10'>
                 <div className='flex relative flex-nowrap space-x-1'>
                   {[1, 2, 3, 4, 5].map((el) => (
                     <svg
@@ -64,7 +64,7 @@ export default function Product({ product }) {
                 {product.description.map((el, index) => (
                   <li className='flex mb-1 lg:mb-2' key={index}>
                     <svg
-                      className='mr-2 mt-2'
+                      className='mr-2 mt-2 lg:mt-1'
                       xmlns='http://www.w3.org/2000/svg'
                       width='10'
                       height='10'
@@ -76,18 +76,18 @@ export default function Product({ product }) {
                   </li>
                 ))}
               </ul>
-              <p className='text-xl font-medium mt-6 lg:text-base lg:mt-6'>
+              <p className='text-xl font-medium mt-6 lg:text-2xl lg:mt-10'>
                 £{product.price.toFixed(2)}
               </p>
-              <div className='mt-6'>
+              <div className='mt-6 space-y-3 min-[450px]:flex min-[450px]:space-y-0 min-[450px]:space-x-3 lg:mt-10'>
                 <button
-                  type='submit'
-                  className='w-48 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-2'
+                  onClick={() => addToBag(product)}
+                  className='w-48 flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
                 >
                   Add to bag
                 </button>
                 <Link href='/checkout'>
-                  <a className='w-48 inline-flex justify-center py-2 px-4 border border-stone-300 rounded-md shadow-sm bg-white text-base font-medium text-stone-500 hover:bg-stone-100'>
+                  <a className='w-48 inline-flex justify-center py-2.5 px-4 border border-stone-300 rounded-md shadow-sm bg-white text-base font-medium text-stone-500 hover:bg-stone-100'>
                     Go to checkout
                   </a>
                 </Link>
