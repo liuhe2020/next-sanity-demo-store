@@ -23,7 +23,7 @@ export default function ProductCard({ product }) {
             />
           </div>
           <div className='flex flex-col justify-between h-full'>
-            <h3 className='font-medium text-base mb-4 min-[400px]:text-xl lg:mb-8'>
+            <h3 className='font-medium text-base mb-4 min-[400px]:max-[549px]:text-xl md:text-lg lg:mb-8'>
               {product.name}
             </h3>
             <ul className=''>
@@ -38,11 +38,13 @@ export default function ProductCard({ product }) {
                   >
                     <path d='M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 6c-3.313 0-6 2.687-6 6s2.687 6 6 6c3.314 0 6-2.687 6-6s-2.686-6-6-6z' />
                   </svg>
-                  <p className='flex-1 text-sm lg:text-sm'>{el}</p>
+                  <p className='flex-1 text-sm min-[400px]:text-base lg:text-sm'>
+                    {el}
+                  </p>
                 </li>
               ))}
             </ul>
-            <p className='font-medium mt-4 lg:text-base lg:mt-6'>
+            <p className='font-medium mt-4 min-[400px]:max-[549px]:text-xl md:text-lg lg:text-base lg:mt-6'>
               £{product.price.toFixed(2)}
             </p>
           </div>

@@ -31,13 +31,13 @@ export default function Product({ product }) {
             />
           </div>
 
-          <div className='flex-1 max-w-xl mx-auto lg:flex lg:items-center'>
-            <div className='lg:p-[10%]'>
-              <h3 className='font-medium text-xl mb-1 lg:text-2xl lg:mb-2'>
+          <div className='flex-1 max-w-xl mx-auto'>
+            <div className='w-full h-full flex flex-col lg:pt-[9%] lg:pl-[10%]'>
+              <h3 className='font-medium text-xl mb-1 min-[400px]:max-[1023px]:mx-4 lg:text-2xl lg:mb-2'>
                 {product.name}
               </h3>
 
-              <div className='flex space-x-2 mb-6 text-xs lg:text-sm lg:mb-10'>
+              <div className='flex space-x-2 mb-8 text-xs min-[400px]:max-[1023px]:mx-4 lg:text-sm lg:mb-10'>
                 <div className='flex relative flex-nowrap space-x-1'>
                   {[1, 2, 3, 4, 5].map((el) => (
                     <svg
@@ -58,7 +58,7 @@ export default function Product({ product }) {
                 <span className=''>{`(${product.numReviews})`}</span>
               </div>
 
-              <ul className=''>
+              <ul className='min-[400px]:max-[1023px]:mx-4'>
                 {product.description.map((el, index) => (
                   <li className='flex mb-1 lg:mb-2' key={index}>
                     <svg
@@ -70,22 +70,24 @@ export default function Product({ product }) {
                     >
                       <path d='M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 6c-3.313 0-6 2.687-6 6s2.687 6 6 6c3.314 0 6-2.687 6-6s-2.686-6-6-6z' />
                     </svg>
-                    <p className='flex-1 text-base lg:text-sm'>{el}</p>
+                    <p className='flex-1 text-base'>{el}</p>
                   </li>
                 ))}
               </ul>
-              <p className='text-xl font-medium mt-6 lg:text-2xl lg:mt-10'>
+
+              <p className='text-xl font-medium mt-8 min-[400px]:max-[1023px]:mx-4 lg:text-2xl lg:mt-10'>
                 £{product.price.toFixed(2)}
               </p>
-              <div className='mt-6 space-y-3 min-[450px]:flex min-[450px]:space-y-0 min-[450px]:space-x-3 lg:mt-10'>
+
+              <div className='mt-8 space-y-3 min-[450px]:flex min-[450px]:space-y-0 min-[450px]:space-x-3 lg:mt-10'>
                 <button
                   onClick={() => addToBag(product)}
-                  className='w-48 flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                  className='w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
                 >
                   Add to bag
                 </button>
                 <Link href='/checkout'>
-                  <a className='w-48 inline-flex justify-center py-2.5 px-4 border border-stone-300 rounded-md shadow-sm bg-white text-base font-medium text-stone-500 hover:bg-stone-100'>
+                  <a className='w-full inline-flex justify-center py-2.5 px-4 border border-stone-300 rounded-md shadow-sm bg-white text-base font-medium text-stone-500 hover:bg-stone-100'>
                     Go to checkout
                   </a>
                 </Link>
