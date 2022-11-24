@@ -3,7 +3,7 @@ export default function Footer() {
   const year = today.getFullYear();
 
   return (
-    <footer className='max-w-screen-lg mx-4 py-4 border-t-[1px] text-gray-500 text-xs sm:text-sm space-y-6 lg:mx-auto'>
+    <footer className='max-w-screen-lg mt-20 mx-4 py-4 border-t-[1px] text-gray-500 text-xs sm:text-sm space-y-6 lg:mx-auto'>
       <p className=''>
         Disclaimer: This webiste is a demo. All displayed products are fake. No
         real transactions are taking place. This is a personal project for

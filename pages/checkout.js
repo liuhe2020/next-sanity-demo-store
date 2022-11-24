@@ -55,25 +55,15 @@ export default function checkout() {
   if (order) return <Confirmation order={order} />;
 
   return (
-    <div className='bg-white max-w-screen-lg mx-auto you'>
-      <div className='relative grid grid-cols-1 gap-x-16 max-w-7xl mx-auto lg:px-2 lg:grid-cols-2 xl:gap-x-32'>
-        <h1 className='sr-only'>Order summary</h1>
-        <section
-          aria-labelledby='summary-heading'
-          className='bg-stone-50 pt-16 pb-10 px-4 sm:px-6 lg:px-0 lg:pb-16 lg:bg-transparent lg:row-start-1 lg:col-start-1'
-        >
-          <div className='max-w-lg mx-auto lg:max-w-none'>
-            <h2
-              id='summary-heading'
-              className='text-lg font-medium text-stone-900'
-            >
+    <div className='bg-white max-w-screen-lg mx-auto pt-16'>
+      <div className='relative pt-10 grid grid-cols-1 gap-x-20 max-w-7xl mx-auto lg:px-2 lg:grid-cols-2'>
+        <section className='bg-stone-50 pb-4 px-4 sm:px-6 sm:pb-10 lg:px-0 lg:pb-0 lg:bg-transparent lg:row-start-1 lg:col-start-1'>
+          <div className='max-w-screen-md mx-auto lg:max-w-none'>
+            <h2 className='text-xl font-medium mb-2 text-stone-900'>
               Order summary
             </h2>
 
-            <ul
-              role='list'
-              className='text-sm font-medium text-stone-900 divide-y divide-stone-200'
-            >
+            <ul className='text-base font-medium text-stone-900 divide-y divide-stone-200'>
               {items.map((item) => (
                 <li key={item._id} className='flex py-6 space-x-4 lg:space-x-6'>
                   <div className='flex flex-1 space-x-4'>
@@ -100,20 +90,15 @@ export default function checkout() {
               ))}
             </ul>
 
-            <dl className='text-sm font-medium text-stone-900 space-y-6 border-t border-stone-200 pt-6 lg:block'>
+            <dl className='text-base font-medium text-stone-900 space-y-6 border-t border-stone-200 pt-6 lg:block'>
               <div className='flex items-center justify-between'>
                 <dt className='text-stone-600'>Subtotal</dt>
-                <dd></dd>
+                <dd>£{total.toFixed(2)}</dd>
               </div>
 
               <div className='flex items-center justify-between'>
                 <dt className='text-stone-600'>Shipping</dt>
-                <dd></dd>
-              </div>
-
-              <div className='flex items-center justify-between'>
-                <dt className='text-stone-600'>Taxes</dt>
-                <dd></dd>
+                <dd>Free</dd>
               </div>
 
               <div className='flex items-center justify-between border-t border-stone-200 pt-6'>
@@ -124,13 +109,10 @@ export default function checkout() {
           </div>
         </section>
 
-        <div className='pt-16 pb-36 px-4 sm:px-6 lg:pb-16 lg:px-0 lg:row-start-1 lg:col-start-2'>
-          <section aria-labelledby='contact-details-heading'>
-            <div className='max-w-lg mx-auto lg:max-w-none'>
-              <h2
-                id='contact-info-heading'
-                className='text-lg font-medium text-stone-900'
-              >
+        <div className='px-4 sm:px-6 lg:pb-16 lg:px-0 lg:row-start-1 lg:col-start-2'>
+          <section>
+            <div className='max-w-md mx-auto lg:max-w-none'>
+              <h2 className='text-xl font-medium mb-2 text-stone-900 hidden lg:block'>
                 Payment methods
               </h2>
               <div className='py-6 relative z-0'>

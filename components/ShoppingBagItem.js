@@ -38,7 +38,7 @@ export default function ShoppingBagItem({ item }) {
 
   return (
     <div className='w-full py-6 grid grid-cols-2 grid-rows-3 min-[450px]:grid-cols-4 min-[450px]:grid-rows-2'>
-      <h3 className='text-base col-span-2 self-center min-[450px]:row-span-2 min-[450px]:justify-self-start'>
+      <h3 className='text-base font-medium text-stone-900 col-span-2 self-center min-[450px]:row-span-2 min-[450px]:justify-self-start'>
         {item.name}
       </h3>
 
@@ -76,7 +76,7 @@ export default function ShoppingBagItem({ item }) {
         </svg>
       </div>
 
-      <span className='font-medium text-sm text-right self-center'>
+      <span className='font-medium text-sm text-stone-900 text-right self-center'>
         £{(item.price * item.quantity).toFixed(2)}
       </span>
     </div>
