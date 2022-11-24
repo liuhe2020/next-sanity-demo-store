@@ -6,7 +6,7 @@ import urlFor from '../utils/image';
 import Confirmation from '../components/Checkout/Confirmation';
 
 export default function checkout() {
-  const { total, totalQty, items } = useStore();
+  const { total, items } = useStore();
   const [order, setOrder] = useState();
 
   // send order to backend
