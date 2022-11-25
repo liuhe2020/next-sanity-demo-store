@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import Image from 'next/image';
+import Link from 'next/link';
 import useStore from '../store/store';
 import urlFor from '../utils/image';
 import Confirmation from '../components/Checkout/Confirmation';
@@ -57,7 +58,7 @@ export default function checkout() {
   return (
     <div className='bg-white max-w-screen-lg mx-auto pt-16'>
       <div className='relative pt-10 grid grid-cols-1 gap-x-20 max-w-7xl mx-auto lg:px-2 lg:grid-cols-2'>
-        <section className='bg-stone-50 pb-4 px-4 sm:px-6 sm:pb-10 lg:px-0 lg:pb-0 lg:bg-transparent lg:row-start-1 lg:col-start-1'>
+        <section className='pb-4 px-4 sm:px-6 sm:pb-10 lg:px-0 lg:pb-0 lg:bg-transparent lg:row-start-1 lg:col-start-1'>
           <div className='max-w-screen-md mx-auto lg:max-w-none'>
             <h2 className='text-xl font-medium mb-2 text-stone-900'>
               Order summary
@@ -90,22 +91,35 @@ export default function checkout() {
               ))}
             </ul>
 
-            <dl className='text-base font-medium text-stone-900 space-y-6 border-t border-stone-200 pt-6 lg:block'>
+            <dl className='text-lg font-medium text-stone-900 space-y-6 border-t border-stone-200 pt-6 lg:block'>
               <div className='flex items-center justify-between'>
-                <dt className='text-stone-600'>Subtotal</dt>
+                <dt>Subtotal</dt>
                 <dd>£{total.toFixed(2)}</dd>
               </div>
 
               <div className='flex items-center justify-between'>
-                <dt className='text-stone-600'>Shipping</dt>
+                <dt>Shipping</dt>
                 <dd>Free</dd>
               </div>
 
               <div className='flex items-center justify-between border-t border-stone-200 pt-6'>
-                <dt className='text-base'>Total</dt>
-                <dd className='text-base'>£{total.toFixed(2)}</dd>
+                <dt>Total</dt>
+                <dd>£{total.toFixed(2)}</dd>
               </div>
             </dl>
+          </div>
+
+          <div className='pt-12 justify-self-start'>
+            <Link href='/shopping-bag'>
+              <a>
+                <div className='flex text-stone-500'>
+                  <svg className='fill-current mr-2 w-4' viewBox='0 0 448 512'>
+                    <path d='M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z' />
+                  </svg>
+                  Back to shopping bag
+                </div>
+              </a>
+            </Link>
           </div>
         </section>
 

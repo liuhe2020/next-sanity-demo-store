@@ -18,7 +18,7 @@ export default function ShoppingBag() {
         </div>
 
         <div className='w-full border-t-[1px] pt-12'>
-          <div className='flex justify-between font-medium text-stone-900 pb-8 text-xl'>
+          <div className='flex justify-between font-medium text-stone-900 pb-8 text-lg'>
             <h2>Subtotal</h2>
             <span>£{total.toFixed(2)}</span>
           </div>
