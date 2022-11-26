@@ -62,7 +62,7 @@ export default function Product({ product }) {
                 {product.description.map((el, index) => (
                   <li className='flex mb-1 lg:mb-2' key={index}>
                     <svg
-                      className='mr-2 mt-2 lg:mt-1'
+                      className='mr-2 mt-1.5'
                       xmlns='http://www.w3.org/2000/svg'
                       width='10'
                       height='10'
