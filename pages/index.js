@@ -1,9 +1,7 @@
 import Head from 'next/head';
 import MainBanner from '../components/Home/MainBanner';
 
-import mySanityClient from '../utils/client';
-
-export default function Home({ products }) {
+export default function Home() {
   return (
     <>
       <Head>
