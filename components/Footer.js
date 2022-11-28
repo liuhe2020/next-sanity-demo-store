@@ -65,9 +65,9 @@ export default function Footer() {
       {/* desktop footer links */}
       <div className='hidden w-full py-6 border-y-[1px] md:flex flex-nowrap'>
         {links.map((link) => (
-          <div className='basis-1/5 space-y-3'>
+          <div key={link.name} className='basis-1/5 space-y-3'>
             <h3 className='font-medium'>{link.name}</h3>
-            <ul key={link.name} className='space-y-2 text-sm'>
+            <ul className='space-y-2 text-sm'>
               {link.subLinks.map((l) => (
                 <li key={l.name} className=''>
                   <a href={l.href} className=''>
