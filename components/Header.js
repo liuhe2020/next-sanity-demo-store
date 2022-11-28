@@ -71,7 +71,7 @@ export default function Header({ navToggle, setNavToggle }) {
       </div>
 
       <nav className='relative bg-black/[.8] backdrop-blur-lg h-full z-20'>
-        <div className='w-full max-w-screen-lg h-full flex justify-between items-center mx-auto px-4 lg:px-2'>
+        <div className='w-full max-w-screen-lg h-full flex justify-between items-center mx-auto px-4 lg:px-2 xl:px-0'>
           {/* hamburger menu icon*/}
           <div
             className={classNames(

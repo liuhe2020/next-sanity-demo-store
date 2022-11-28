@@ -54,22 +54,39 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className='px-4'>
-      <div className='border-t-[1px] pt-4'>
+    <footer className='max-w-screen-lg mx-auto mt-20 text-stone-900 px-4 md:px-6 xl:px-0'>
+      {/* mobile footer links */}
+      <div className='border-t-[1px] py-6 md:hidden'>
         {links.map((link) => (
-          <FooterLinks link={link} />
+          <FooterLinks key={link.name} link={link} />
         ))}
       </div>
 
-      <div className='max-w-screen-lg mt-20 mx-4 py-4 border-t-[1px] text-gray-500 text-xs sm:text-sm space-y-6 lg:mx-auto'>
-        <p className=''>
+      {/* desktop footer links */}
+      <div className='hidden w-full py-6 border-y-[1px] md:flex flex-nowrap'>
+        {links.map((link) => (
+          <div className='basis-1/5 space-y-3'>
+            <h3 className='font-medium'>{link.name}</h3>
+            <ul key={link.name} className='space-y-2 text-sm'>
+              {link.subLinks.map((l) => (
+                <li key={l.name} className=''>
+                  <a href={l.href} className=''>
+                    {l.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <div className='text-stone-500 text-sm'>
+        <p className='py-6 border-y-[1px] md:border-t-0'>
           Disclaimer: This webiste is a demo. All displayed products are fake.
           No real transactions are taking place. This is a personal project for
           educational purposes only.
         </p>
-        <p className='pt-4 pb-8 border-t-[1px]'>
-          &copy; {year} Next Sanity Demo Store
-        </p>
+        <p className='pt-6 pb-10'>&copy; {year} Next Sanity Demo Store</p>
       </div>
     </footer>
   );

@@ -4,16 +4,16 @@ export default function FooterLinks({ link }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div key={link.name} className='w-full'>
+    <div className='w-full border-b-[1px] last:border-none'>
       <div
         onClick={() => setIsOpen((prev) => !prev)}
-        className='cursor-pointer flex w-full justify-between px-4 py-2 font-medium'
+        className='cursor-pointer py-4 flex w-full justify-between font-medium'
       >
-        <span>{link.name}</span>
+        <h3>{link.name}</h3>
         <svg
           className={`${
             isOpen && '-rotate-180 transform'
-          } h-5 w-5 transition duration-300`}
+          } h-5 w-5 transition duration-400 delay-75`}
           xmlns='http://www.w3.org/2000/svg'
           width='24'
           height='24'
@@ -25,8 +25,8 @@ export default function FooterLinks({ link }) {
       </div>
       <ul
         className={`${
-          isOpen ? 'max-h-[200px]' : 'max-h-0'
-        } px-5 pt-0 overflow-hidden transition-[max-height] duration-500 ease-out`}
+          isOpen && 'max-h-[300px] pb-4'
+        } px-4 space-y-4 overflow-hidden max-h-0 transition-all duration-500`}
       >
         {link.subLinks.map((l) => (
           <li key={l.name} className=''>
