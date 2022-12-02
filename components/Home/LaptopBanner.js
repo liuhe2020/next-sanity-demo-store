@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function MainBanner() {
+export default function LaptopBanner() {
   return (
     <section className='pt-16 bg-black text-white w-full h-[530px] flex flex-col items-center overflow-hidden md:h-[750px] lg:h-[1000px]'>
       <div className='flex flex-col justify-center items-center my-16 md:my-24'>
@@ -34,10 +34,9 @@ export default function MainBanner() {
           </Link>
         </div>
       </div>
-      {/* <div className="relative bg-[url('/images/background/main_banner_bg.jpg')] bg-contain bg-no-repeat mx-auto w-[375px] md:w-[600px] h-full"></div> */}
       <div className='relative w-[500px] md:w-[1280px] h-full'>
         <Image
-          src='/images/main_banner.jpg'
+          src='/images/hero_laptop.jpg'
           layout='fill'
           objectFit='contain'
           objectPosition='top'

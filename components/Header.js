@@ -53,7 +53,7 @@ export default function Header({ navToggle, setNavToggle }) {
           'absolute w-full h-[100vh] bg-black top-0 pt-16 transition duration-500 ease-in-out md:hidden'
         )}
       >
-        <ul className=' flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500'>
+        <ul className='flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500'>
           {navigation.map((el, index) => (
             <li
               key={index}
