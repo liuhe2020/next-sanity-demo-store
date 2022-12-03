@@ -3,14 +3,14 @@ import Link from 'next/link';
 
 export default function WatchBanner() {
   return (
-    <section className='pt-6 bg-white text-stone-900 w-full h-[530px] flex flex-col items-center overflow-hidden md:h-[750px] lg:h-[1000px]'>
-      <div className='flex flex-col justify-center items-center my-12 md:mt-24 md:mb-20'>
-        <h2 className='text-4xl text-center font-semibold md:text-5xl lg:text-7xl'>
+    <section className='pt-4 bg-white text-stone-900 w-full h-[550px] flex flex-col items-center overflow-hidden md:h-[750px] lg:h-[1000px]'>
+      <div className='flex flex-col justify-center items-center text-center px-4 my-12 md:mt-24 md:mb-20'>
+        <h2 className='text-4xl font-semibold md:text-5xl lg:text-7xl'>
           Unknown Explorer Watch
         </h2>
-        <h2 className='text-3xl font-medium mt-2 lg:text-4xl lg:mt-6'>
+        <h3 className='text-2xl font-medium mt-4 md:text-3xl lg:text-4xl lg:mt-6'>
           Anytime, Anywhere
-        </h2>
+        </h3>
         <div className='mt-8 text-base space-x-4 lg:space-x-6 lg:mt-16 lg:font-medium'>
           <Link href='/accessories'>
             <a>

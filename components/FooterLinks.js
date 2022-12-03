@@ -25,7 +25,7 @@ export default function FooterLinks({ link }) {
       </div>
       <ul
         className={`${
-          isOpen && 'max-h-60 pb-4'
+          isOpen && 'max-h-64 pb-4'
         } px-4 space-y-4 overflow-hidden max-h-0 transition-all duration-500`}
       >
         {link.subLinks.map((l) => (
