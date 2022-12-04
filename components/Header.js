@@ -90,9 +90,9 @@ export default function Header({ navToggle, setNavToggle }) {
 
           {/* logo */}
           <Link href='/'>
-            <a>
+            <a className='md:mr-7'>
               <img
-                className='h-7 cursor-pointer absolute top-5 left-0 right-0 mx-auto md:static md:mx-0 opacity-90'
+                className='h-7 absolute top-5 left-0 right-0 mx-auto md:static md:mx-0 opacity-90'
                 src='/images/nsds_logo.png'
                 alt='nsds logo'
               ></img>
