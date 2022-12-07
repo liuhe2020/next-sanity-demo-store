@@ -34,7 +34,7 @@ export default function PhoneBanner() {
       <div className='w-[700px] md:w-[1000px] h-full -z-10 lg:hidden'>
         <Image src='/images/hero_phone.jpg' layout='fill' objectFit='cover' />
       </div>
-      <div className='w-[2560px] -z-10 hidden lg:block'>
+      <div className='relative w-full max-w-[2560px] h-full -z-10 hidden lg:block'>
         <Image
           src='/images/hero_phone_lg.jpg'
           layout='fill'
