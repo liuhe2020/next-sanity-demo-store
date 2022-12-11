@@ -3,10 +3,14 @@ import ProductCard from '../../components/ProductCard';
 import mySanityClient from '../../utils/client';
 
 export default function index({ products, category }) {
+  console.log(category);
   return (
     <>
       <Head>
-        <title>{`Next Sanity Demo Store | ${category.name}`}</title>
+        <title>{`DS | ${category[0].toUpperCase()}${category
+          .slice(1)
+          .toLowerCase()}`}</title>
+        <link rel='shortcut icon' href='/images/favicon.ico' />
       </Head>
       <section className='pt-16'>
         <div className='max-w-screen-lg grid grid-cols-1 gap-4 p-4 mx-auto min-[550px]:grid-cols-2 min-[550px]:gap-2.5 lg:grid-cols-3'>

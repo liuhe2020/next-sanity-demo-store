@@ -8,7 +8,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Fake Store</title>
+        <title>Next Sanity Demo Store</title>
+        <link rel='shortcut icon' href='/images/favicon.ico' />
       </Head>
       <LaptopBanner />
       <WatchBanner />

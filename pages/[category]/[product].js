@@ -17,7 +17,8 @@ export default function Product({ product }) {
   return (
     <>
       <Head>
-        <title>{`Next Sanity Demo Store | ${product.name}`}</title>
+        <title>{`DS | ${product.name}`}</title>
+        <link rel='shortcut icon' href='/images/favicon.ico' />
       </Head>
       <section className='pt-16'>
         <div className='max-w-screen-lg py-4 px-4 space-y-12 lg:space-y-0 lg:flex lg:mx-auto lg:space-x-6 lg:p-10'>
