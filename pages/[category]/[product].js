@@ -39,7 +39,10 @@ export default function Product({ product }) {
               </h3>
 
               <div className='flex space-x-2 mb-8 text-xs min-[400px]:max-[1023px]:mx-4 lg:text-sm lg:mb-10'>
-                <div className='flex relative flex-nowrap space-x-1'>
+                <div
+                  className='flex relative flex-nowrap space-x-1'
+                  title={product.rating}
+                >
                   {[1, 2, 3, 4, 5].map((el) => (
                     <svg
                       key={el}

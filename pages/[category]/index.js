@@ -3,7 +3,6 @@ import ProductCard from '../../components/ProductCard';
 import mySanityClient from '../../utils/client';
 
 export default function index({ products, category }) {
-  console.log(category);
   return (
     <>
       <Head>
