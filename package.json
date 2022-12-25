@@ -20,6 +20,7 @@
     "next-auth": "^4.12.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.0",
     "react-image-gallery": "^1.2.11",
     "tailwindcss-delicious-hamburgers": "^1.0.3",
     "uuid": "^9.0.0",

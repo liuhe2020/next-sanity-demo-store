@@ -4,6 +4,7 @@ import ImageGallery from 'react-image-gallery';
 import mySanityClient from '../../utils/client';
 import urlFor from '../../utils/image';
 import useStore from '../../store/store';
+import toast from 'react-hot-toast';
 
 export default function Product({ product }) {
   const addToBag = useStore((state) => state.addToBag);
@@ -13,6 +14,11 @@ export default function Product({ product }) {
     originalWidth: '800',
     originalHeight: '800',
   }));
+
+  const handleAddToBag = () => {
+    addToBag(product);
+    toast(`Added ${product.name} to the bag`);
+  };
 
   return (
     <>
@@ -85,7 +91,7 @@ export default function Product({ product }) {
 
               <div className='mt-8 space-y-3 min-[450px]:flex min-[450px]:space-y-0 min-[450px]:space-x-3 lg:mt-10'>
                 <button
-                  onClick={() => addToBag(product)}
+                  onClick={handleAddToBag}
                   className='w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
                 >
                   Add to bag

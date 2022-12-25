@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { Toaster } from 'react-hot-toast';
 import Footer from './Footer';
 import Header from './Header';
 
@@ -25,6 +26,15 @@ export default function Layout({ children }) {
       <Header navToggle={navToggle} setNavToggle={setNavToggle} />
       {children}
       <Footer />
+      <Toaster
+        position='bottom-center'
+        toastOptions={{
+          style: {
+            background: 'rgb(0 0 0 / .8)',
+            color: '#fff',
+          },
+        }}
+      />
     </>
   );
 }
