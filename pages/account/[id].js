@@ -37,7 +37,8 @@ export default function index({ id }) {
   return (
     <>
       <Head>
-        <title>{`Next Sanity Demo Store | Account - ${session.user.name}`}</title>
+        <title>{`DS | Account - ${session.user.name}`}</title>
+        <link rel='shortcut icon' href='/images/favicon.ico' />
       </Head>
       <div className='pt-16 min-h-[80vh] relative bg-stone-50 w-full'>
         <div className='max-w-screen-lg mx-auto p-2 sm:p-4 lg:my-10'>

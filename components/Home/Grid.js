@@ -34,7 +34,7 @@ const data = [
 
 function Grid() {
   return (
-    <div className='w-full grid overflow-hidden grid-cols-1 grid-rows-4 md:gap-3 md:grid-cols-2 md:grid-rows-2 md:py-3'>
+    <section className='max-w-[2560px] mx-auto grid overflow-hidden grid-cols-1 grid-rows-4 md:gap-3 md:grid-cols-2 md:grid-rows-2 md:py-3'>
       {data.map((i) => (
         <div
           key={i.title}
@@ -65,7 +65,7 @@ function Grid() {
           </div>
         </div>
       ))}
-    </div>
+    </section>
   );
 }
 

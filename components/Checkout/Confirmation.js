@@ -21,11 +21,11 @@ export default function Confirmation({ order }) {
           <p className='mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl'>
             Thank you.
           </p>
-          <p className='mt-6 text-base text-gray-500'>
+          <p className='mt-6 text-base text-stone-500'>
             We will send a confirmation and delivery update to your email
             address.
           </p>
-          <p className='mt-6 text-sm font-semibold text-gray-500'>Order ID</p>
+          <p className='mt-6 text-sm font-semibold text-stone-500'>Order ID</p>
           <p className='mt-2 text-indigo-600'>{order.name}</p>
         </div>
 
@@ -50,19 +50,19 @@ export default function Confirmation({ order }) {
               />
               <div className='flex-auto flex flex-col'>
                 <div>
-                  <h4 className='font-medium text-gray-900'>
+                  <h4 className='font-medium text-stone-900'>
                     <a href={''}>{item.name}</a>
                   </h4>
                 </div>
                 <div className='mt-6 flex-1 flex items-end'>
                   <dl className='flex text-sm divide-x divide-gray-200 space-x-4 sm:space-x-6'>
                     <div className='flex'>
-                      <dt className='font-medium text-gray-900'>Quantity</dt>
-                      <dd className='ml-2 text-gray-700'>{item.quantity}</dd>
+                      <dt className='font-medium text-stone-900'>Quantity</dt>
+                      <dd className='ml-2 text-stone-700'>{item.quantity}</dd>
                     </div>
                     <div className='pl-4 flex sm:pl-6'>
-                      <dt className='font-medium text-gray-900'>Price</dt>
-                      <dd className='ml-2 text-gray-700'>
+                      <dt className='font-medium text-stone-900'>Price</dt>
+                      <dd className='ml-2 text-stone-700'>
                         £{item.price.toFixed(2)}
                       </dd>
                     </div>
@@ -78,8 +78,8 @@ export default function Confirmation({ order }) {
             <h4 className='sr-only'>Addresses</h4>
             <dl className='grid grid-cols-2 gap-x-6 text-sm py-10'>
               <div>
-                <dt className='font-medium text-gray-900'>Shipping address</dt>
-                <dd className='mt-2 text-gray-700'>
+                <dt className='font-medium text-stone-900'>Shipping address</dt>
+                <dd className='mt-2 text-stone-700'>
                   <address className='not-italic'>
                     <span className='block'>
                       {order.deliveryAddress.fullName}
@@ -104,8 +104,8 @@ export default function Confirmation({ order }) {
                 </dd>
               </div>
               <div>
-                <dt className='font-medium text-gray-900'>Billing address</dt>
-                <dd className='mt-2 text-gray-700'>
+                <dt className='font-medium text-stone-900'>Billing address</dt>
+                <dd className='mt-2 text-stone-700'>
                   <address className='not-italic'>
                     <span className='block'>
                       {order.deliveryAddress.fullName}
@@ -134,8 +134,8 @@ export default function Confirmation({ order }) {
             <h4 className='sr-only'>Payment</h4>
             <dl className='grid grid-cols-2 gap-x-6 border-t border-gray-200 text-sm py-10'>
               <div>
-                <dt className='font-medium text-gray-900'>Payment method</dt>
-                <dd className='mt-2 text-gray-700'>
+                <dt className='font-medium text-stone-900'>Payment method</dt>
+                <dd className='mt-2 text-stone-700'>
                   <p>Paypal</p>
                   <p>{order.paymentDetail.paypalEmail}</p>
                   <p>
@@ -145,8 +145,8 @@ export default function Confirmation({ order }) {
                 </dd>
               </div>
               <div>
-                <dt className='font-medium text-gray-900'>Shipping method</dt>
-                <dd className='mt-2 text-gray-700'>
+                <dt className='font-medium text-stone-900'>Shipping method</dt>
+                <dd className='mt-2 text-stone-700'>
                   <p>DHL</p>
                   <p>Takes up to 3 working days</p>
                 </dd>
@@ -157,18 +157,18 @@ export default function Confirmation({ order }) {
 
             <dl className='space-y-6 border-t border-gray-200 text-sm pt-10'>
               <div className='flex justify-between'>
-                <dt className='font-medium text-gray-900'>Subtotal</dt>
-                <dd className='text-gray-700'>
+                <dt className='font-medium text-stone-900'>Subtotal</dt>
+                <dd className='text-stone-700'>
                   £{order.orderTotal.toFixed(2)}
                 </dd>
               </div>
               <div className='flex justify-between'>
-                <dt className='font-medium text-gray-900'>Shipping</dt>
-                <dd className='text-gray-700'>£0.00</dd>
+                <dt className='font-medium text-stone-900'>Shipping</dt>
+                <dd className='text-stone-700'>£0.00</dd>
               </div>
               <div className='flex justify-between'>
-                <dt className='font-medium text-gray-900'>Total</dt>
-                <dd className='text-gray-900'>
+                <dt className='font-medium text-stone-900'>Total</dt>
+                <dd className='text-stone-900'>
                   £{order.orderTotal.toFixed(2)}
                 </dd>
               </div>
