@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 
 const handleAddToBag = (items, nextItem) => {
   // check if item to be added already exists
