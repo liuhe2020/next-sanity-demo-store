@@ -30,8 +30,6 @@ export default function SignIn() {
     if (response.status === 200) return router.back();
 
     alert('Incorrect email or password');
-
-    return router.back();
   };
 
   if (session) {
