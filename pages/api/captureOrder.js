@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import generateAccessToken from '../../utils/accessToken';
-import mySanityClient from '../../utils/client';
+import client from '../../utils/client';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Not allowed');
@@ -66,7 +66,7 @@ export default async function handler(req, res) {
 
   if (captureRes.status === 200 || captureRes.status === 201) {
     const captureData = await captureRes.json();
-    const createSanityOrder = await mySanityClient.create(
+    const createSanityOrder = await client.create(
       sanityOrder(orderData, captureData)
     );
     // return res.status(200).json(captureData);

@@ -1,4 +1,4 @@
-import mySanityClient from '../../utils/client';
+import client from '../../utils/client';
 import generateAccessToken from '../../utils/accessToken';
 import urlFor from '../../utils/image';
 
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   // check items from client and match prices from sanity
   const items = await Promise.all(
     clientOrder.map(async (item) => {
-      const product = await mySanityClient.fetch(
+      const product = await client.fetch(
         `*[_type == 'product' && _id == '${item.id}'][0]`
       );
       return {

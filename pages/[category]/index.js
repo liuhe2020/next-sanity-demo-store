@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import ProductCard from '../../components/ProductCard';
-import mySanityClient from '../../utils/client';
+import client from '../../utils/client';
 
 export default function index({ products, category }) {
   return (
@@ -23,7 +23,7 @@ export default function index({ products, category }) {
 }
 
 export async function getStaticPaths() {
-  const categories = await mySanityClient.fetch(`*[_type == "category"]`);
+  const categories = await client.fetch(`*[_type == "category"]`);
 
   const paths = categories.map((category) => ({
     params: { category: category.slug.current },
@@ -38,7 +38,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   // // alternative method if product schema does not have a string category field other than the category ref field
   // // fetch the category with name/slug matching to params from getStaticPaths
-  // const categoryArray = await mySanityClient.fetch(
+  // const categoryArray = await client.fetch(
   //   `*[slug.current == '${params.categorySlug}' ]`
   // );
 
@@ -46,13 +46,13 @@ export async function getStaticProps({ params }) {
   // const category = categoryArray[0];
 
   // // use the category id(reference) to query all product with that reference/category
-  // const products = await mySanityClient.fetch(
+  // const products = await client.fetch(
   //   `*[_type == 'product' && references('${category._id}')]`
   // );
 
   const category = params.category;
 
-  const products = await mySanityClient.fetch(`*[category == '${category}']`);
+  const products = await client.fetch(`*[category == '${category}']`);
 
   return {
     props: { products, category },

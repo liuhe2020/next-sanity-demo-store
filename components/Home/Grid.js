@@ -48,21 +48,28 @@ function Grid() {
               {i.subtitle}
             </h3>
             <div className='mt-8 text-lg font-semibold text-indigo-700 space-x-6 lg:text-xl'>
-              <Link href='/laptops'>
-                <a className='hover:text-indigo-400 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500'>
-                  Learn more
-                </a>
+              <Link
+                href='/laptops'
+                className='hover:text-indigo-400 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500'
+              >
+                Learn more
               </Link>
-              <Link href='/laptops'>
-                <a className='hover:text-indigo-400 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500'>
-                  Shop now
-                </a>
+              <Link
+                href='/laptops'
+                className='hover:text-indigo-400 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500'
+              >
+                Shop now
               </Link>
             </div>
           </div>
-          <div className='relative mx-auto w-[260px] h-[260px] xl:w-[330px] xl:h-[330px]'>
-            <Image src={i.url} layout='fill' objectFit='contain' />
-          </div>
+
+          <Image
+            className='mx-auto w-[260px] h-[260px] xl:w-[330px] xl:h-[330px]'
+            src={i.url}
+            alt={i.title}
+            width='330'
+            height='330'
+          />
         </div>
       ))}
     </section>

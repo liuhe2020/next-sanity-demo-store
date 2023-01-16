@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import Cookies from 'js-cookie';
 import useStore from '../store/store';
-import mySanityClient from '../utils/client';
+import client from '../utils/client';
 
 export default function StoreProvider({ children }) {
   const { data: session } = useSession();
@@ -20,7 +20,7 @@ export default function StoreProvider({ children }) {
       // update user bag when sign in
       if (session && parsedBag.total != 0) {
         (async function () {
-          await mySanityClient
+          await client
             .patch(session.user._id)
             .set({ bag: JSON.stringify(parsedBag) })
             .commit();
@@ -39,7 +39,7 @@ export default function StoreProvider({ children }) {
     // update user shopping bag on sanity when signed in
     if (session) {
       (async function () {
-        await mySanityClient
+        await client
           .patch(session.user._id)
           .set({ bag: JSON.stringify(state) })
           .commit();

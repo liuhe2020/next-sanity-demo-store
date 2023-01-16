@@ -77,15 +77,13 @@ export default function checkout() {
                     className='flex py-6 space-x-4 lg:space-x-6'
                   >
                     <div className='flex flex-1 space-x-4'>
-                      <div className='relative flex justify-center min-w-[75px] w-[75px] h-[75px] sm:w-[120px] sm:h-[120px]'>
-                        <Image
-                          src={urlFor(item.images[0]).url()}
-                          alt=''
-                          layout='fill'
-                          objectFit='contain'
-                          objectPosition='center'
-                        />
-                      </div>
+                      <Image
+                        className='object-contain object-center w-[75px] h-[75px] sm:w-[120px] sm:h-[120px]'
+                        src={urlFor(item.images[0]).url()}
+                        alt={item.name}
+                        width='120'
+                        height='120'
+                      />
                       <div className='space-y-2 mt-2 sm:mt-4'>
                         <h3>{item.name}</h3>
                         <p className='text-stone-500 text-xs'>
@@ -117,18 +115,13 @@ export default function checkout() {
                 </div>
               </dl>
 
-              <Link href='/shopping-bag'>
-                <a className='block max-w-max pt-12 pb-4'>
-                  <div className='flex justify-start text-stone-500 hover:text-indigo-600'>
-                    <svg
-                      className='fill-current mr-2 w-4'
-                      viewBox='0 0 448 512'
-                    >
-                      <path d='M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z' />
-                    </svg>
-                    Back to shopping bag
-                  </div>
-                </a>
+              <Link href='/shopping-bag' className='block max-w-max pt-12 pb-4'>
+                <div className='flex justify-start text-stone-500 hover:text-indigo-600'>
+                  <svg className='fill-current mr-2 w-4' viewBox='0 0 448 512'>
+                    <path d='M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z' />
+                  </svg>
+                  Back to shopping bag
+                </div>
               </Link>
             </div>
           </section>

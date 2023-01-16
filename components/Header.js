@@ -18,10 +18,8 @@ const navigation = [
 const MyLink = forwardRef((props, ref) => {
   let { href, children, ...rest } = props;
   return (
-    <Link href={href}>
-      <a ref={ref} {...rest}>
-        {children}
-      </a>
+    <Link href={href} ref={ref} {...rest}>
+      {children}
     </Link>
   );
 });
@@ -62,9 +60,7 @@ export default function Header({ navToggle, setNavToggle }) {
                 'hover:text-white font-medium text-center py-4'
               )}
             >
-              <Link href={el.href}>
-                <a>{el.name}</a>
-              </Link>
+              <Link href={el.href}>{el.name}</Link>
             </li>
           ))}
         </ul>
@@ -89,14 +85,12 @@ export default function Header({ navToggle, setNavToggle }) {
           </div>
 
           {/* logo */}
-          <Link href='/'>
-            <a className='md:mr-7'>
-              <img
-                className='h-7 absolute top-5 left-0 right-0 mx-auto md:static md:mx-0 opacity-90'
-                src='/images/nsds_logo.png'
-                alt='nsds logo'
-              ></img>
-            </a>
+          <Link href='/' className='md:mr-7'>
+            <img
+              className='h-7 absolute top-5 left-0 right-0 mx-auto md:static md:mx-0 opacity-90'
+              src='/images/nsds_logo.png'
+              alt='nsds logo'
+            ></img>
           </Link>
 
           {/* desktop menu */}
@@ -109,9 +103,7 @@ export default function Header({ navToggle, setNavToggle }) {
                   'hover:text-white font-medium'
                 )}
               >
-                <Link href={el.href}>
-                  <a>{el.name}</a>
-                </Link>
+                <Link href={el.href}>{el.name}</Link>
               </li>
             ))}
           </ul>
@@ -180,25 +172,23 @@ export default function Header({ navToggle, setNavToggle }) {
               </Transition>
             </Menu>
             <Link href='/shopping-bag'>
-              <a>
-                <div className='cursor-pointer relative group'>
-                  <svg
-                    className='group-hover:fill-white'
-                    fill='#d6d3d1'
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='26.5'
-                    height='26.5'
-                    viewBox='0 0 24 24'
-                  >
-                    <path d='M16 6v-2c0-2.209-1.791-4-4-4s-4 1.791-4 4v2h-5v18h18v-18h-5zm-7-2c0-1.654 1.346-3 3-3s3 1.346 3 3v2h-6v-2zm10 18h-14v-14h3v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h6v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h3v14z' />
-                  </svg>
-                  {totalQty !== 0 && (
-                    <span className='absolute text-xs font-semibold top-[10px] left-1/2 -translate-x-1/2  text-stone-300 group-hover:text-white'>
-                      {totalQty > 99 ? 99 : totalQty}
-                    </span>
-                  )}
-                </div>
-              </a>
+              <div className='cursor-pointer relative group'>
+                <svg
+                  className='group-hover:fill-white'
+                  fill='#d6d3d1'
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='26.5'
+                  height='26.5'
+                  viewBox='0 0 24 24'
+                >
+                  <path d='M16 6v-2c0-2.209-1.791-4-4-4s-4 1.791-4 4v2h-5v18h18v-18h-5zm-7-2c0-1.654 1.346-3 3-3s3 1.346 3 3v2h-6v-2zm10 18h-14v-14h3v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h6v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h3v14z' />
+                </svg>
+                {totalQty !== 0 && (
+                  <span className='absolute text-xs font-semibold top-[10px] left-1/2 -translate-x-1/2  text-stone-300 group-hover:text-white'>
+                    {totalQty > 99 ? 99 : totalQty}
+                  </span>
+                )}
+              </div>
             </Link>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Head from 'next/head';
-import mySanityClient from '../../utils/client';
+import client from '../../utils/client';
 import Orders from '../../components/Account/Orders';
 import Profile from '../../components/Account/Profile';
 import Password from '../../components/Account/Password';
@@ -84,7 +84,7 @@ export default function index({ id }) {
 
 // using getStaticPaths to generate all users routes
 export async function getStaticPaths() {
-  const users = await mySanityClient.fetch(`*[_type == "user"]`);
+  const users = await client.fetch(`*[_type == "user"]`);
 
   const paths = users.map((user) => ({
     params: {

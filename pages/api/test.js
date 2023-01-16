@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import mySanityClient from '../../utils/client';
+import client from '../../utils/client';
 import generateAccessToken from '../../utils/accessToken';
 import urlFor from '../../utils/image';
 
