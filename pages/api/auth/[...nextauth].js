@@ -20,7 +20,7 @@ export default NextAuth({
         const { email, password } = credentials;
         // fetch user from sanity
         const userData = await client.fetch(
-          `*[_type == "user" && email == '${email}'][0]{_id, name, email, password, bag, orders[]->}`
+          `*[_type == "user" && email == '${email}'][0]{_id, name, email, password, bag}`
         );
 
         // authenticate user

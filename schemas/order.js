@@ -35,7 +35,20 @@ export default {
       of: [
         {
           title: 'Order Item',
-          type: 'orderItem',
+          name: 'orderItem',
+          type: 'object',
+          fields: [
+            {
+              name: 'product',
+              type: 'reference',
+              to: [{ type: 'product' }],
+            },
+            {
+              title: 'Quantity',
+              name: 'quantity',
+              type: 'number',
+            },
+          ],
         },
       ],
     },

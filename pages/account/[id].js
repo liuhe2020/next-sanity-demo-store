@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import client from '../../utils/client';
 import Orders from '../../components/Account/Orders';
 import Profile from '../../components/Account/Profile';
 import Password from '../../components/Account/Password';
-import { useRouter } from 'next/router';
 
 const sideNav = [{ name: 'Orders' }, { name: 'Profile' }, { name: 'Password' }];
 
@@ -13,7 +13,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function index({ id }) {
+export default function index({ id, orders }) {
   const [view, setView] = useState('Orders');
   const router = useRouter();
 
@@ -71,7 +71,7 @@ export default function index({ id }) {
                   ))}
                 </ul>
               </aside>
-              {view === 'Orders' && <Orders orders={session.user.orders} />}
+              {view === 'Orders' && <Orders orders={orders} />}
               {view === 'Profile' && <Profile user={session.user} />}
               {view === 'Password' && <Password user={session.user} />}
             </div>
@@ -84,7 +84,7 @@ export default function index({ id }) {
 
 // using getStaticPaths to generate all users routes
 export async function getStaticPaths() {
-  const users = await client.fetch(`*[_type == "user"]`);
+  const users = await client.fetch(`*[_type == 'user']`);
 
   const paths = users.map((user) => ({
     params: {
@@ -101,5 +101,9 @@ export async function getStaticPaths() {
 // return only user id from getStaticProps which is used for client side checks
 export async function getStaticProps({ params }) {
   const { id } = params;
-  return { props: { id } };
+  const orders = await client.fetch(
+    `*[_type == 'order' && user._ref == '${id}']{name, _createdAt, orderTotal, orderItems[]{product->,quantity}}`
+  );
+
+  return { props: { id, orders } };
 }

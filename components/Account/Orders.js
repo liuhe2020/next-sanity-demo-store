@@ -1,4 +1,7 @@
+import urlFor from '../../utils/image';
+
 export default function Orders({ orders }) {
+  console.log(orders[0].orderItems[0].product);
   return (
     <section className='divide-y divide-stone-200 md:flex-1'>
       <div className='py-6 px-4 sm:p-6 lg:pb-8'>
@@ -9,17 +12,17 @@ export default function Orders({ orders }) {
           <div className=''>
             <div className='space-y-6'>
               {orders.map((order) => (
-                <div key={order._id} className='bg-stone-100 rounded-lg p-6'>
+                <div key={order.name} className='bg-stone-100 rounded-lg p-6'>
                   <dl className='space-y-3 text-sm text-stone-600 pb-6 border-b border-stone-200'>
                     <div className='flex'>
                       <dt className='w-28 font-medium'>Order number</dt>
-                      <dd className='ml-2 text-stone-900'>{order._id}</dd>
+                      <dd className='ml-2 text-stone-900'>{order.name}</dd>
                     </div>
                     <div className='flex'>
                       <dt className='w-28 font-medium'>Order date</dt>
                       <dd className='ml-2 text-stone-900'>
-                        <time dateTime={order.paymentDetail.paymentDate}>
-                          {order.paymentDetail.paymentDate}
+                        <time dateTime={order._createdAt}>
+                          {order._createdAt}
                         </time>
                       </dd>
                     </div>
@@ -50,27 +53,27 @@ export default function Orders({ orders }) {
                       </tr>
                     </thead>
                     <tbody className='text-sm'>
-                      {order.orderItems.map((item, i) => (
-                        <tr key={i}>
+                      {order.orderItems.map((item) => (
+                        <tr key={item.product._id}>
                           <td className='pt-5'>
                             <div className='flex items-center'>
                               <img
-                                src={item.image}
-                                alt={item.name}
+                                src={urlFor(item.product.images[0]).url()}
+                                alt={item.product.name}
                                 className='w-16 h-16 object-center object-contain rounded mr-6'
                               />
                               <div>
                                 <div className='text-stone-900'>
-                                  {item.name}
+                                  {item.product.name}
                                 </div>
                                 <div className='mt-1 sm:hidden text-stone-900'>
-                                  £{item.price.toFixed(2)}
+                                  £{item.product.price.toFixed(2)}
                                 </div>
                               </div>
                             </div>
                           </td>
                           <td className='hidden pt-6 sm:table-cell text-stone-900'>
-                            £{item.price.toFixed(2)}
+                            £{item.product.price.toFixed(2)}
                           </td>
                         </tr>
                       ))}
