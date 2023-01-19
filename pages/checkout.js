@@ -50,7 +50,6 @@ export default function checkout() {
     }
 
     const captureData = await response.json();
-    console.log(captureData);
     setOrder(captureData);
   };
 

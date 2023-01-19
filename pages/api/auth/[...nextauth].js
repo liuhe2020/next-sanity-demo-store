@@ -3,7 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import client from '../../../utils/client';
 
-export default NextAuth({
+export const authOptions = {
   session: {
     strategy: 'jwt',
   },
@@ -42,6 +42,7 @@ export default NextAuth({
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     jwt: async ({ token, user }) => {
       user && (token.user = user);
@@ -52,4 +53,6 @@ export default NextAuth({
       return session;
     },
   },
-});
+};
+
+export default NextAuth(authOptions);
