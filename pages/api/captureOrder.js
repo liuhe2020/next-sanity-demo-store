@@ -22,11 +22,16 @@ export default async function handler(req, res) {
       name: orderId, //paypal order/capture id (not transaction id)
       // TODO: ORDER ITEMS NO LONGER NEEDED, NEED TO REFERENCE ITEMS
       orderItems: order.purchase_units[0].items.map((item) => ({
-        name: item.name,
-        price: parseInt(item.unit_amount.value),
-        image: item.description,
+        // name: item.name,
+        // price: parseInt(item.unit_amount.value),
+        // image: item.description,
+        // quantity: parseInt(item.quantity),
+        // _key: uuidv4(),
+        product: {
+          _type: 'reference',
+          _ref: item._id,
+        },
         quantity: parseInt(item.quantity),
-        _key: uuidv4(),
       })),
       orderTotal: parseInt(
         capture.purchase_units[0].payments.captures[0].amount.value

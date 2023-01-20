@@ -28,7 +28,7 @@ export default async function handler(req, res) {
 
   const paypalItems = items.map((item) => ({
     name: item.name,
-    description: urlFor(item.images[0]).url(), // store img url in description key
+    description: item._id, // store id in description key
     unit_amount: {
       currency_code: 'GBP',
       value: item.price.toString(), // all values must be string in paypal api
