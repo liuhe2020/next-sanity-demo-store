@@ -20,18 +20,13 @@ export default async function handler(req, res) {
     const orderObj = {
       _type: 'order',
       name: orderId, //paypal order/capture id (not transaction id)
-      // TODO: ORDER ITEMS NO LONGER NEEDED, NEED TO REFERENCE ITEMS
       orderItems: order.purchase_units[0].items.map((item) => ({
-        // name: item.name,
-        // price: parseInt(item.unit_amount.value),
-        // image: item.description,
-        // quantity: parseInt(item.quantity),
-        // _key: uuidv4(),
         product: {
           _type: 'reference',
-          _ref: item._id,
+          _ref: item.sku,
         },
         quantity: parseInt(item.quantity),
+        _key: uuidv4(),
       })),
       orderTotal: parseInt(
         capture.purchase_units[0].payments.captures[0].amount.value
@@ -76,6 +71,8 @@ export default async function handler(req, res) {
 
   const orderData = await orderRes.json();
 
+  console.dir(orderData);
+
   const captureRes = await fetch(
     `${base}/v2/checkout/orders/${orderId}/capture`,
     {
@@ -92,10 +89,9 @@ export default async function handler(req, res) {
     const createSanityOrder = await client.create(
       sanityOrder(orderData, captureData)
     );
-    // return res.status(200).json(captureData);
+    // TODO: fetch order with orderItems ref expanded and return to client side
     return res.status(200).json(sanityOrder(orderData, captureData));
   }
 
-  const errorMessage = await captureRes.text();
-  throw new Error(errorMessage);
+  return res.status(500).send('Failed to capture Paypal order');
 }

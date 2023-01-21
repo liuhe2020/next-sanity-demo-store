@@ -1,7 +1,6 @@
 import urlFor from '../../utils/image';
 
 export default function Orders({ orders }) {
-  console.log(orders[0].orderItems[0].product);
   return (
     <section className='divide-y divide-stone-200 md:flex-1'>
       <div className='py-6 px-4 sm:p-6 lg:pb-8'>

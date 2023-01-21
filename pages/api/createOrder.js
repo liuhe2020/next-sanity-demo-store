@@ -1,6 +1,5 @@
 import client from '../../utils/client';
 import generateAccessToken from '../../utils/accessToken';
-import urlFor from '../../utils/image';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Not allowed');
@@ -28,7 +27,7 @@ export default async function handler(req, res) {
 
   const paypalItems = items.map((item) => ({
     name: item.name,
-    description: item._id, // store id in description key
+    sku: item._id, // store id in sku key
     unit_amount: {
       currency_code: 'GBP',
       value: item.price.toString(), // all values must be string in paypal api
@@ -76,6 +75,5 @@ export default async function handler(req, res) {
     return res.status(200).json(order);
   }
 
-  const errorMessage = await response.text();
-  throw new Error(errorMessage);
+  return res.status(500).send('Failed to create Paypal order');
 }

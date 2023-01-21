@@ -1,19 +1,5 @@
-const products = [
-  {
-    id: 1,
-    name: 'Cold Brew Bottle',
-    description:
-      'This glass bottle comes with a mesh insert for steeping tea or cold-brewing coffee. Pour from any angle and remove the top for easy cleaning.',
-    href: '#',
-    quantity: 1,
-    price: '$32.00',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/confirmation-page-05-product-01.jpg',
-    imageAlt: 'Glass bottle with black plastic pour top and mesh insert.',
-  },
-];
-
 export default function Confirmation({ order }) {
+  console.log(order);
   return (
     <main className='bg-white px-4 pt-16 pb-24 sm:px-6 sm:pt-24 lg:px-8 lg:py-32'>
       <div className='max-w-3xl mx-auto'>
@@ -63,7 +49,7 @@ export default function Confirmation({ order }) {
                     <div className='pl-4 flex sm:pl-6'>
                       <dt className='font-medium text-stone-900'>Price</dt>
                       <dd className='ml-2 text-stone-700'>
-                        £{item.price.toFixed(2)}
+                        {/* £{item.price.toFixed(2)} */}
                       </dd>
                     </div>
                   </dl>
