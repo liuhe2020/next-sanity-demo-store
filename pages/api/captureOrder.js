@@ -71,8 +71,6 @@ export default async function handler(req, res) {
 
   const orderData = await orderRes.json();
 
-  console.dir(orderData);
-
   const captureRes = await fetch(
     `${base}/v2/checkout/orders/${orderId}/capture`,
     {
@@ -86,11 +84,15 @@ export default async function handler(req, res) {
 
   if (captureRes.status === 200 || captureRes.status === 201) {
     const captureData = await captureRes.json();
-    const createSanityOrder = await client.create(
+    const newSanityOrder = await client.create(
       sanityOrder(orderData, captureData)
     );
+
     // TODO: fetch order with orderItems ref expanded and return to client side
-    return res.status(200).json(sanityOrder(orderData, captureData));
+    const newSanityOrderProjection = await client.fetch(
+      `*[_id == '${newSanityOrder._id}']{..., orderItems[]{product->, quantity}}`
+    );
+    return res.status(200).json(newSanityOrderProjection);
   }
 
   return res.status(500).send('Failed to capture Paypal order');

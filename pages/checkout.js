@@ -55,7 +55,7 @@ export default function checkout() {
     setOrder(captureData);
   };
 
-  if (order) return <Confirmation order={order} />;
+  // if (order) return <Confirmation order={order} />;
 
   return (
     <>
