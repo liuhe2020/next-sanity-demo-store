@@ -50,12 +50,11 @@ export default function checkout() {
     }
 
     const captureData = await response.json();
-    console.log(captureData);
     // toggle order confirmation after purchase
     setOrder(captureData);
   };
 
-  // if (order) return <Confirmation order={order} />;
+  if (order) return <Confirmation order={order} />;
 
   return (
     <>

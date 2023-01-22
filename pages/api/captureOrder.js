@@ -90,7 +90,7 @@ export default async function handler(req, res) {
 
     // TODO: fetch order with orderItems ref expanded and return to client side
     const newSanityOrderProjection = await client.fetch(
-      `*[_id == '${newSanityOrder._id}']{..., orderItems[]{product->, quantity}}`
+      `*[_id == '${newSanityOrder._id}'][0]{..., orderItems[]{product->, quantity}}`
     );
     return res.status(200).json(newSanityOrderProjection);
   }

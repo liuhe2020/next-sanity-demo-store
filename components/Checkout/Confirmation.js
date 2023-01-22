@@ -1,5 +1,6 @@
+import urlFor from '../../utils/image';
+
 export default function Confirmation({ order }) {
-  console.log(order);
   return (
     <main className='bg-white px-4 pt-16 pb-24 sm:px-6 sm:pt-24 lg:px-8 lg:py-32'>
       <div className='max-w-3xl mx-auto'>
@@ -26,18 +27,18 @@ export default function Confirmation({ order }) {
           <h3 className='sr-only'>Items</h3>
           {order.orderItems.map((item) => (
             <div
-              key={item._key}
+              key={item.product._id}
               className='py-10 border-b border-gray-200 flex space-x-6'
             >
               <img
-                src={item.image}
-                alt={item.name}
+                src={urlFor(item.product.images[0]).url()}
+                alt={item.product.name}
                 className='flex-none w-20 h-20 object-center object-cover bg-gray-100 rounded-lg sm:w-40 sm:h-40'
               />
               <div className='flex-auto flex flex-col'>
                 <div>
                   <h4 className='font-medium text-stone-900'>
-                    <a href={''}>{item.name}</a>
+                    <a href={''}>{item.product.name}</a>
                   </h4>
                 </div>
                 <div className='mt-6 flex-1 flex items-end'>
@@ -49,7 +50,7 @@ export default function Confirmation({ order }) {
                     <div className='pl-4 flex sm:pl-6'>
                       <dt className='font-medium text-stone-900'>Price</dt>
                       <dd className='ml-2 text-stone-700'>
-                        {/* £{item.price.toFixed(2)} */}
+                        £{item.product.price.toFixed(2)}
                       </dd>
                     </div>
                   </dl>
