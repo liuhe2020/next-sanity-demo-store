@@ -84,11 +84,13 @@ export default async function handler(req, res) {
 
   if (captureRes.status === 200 || captureRes.status === 201) {
     const captureData = await captureRes.json();
+
+    // store new order in sanity database
     const newSanityOrder = await client.create(
       sanityOrder(orderData, captureData)
     );
 
-    // TODO: fetch order with orderItems ref expanded and return to client side
+    // fetch order with orderItems ref expanded and return to client side
     const newSanityOrderProjection = await client.fetch(
       `*[_id == '${newSanityOrder._id}'][0]{..., orderItems[]{product->, quantity}}`
     );
