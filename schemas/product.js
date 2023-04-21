@@ -58,5 +58,10 @@ export default {
       title: 'Stock Count',
       type: 'number',
     },
+    {
+      name: 'featured',
+      title: 'Featured',
+      type: 'boolean',
+    },
   ],
 };
