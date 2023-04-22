@@ -7,7 +7,7 @@ import urlFor from '../utils/image';
 import Confirmation from '../components/Checkout/Confirmation';
 import Head from 'next/head';
 
-export default function checkout() {
+export default function Checkout() {
   const { total, items } = useStore();
   const [order, setOrder] = useState();
 
@@ -66,16 +66,11 @@ export default function checkout() {
         <div className='relative pt-10 grid grid-cols-1 gap-x-20 max-w-7xl mx-auto lg:px-2 lg:grid-cols-2'>
           <section className='pb-4 px-4 sm:px-6 sm:pb-10 lg:px-0 lg:pb-0 lg:row-start-1 lg:col-start-1'>
             <div className='max-w-screen-md mx-auto lg:max-w-none'>
-              <h2 className='text-xl font-medium mb-2 text-stone-900'>
-                Order summary
-              </h2>
+              <h2 className='text-xl font-medium mb-2 text-stone-900'>Order summary</h2>
 
               <ul className='text-base font-medium text-stone-900 divide-y divide-stone-200'>
                 {items.map((item) => (
-                  <li
-                    key={item._id}
-                    className='flex py-6 space-x-4 lg:space-x-6'
-                  >
+                  <li key={item._id} className='flex py-6 space-x-4 lg:space-x-6'>
                     <div className='flex flex-1 space-x-4'>
                       <Image
                         className='object-contain object-center w-[75px] h-[75px] sm:w-[120px] sm:h-[120px]'
@@ -86,14 +81,10 @@ export default function checkout() {
                       />
                       <div className='space-y-2 mt-2 sm:mt-4'>
                         <h3>{item.name}</h3>
-                        <p className='text-stone-500 text-xs'>
-                          Qty: {item.quantity}
-                        </p>
+                        <p className='text-stone-500 text-xs'>Qty: {item.quantity}</p>
                       </div>
                     </div>
-                    <p className='font-medium mt-2 sm:mt-4'>
-                      £{(item.price * item.quantity).toFixed(2)}
-                    </p>
+                    <p className='font-medium mt-2 sm:mt-4'>£{(item.price * item.quantity).toFixed(2)}</p>
                   </li>
                 ))}
               </ul>
@@ -129,14 +120,9 @@ export default function checkout() {
           <div className='px-4 sm:px-6 lg:pb-16 lg:px-0 lg:row-start-1 lg:col-start-2'>
             <section>
               <div className='max-w-md mx-auto lg:max-w-none'>
-                <h2 className='text-xl font-medium mb-2 text-stone-900 hidden lg:block'>
-                  Payment methods
-                </h2>
+                <h2 className='text-xl font-medium mb-2 text-stone-900 hidden lg:block'>Payment methods</h2>
                 <div className='py-6 relative z-0'>
-                  <PayPalButtons
-                    createOrder={createOrder}
-                    onApprove={onApprove}
-                  />
+                  <PayPalButtons createOrder={createOrder} onApprove={onApprove} />
                 </div>
               </div>
             </section>

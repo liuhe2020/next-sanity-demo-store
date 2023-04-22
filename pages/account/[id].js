@@ -13,7 +13,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function index({ id, orders }) {
+export default function Account({ id, orders }) {
   const [view, setView] = useState('Orders');
   const router = useRouter();
 
@@ -101,9 +101,7 @@ export async function getStaticPaths() {
 // return only user id from getStaticProps which is used for client side checks
 export async function getStaticProps({ params }) {
   const { id } = params;
-  const orders = await client.fetch(
-    `*[_type == 'order' && user._ref == '${id}']{name, _createdAt, orderTotal, orderItems[]{product->,quantity}}`
-  );
+  const orders = await client.fetch(`*[_type == 'order' && user._ref == '${id}']{name, _createdAt, orderTotal, orderItems[]{product->,quantity}}`);
 
   return { props: { id, orders } };
 }
