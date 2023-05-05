@@ -26,18 +26,18 @@ export default function Account({ id, orders }) {
   });
 
   if (status === 'loading') {
-    return 'Loading or not authenticated...';
+    return null;
   }
 
-  // redirect user to the correct signed in user
-  if (session.user._id !== id) {
-    router.replace(`/account/${session.user._id}`);
-  }
+  // // redirect user to the correct signed in user
+  // if (session.user._id !== id) {
+  //   router.replace(`/account/${session.user._id}`);
+  // }
 
   return (
     <>
       <Head>
-        <title>{`DS | Account - ${session.user.name}`}</title>
+        <title>{`DS | Account - ${session?.user?.name}`}</title>
         <link rel='shortcut icon' href='/images/favicon.ico' />
       </Head>
       <div className='pt-16 min-h-[80vh] relative bg-stone-50 w-full'>
