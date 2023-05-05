@@ -29,10 +29,10 @@ export default function Account({ id, orders }) {
     return null;
   }
 
-  // // redirect user to the correct signed in user
-  // if (session.user._id !== id) {
-  //   router.replace(`/account/${session.user._id}`);
-  // }
+  // redirect user to the correct signed in user
+  if (session.user._id !== id) {
+    router.replace(`/account/${session.user._id}`);
+  }
 
   return (
     <>
