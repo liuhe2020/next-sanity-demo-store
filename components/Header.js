@@ -5,6 +5,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import useStore from '../store/store';
+import classNames from '../utils/classNames';
 
 const navigation = [
   { name: 'Laptops', href: '/laptops', current: false },
@@ -25,11 +26,6 @@ const MyLink = forwardRef((props, ref) => {
 });
 
 MyLink.displayName = 'MyLink';
-
-// tailwind class name helper
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export default function Header({ navToggle, setNavToggle }) {
   const totalQty = useStore((state) => state.totalQty);
