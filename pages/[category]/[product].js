@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import ImageGallery from 'react-image-gallery';
-import mySanityClient from '../../utils/client';
+import client from '../../utils/client';
 import urlFor from '../../utils/image';
 import useStore from '../../store/store';
 import toast from 'react-hot-toast';
@@ -96,10 +96,11 @@ export default function Product({ product }) {
                 >
                   Add to bag
                 </button>
-                <Link href='/checkout'>
-                  <a className='w-full inline-flex justify-center py-2.5 px-4 border border-stone-300 rounded-md shadow-sm bg-white text-base font-medium text-stone-500 hover:bg-stone-100'>
-                    Go to checkout
-                  </a>
+                <Link
+                  href='/checkout'
+                  className='w-full inline-flex justify-center py-2.5 px-4 border border-stone-300 rounded-md shadow-sm bg-white text-base font-medium text-stone-500 hover:bg-stone-100'
+                >
+                  Go to checkout
                 </Link>
               </div>
             </div>
@@ -111,7 +112,7 @@ export default function Product({ product }) {
 }
 
 export async function getStaticPaths() {
-  const products = await mySanityClient.fetch(`*[_type == "product"]`);
+  const products = await client.fetch(`*[_type == "product"]`);
 
   const paths = products.map((product) => ({
     params: {
@@ -128,7 +129,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   // fetch the product with matching slug
-  const product = await mySanityClient.fetch(
+  const product = await client.fetch(
     `*[slug.current == '${params.product}'][0]`
   );
 

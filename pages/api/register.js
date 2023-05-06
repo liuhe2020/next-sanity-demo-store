@@ -1,10 +1,10 @@
 import bcrypt from 'bcryptjs';
-import mySanityClient from '../../utils/client';
+import client from '../../utils/client';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Not allowed');
 
-  const existingUser = await mySanityClient.fetch(
+  const existingUser = await client.fetch(
     `*[_type == "user" && email == '${req.body.email}'][0]`
   );
 
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     password: hashedPassword,
   };
 
-  const createUser = await mySanityClient.create(newUser);
+  const createUser = await client.create(newUser);
 
   if (createUser) return res.status(200).send('New user created');
   res.status(400).send('Failed to register user to database');

@@ -41,17 +41,13 @@ export default function ShoppingBagItem({ item }) {
       <h3 className='text-base font-medium text-stone-900 col-span-2 self-center min-[450px]:row-span-2 min-[450px]:justify-self-start'>
         {item.name}
       </h3>
-
-      <div className='row-span-2 relative flex justify-center w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] min-[450px]:col-span-1 min-[450px]:row-start-1'>
-        <Image
-          src={urlFor(item.images[0]).url()}
-          alt=''
-          layout='fill'
-          objectFit='contain'
-          objectPosition='center'
-        />
-      </div>
-
+      <Image
+        className='object-contain object-center row-span-2 w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] min-[450px]:col-span-1 min-[450px]:row-start-1'
+        src={urlFor(item.images[0]).url()}
+        alt={item.name}
+        width='150'
+        height='150'
+      />
       <div className='flex place-self-end'>
         <svg
           onClick={handleDecrement}

@@ -1,9 +1,9 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
-import mySanityClient from '../../../utils/client';
+import client from '../../../utils/client';
 
-export default NextAuth({
+export const authOptions = {
   session: {
     strategy: 'jwt',
   },
@@ -19,8 +19,8 @@ export default NextAuth({
         // credentials is an object containing email & password from the reqeust body
         const { email, password } = credentials;
         // fetch user from sanity
-        const userData = await mySanityClient.fetch(
-          `*[_type == "user" && email == '${email}'][0]{_id, name, email, password, bag, orders[]->}`
+        const userData = await client.fetch(
+          `*[_type == "user" && email == '${email}'][0]{_id, name, email, password, bag}`
         );
 
         // authenticate user
@@ -52,4 +52,6 @@ export default NextAuth({
       return session;
     },
   },
-});
+};
+
+export default NextAuth(authOptions);
