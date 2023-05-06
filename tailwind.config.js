@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./src/pages/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     // define screens to enable max-width and dynamic breakpoints https://tailwindcss.com/blog/tailwindcss-v3-2
     screens: {
@@ -27,9 +24,5 @@ module.exports = {
   variants: {
     fill: ['hover', 'focus'],
   },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/forms'),
-    require('tailwindcss-delicious-hamburgers'),
-  ],
+  plugins: [require('@tailwindcss/aspect-ratio'), require('@tailwindcss/forms'), require('tailwindcss-delicious-hamburgers')],
 };
