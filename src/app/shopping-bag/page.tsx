@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import ShoppingBagItem from '../components/ShoppingBagItem';
+import ShoppingBagItem from './ShoppingBagItem';
 import useStore from '../store/store';
 
 export default function ShoppingBag() {

@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import ProductCard from '../../components/ProductCard';
 import client from '../../utils/client';
+import ProductCard from './ProductCard';
 
 export default function index({ products, category }) {
   return (
