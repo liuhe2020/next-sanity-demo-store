@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import useStore from './store';
 import client from '../utils/client';
 
-export default function StoreProvider({ children }) {
+export default function StoreProvider({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession();
   const state = useStore();
   const shoppingBag = Cookies.get('NSDS-bag');

@@ -44,3 +44,18 @@ type Product = {
   _type: string;
   numReviews: number;
 };
+
+// zustand store
+interface ShoppingBagItem {
+  _id: string;
+  name: string;
+  price: number;
+  image: SanityImage;
+  quantity: number;
+}
+
+interface ShoppingBag {
+  total: number;
+  totalQty: number;
+  items: ShoppingBagItem[] | [];
+}

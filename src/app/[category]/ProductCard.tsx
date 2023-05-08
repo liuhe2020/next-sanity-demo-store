@@ -1,5 +1,4 @@
 // require @tailwindcss/aspect-ratio for next Image to fill container responsively without setting width & height
-
 import urlFor from '@/utils/image';
 import Image from 'next/image';
 import Link from 'next/link';

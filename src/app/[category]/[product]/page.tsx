@@ -5,7 +5,7 @@ import AddToBag from './AddToBag';
 import ProductGallery from './ProductGallery';
 
 export async function generateStaticParams() {
-  const products: [Product] = await client.fetch(`*[_type == "product"]`);
+  const products: Product[] = await client.fetch(`*[_type == "product"]`);
 
   return products.map((product) => ({
     product: product.slug.current,
@@ -28,7 +28,9 @@ export default async function Product({ params }: { params: { product: string } 
     <section className='pt-16'>
       <div className='max-w-screen-lg py-4 px-4 space-y-12 lg:space-y-0 lg:flex lg:mx-auto lg:space-x-6 lg:p-10'>
         <div className='flex-1 max-w-xl mx-auto'>
+          {/* client component */}
           <ProductGallery product={product} />
+          {/* client component */}
         </div>
         <div className='flex-1 max-w-xl mx-auto'>
           <div className='w-full h-full flex flex-col lg:pt-[9%] lg:pl-[10%]'>
@@ -62,7 +64,9 @@ export default async function Product({ params }: { params: { product: string } 
             </ul>
             <p className='text-xl font-medium mt-8 min-[400px]:max-[1023px]:mx-4 lg:text-2xl lg:mt-10'>£{product.price.toFixed(2)}</p>
             <div className='mt-8 space-y-3 min-[450px]:flex min-[450px]:space-y-0 min-[450px]:space-x-3 lg:mt-10'>
+              {/* client component */}
               <AddToBag product={product} />
+              {/* client component */}
               <Link
                 href='/checkout'
                 className='w-full inline-flex justify-center py-2.5 px-4 border border-stone-300 rounded-md shadow-sm bg-white text-base font-medium text-stone-500 hover:bg-stone-100'

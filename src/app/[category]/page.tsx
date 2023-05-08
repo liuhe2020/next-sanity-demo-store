@@ -3,7 +3,7 @@ import client from '@/utils/client';
 import ProductCard from './ProductCard';
 
 export async function generateStaticParams() {
-  const categories: [Category] = await client.fetch(`*[_type == "category"]`);
+  const categories: Category[] = await client.fetch(`*[_type == "category"]`);
 
   return categories.map((category) => ({
     category: category.slug.current,
@@ -20,7 +20,7 @@ export function generateMetadata({ params }: { params: { category: string } }): 
 }
 
 export default async function CategoryPage({ params }: { params: { category: string } }) {
-  const products: [Product] = await client.fetch(`*[category == '${params.category}']`);
+  const products: Product[] = await client.fetch(`*[category == '${params.category}']`);
 
   return (
     <section className='pt-16'>
