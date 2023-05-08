@@ -1,58 +1,34 @@
-import Head from 'next/head';
-import client from '../../utils/client';
+import { Metadata } from 'next';
+import client from '@/utils/client';
 import ProductCard from './ProductCard';
 
-export default function index({ products, category }) {
-  return (
-    <>
-      <Head>
-        <title>{`DS | ${category[0].toUpperCase()}${category.slice(1).toLowerCase()}`}</title>
-        <link rel='shortcut icon' href='/images/favicon.ico' />
-      </Head>
-      <section className='pt-16'>
-        <div className='max-w-screen-lg grid grid-cols-1 gap-4 p-4 mx-auto min-[550px]:grid-cols-2 min-[550px]:gap-2.5 lg:grid-cols-3'>
-          {products.map((product, index) => (
-            <ProductCard product={product} key={index} />
-          ))}
-        </div>
-      </section>
-    </>
-  );
-}
+export async function generateStaticParams() {
+  const categories: [Category] = await client.fetch(`*[_type == "category"]`);
 
-export async function getStaticPaths() {
-  const categories = await client.fetch(`*[_type == "category"]`);
-
-  const paths = categories.map((category) => ({
-    params: { category: category.slug.current },
+  return categories.map((category) => ({
+    category: category.slug.current,
   }));
+}
+
+export function generateMetadata({ params }: { params: { category: string } }): Metadata {
+  const title = `${params.category.charAt(0).toUpperCase()}${params.category.slice(1)}`; // capitalize title
 
   return {
-    paths,
-    fallback: false,
+    title: `DS | ${title}`,
+    description: `${title} products category page for Next Sanity Demo Store`,
   };
 }
 
-export async function getStaticProps({ params }) {
-  // // alternative method if product schema does not have a string category field other than the category ref field
-  // // fetch the category with name/slug matching to params from getStaticPaths
-  // const categoryArray = await client.fetch(
-  //   `*[slug.current == '${params.categorySlug}' ]`
-  // );
+export default async function CategoryPage({ params }: { params: { category: string } }) {
+  const products: [Product] = await client.fetch(`*[category == '${params.category}']`);
 
-  // // fetch returns an array with only one matching category object
-  // const category = categoryArray[0];
-
-  // // use the category id(reference) to query all product with that reference/category
-  // const products = await client.fetch(
-  //   `*[_type == 'product' && references('${category._id}')]`
-  // );
-
-  const category = params.category;
-
-  const products = await client.fetch(`*[category == '${category}']`);
-
-  return {
-    props: { products, category },
-  };
+  return (
+    <section className='pt-16'>
+      <div className='max-w-screen-lg grid grid-cols-1 gap-4 p-4 mx-auto min-[550px]:grid-cols-2 min-[550px]:gap-2.5 lg:grid-cols-3'>
+        {products.map((product) => (
+          <ProductCard product={product} key={product._id} />
+        ))}
+      </div>
+    </section>
+  );
 }

@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import ShoppingBagItem from './ShoppingBagItem';
-import useStore from '../store/store';
+import useStore from '@/store/store';
 
 export default function ShoppingBag() {
   const { total, items, clearBag } = useStore();

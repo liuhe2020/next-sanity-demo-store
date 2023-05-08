@@ -3,6 +3,6 @@ import client from './client';
 
 const builder = imageUrlBuilder(client);
 
-export default function urlFor(source: string) {
+export default function urlFor(source: SanityImage) {
   return builder.image(source);
 }

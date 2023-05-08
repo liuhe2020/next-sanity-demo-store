@@ -1,5 +1,5 @@
+'use client';
 // hamburger menu https://github.com/theMosaad/tailwindcss-delicious-hamburgers
-
 import { Fragment, useEffect, forwardRef } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { Menu, Transition } from '@headlessui/react';

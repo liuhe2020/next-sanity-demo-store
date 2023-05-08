@@ -1,3 +1,4 @@
+'use client';
 import FooterLinks from './FooterLinks';
 
 const links = [
@@ -82,9 +83,8 @@ export default function Footer() {
 
       <div className='text-stone-500 text-sm'>
         <p className='py-6 border-y-[1px] md:border-t-0'>
-          Disclaimer: This webiste is a demo. All displayed products are fake.
-          No real transactions are taking place. This is a personal project for
-          educational purposes only.
+          Disclaimer: This webiste is a demo. All displayed products are fake. No real transactions are taking place. This is a personal project for educational
+          purposes only.
         </p>
         <p className='pt-6 pb-10'>&copy; {year} Next Sanity Demo Store</p>
       </div>
