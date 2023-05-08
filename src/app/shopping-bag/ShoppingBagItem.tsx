@@ -1,16 +1,16 @@
 'use client';
-import { useState } from 'react';
+import { useState, type ChangeEvent, type FocusEvent } from 'react';
 import Image from 'next/image';
 import urlFor from '@/utils/image';
 import useStore from '@/store/store';
 
-export default function ShoppingBagItem({ item }) {
+export default function ShoppingBagItem({ item }: { item: ShoppingBagItem }) {
   // quantity local state for component level change and then update to store state
-  const [quantity, setQuantity] = useState(item.quantity);
+  const [quantity, setQuantity] = useState<number | string>(item.quantity);
   const { addToBag, reduceFromBag, updateQuantity } = useStore();
 
-  const handleOnChange = (e) => {
-    // e.target.value is type string, need to work with numbers, but react can't parse NaN hence setQuantity to empty string to stop error
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // e.target.value is type string when there is no input
     if (e.target.value === '') return setQuantity('');
     // convert input string to number and limit to 2 chars
     const value = parseFloat(e.target.value.slice(0, 2));
@@ -19,21 +19,21 @@ export default function ShoppingBagItem({ item }) {
     setQuantity(value);
   };
 
-  const handleOnBlur = (e) => {
+  const handleOnBlur = (e: FocusEvent<HTMLInputElement>) => {
     // show previous quantity if there isn't a number in the input field
     if (e.target.value === '') return setQuantity(item.quantity);
-    updateQuantity(item, quantity);
+    updateQuantity(item, parseInt(String(quantity))); // parseInt accepts string only hence the conversion
   };
 
   const handleIncrement = async () => {
-    if (quantity < 99) {
-      setQuantity((prev) => prev + 1);
+    if (parseInt(String(quantity)) < 99) {
+      setQuantity((prev) => parseInt(String(prev)) + 1);
       addToBag(item);
     }
   };
 
   const handleDecrement = () => {
-    setQuantity((prev) => prev - 1);
+    setQuantity((prev) => parseInt(String(prev)) - 1);
     reduceFromBag(item);
   };
 
@@ -42,7 +42,7 @@ export default function ShoppingBagItem({ item }) {
       <h3 className='text-base font-medium text-stone-900 col-span-2 self-center min-[450px]:row-span-2 min-[450px]:justify-self-start'>{item.name}</h3>
       <Image
         className='object-contain object-center row-span-2 w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] min-[450px]:col-span-1 min-[450px]:row-start-1'
-        src={urlFor(item.images[0]).url()}
+        src={urlFor(item.image).url()}
         alt={item.name}
         width='150'
         height='150'

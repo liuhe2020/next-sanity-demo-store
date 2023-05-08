@@ -6,7 +6,13 @@ export default function AddToBag({ product }: { product: Product }) {
   const addToBag = useStore((state) => state.addToBag);
 
   const handleAddToBag = () => {
-    addToBag(product);
+    addToBag({
+      _id: product._id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0],
+      quantity: 1,
+    });
     toast(`Added ${product.name} to the bag`);
   };
 

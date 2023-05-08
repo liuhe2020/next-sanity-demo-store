@@ -1,3 +1,4 @@
+'use client';
 import { create } from 'zustand';
 
 const handleAddToBag = (items: ShoppingBagItem[] | [], nextItem: ShoppingBagItem) => {

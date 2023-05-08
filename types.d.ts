@@ -58,4 +58,9 @@ interface ShoppingBag {
   total: number;
   totalQty: number;
   items: ShoppingBagItem[] | [];
+  addToBag: (arg: ShoppingBagItem) => void;
+  reduceFromBag: (arg: ShoppingBagItem) => void;
+  updateQuantity: (arg1: ShoppingBagItem, arg2: number) => void;
+  clearBag: () => void;
+  hydrateBag: (arg: ShoppingBag) => void;
 }

@@ -1,8 +1,9 @@
+'use client';
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import Cookies from 'js-cookie';
 import useStore from './store';
-import client from '../utils/client';
+import client from '@/utils/client';
 
 export default function StoreProvider({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession();
@@ -21,7 +22,7 @@ export default function StoreProvider({ children }: { children: React.ReactNode 
       if (session && parsedBag.total != 0) {
         (async function () {
           await client
-            .patch(session.user._id)
+            .patch(session?.user?._id)
             .set({ bag: JSON.stringify(parsedBag) })
             .commit();
           return;
