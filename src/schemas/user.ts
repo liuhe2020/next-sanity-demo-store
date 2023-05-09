@@ -8,25 +8,20 @@ export default {
       title: 'Name',
       type: 'string',
     },
-
     {
       name: 'email',
       title: 'Email',
       type: 'string',
     },
     {
-      name: 'password',
-      title: 'Password',
-      type: 'string',
+      name: 'image',
+      title: 'Image',
+      type: 'url',
     },
     {
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 96,
-      },
+      name: 'emailVerified',
+      title: 'Email Verified',
+      type: 'datetime',
     },
     {
       name: 'bag',

@@ -1,0 +1,1 @@
+export { SanityAdapter } from './adapter';
