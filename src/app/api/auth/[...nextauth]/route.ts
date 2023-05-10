@@ -1,55 +1,36 @@
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt from 'bcryptjs';
-import client from '../../../../utils/client';
+import NextAuth, { type NextAuthOptions } from 'next-auth';
+import EmailProvider from 'next-auth/providers/email';
+import client from '@/utils/client';
+import { SanityAdapter } from '@/nextauth-sanity-adapter';
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
+  // Configure one or more authentication providers
+  adapter: SanityAdapter(client),
+  providers: [
+    EmailProvider({
+      server: process.env.EMAIL_SERVER,
+      from: process.env.EMAIL_FROM,
+    }),
+  ],
+  pages: {
+    signIn: '/sign-in',
+  },
   session: {
     strategy: 'jwt',
   },
-  pages: {
-    signIn: '/sign-in',
-    error: '/sign-in',
-  },
-  providers: [
-    CredentialsProvider({
-      type: 'credentials',
-      credentials: {},
-      async authorize(credentials, req) {
-        // credentials is an object containing email & password from the reqeust body
-        const { email, password } = credentials;
-        // fetch user from sanity
-        const userData = await client.fetch(`*[_type == "user" && email == '${email}'][0]{_id, name, email, password, bag}`);
+  // callbacks: {
+  //   async jwt({ token }) {
+  //     // add user role to jwt. note: user is only available on first call when user sign in, not on subsequent calls
 
-        // authenticate user
-        if (userData) {
-          const matching = await bcrypt.compare(password, userData.password);
-          if (matching) {
-            const user = {
-              _id: userData._id,
-              name: userData.name,
-              email: userData.email,
-              bag: userData.bag,
-              orders: userData.orders,
-            };
-            return user;
-          }
-          return null;
-        }
-        return null;
-      },
-    }),
-  ],
-  callbacks: {
-    jwt: async ({ token, user }) => {
-      user && (token.user = user);
-      return token;
-    },
-    session: async ({ session, token }) => {
-      session.user = token.user;
-      return session;
-    },
-  },
+  //     return token;
+  //   },
+  //   async session({ session }) {
+  //     // add user role to session
+
+  //     return session;
+  //   },
+  // },
 };
 
-export default NextAuth(authOptions);
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };

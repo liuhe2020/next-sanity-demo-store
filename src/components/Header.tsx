@@ -1,13 +1,13 @@
 'use client';
 // hamburger menu https://github.com/theMosaad/tailwindcss-delicious-hamburgers
-import { Fragment, useEffect, forwardRef } from 'react';
+import { Fragment, useEffect, forwardRef, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import useStore from '../store/store';
 import classNames from '../utils/classNames';
 
-const navigation = [
+const routes = [
   { name: 'Laptops', href: '/laptops', current: false },
   { name: 'Phones', href: '/phones', current: false },
   { name: 'Tablets', href: '/tablets', current: false },
@@ -16,42 +16,47 @@ const navigation = [
 ];
 
 // headlessui intergration with next.js
-const MyLink = forwardRef((props, ref) => {
-  let { href, children, ...rest } = props;
-  return (
-    <Link href={href} ref={ref} {...rest}>
-      {children}
-    </Link>
-  );
-});
+// const MyLink = forwardRef((props, ref) => {
+//   let { href, children, ...rest } = props;
+//   return (
+//     <Link href={href} ref={ref} {...rest}>
+//       {children}
+//     </Link>
+//   );
+// });
 
-MyLink.displayName = 'MyLink';
+// MyLink.displayName = 'MyLink';
 
-export default function Header({ navToggle, setNavToggle }) {
+export default function Header() {
+  const [isToggled, setIsToggled] = useState(false);
   const totalQty = useStore((state) => state.totalQty);
   const { data: session } = useSession();
 
   // lock window scroll when mobile menu is open
   useEffect(() => {
-    if (navToggle) document.querySelector('body').classList.add('overflow-y-hidden');
+    if (isToggled) {
+      document.querySelector('body')?.classList.add('overflow-y-hidden');
+    }
     return () => {
-      document.querySelector('body').classList.remove('overflow-y-hidden');
+      document.querySelector('body')?.classList.remove('overflow-y-hidden');
     };
-  }, [navToggle]);
+  }, [isToggled]);
 
   return (
     <header className='fixed top-0 h-16 z-10 w-full'>
       {/* mobile menu */}
       <div
         className={classNames(
-          !navToggle && '-translate-y-full bg-transparent',
+          !isToggled && '-translate-y-full bg-transparent',
           'absolute w-full h-[100vh] bg-black top-0 pt-16 transition duration-500 ease-in-out md:hidden'
         )}
       >
         <ul className='flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500'>
-          {navigation.map((el, index) => (
+          {routes.map((el, index) => (
             <li key={index} className={classNames(el.current ? 'text-white' : 'text-stone-300', 'hover:text-white font-medium text-center py-4')}>
-              <Link href={el.href}>{el.name}</Link>
+              <Link href={el.href} onClick={() => setIsToggled(false)}>
+                {el.name}
+              </Link>
             </li>
           ))}
         </ul>
@@ -60,7 +65,7 @@ export default function Header({ navToggle, setNavToggle }) {
       <nav className='relative bg-black/[.8] backdrop-blur-lg h-full z-20'>
         <div className='w-full max-w-screen-lg h-full flex justify-between items-center mx-auto px-4 lg:px-2 xl:px-0'>
           {/* hamburger menu icon*/}
-          <div className={classNames(navToggle && 'active', 'c-hamburger c-hamburger--chop', 'md:hidden')} onClick={() => setNavToggle((prev) => !prev)}>
+          <div className={classNames(isToggled && 'active', 'c-hamburger c-hamburger--chop', 'md:hidden')} onClick={() => setIsToggled((prev) => !prev)}>
             <div className='c-hamburger-inner'>
               <span className='c-hamburger-bar'></span>
               <span className='c-hamburger-bar'></span>
@@ -75,7 +80,7 @@ export default function Header({ navToggle, setNavToggle }) {
 
           {/* desktop menu */}
           <ul className='hidden md:flex space-x-8'>
-            {navigation.map((el, index) => (
+            {routes.map((el, index) => (
               <li key={index} className={classNames(el.current ? 'text-white' : 'text-stone-300', 'hover:text-white font-medium')}>
                 <Link href={el.href}>{el.name}</Link>
               </li>
@@ -92,7 +97,7 @@ export default function Header({ navToggle, setNavToggle }) {
                   </svg>
                 </Menu.Button>
               </div>
-              <Transition
+              {/* <Transition
                 as={Fragment}
                 enter='transition ease-out duration-100'
                 enterFrom='transform opacity-0 scale-95'
@@ -124,7 +129,7 @@ export default function Header({ navToggle, setNavToggle }) {
                     )}
                   </Menu.Item>
                 </Menu.Items>
-              </Transition>
+              </Transition> */}
             </Menu>
             <Link href='/shopping-bag'>
               <div className='cursor-pointer relative group'>

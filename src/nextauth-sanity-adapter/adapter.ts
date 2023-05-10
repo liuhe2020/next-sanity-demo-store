@@ -1,5 +1,5 @@
 import type { Adapter } from 'next-auth/adapters';
-import { type SanityClient } from 'next-sanity';
+import type { SanityClient } from 'next-sanity';
 import { getUserByIdQuery, getUserByProviderAccountIdQuery, getUserByEmailQuery, getVerificationTokenQuery } from './queries';
 import { uuid } from '@sanity/uuid';
 
@@ -22,7 +22,6 @@ export function SanityAdapter(
       const { _id, ...user } = await client.create({
         _id: `user.${uuid()}`,
         _type: options.schemas.user,
-        role: 'unauthorized',
         ...profile,
       });
 
