@@ -1,6 +1,6 @@
 'use client';
 // hamburger menu https://github.com/theMosaad/tailwindcss-delicious-hamburgers
-import { Fragment, useEffect, forwardRef, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
@@ -14,18 +14,6 @@ const routes = [
   { name: 'Audio', href: '/audios', current: false },
   { name: 'Accessories', href: '/accessories', current: false },
 ];
-
-// headlessui intergration with next.js
-// const MyLink = forwardRef((props, ref) => {
-//   let { href, children, ...rest } = props;
-//   return (
-//     <Link href={href} ref={ref} {...rest}>
-//       {children}
-//     </Link>
-//   );
-// });
-
-// MyLink.displayName = 'MyLink';
 
 export default function Header() {
   const [isToggled, setIsToggled] = useState(false);
@@ -97,7 +85,7 @@ export default function Header() {
                   </svg>
                 </Menu.Button>
               </div>
-              {/* <Transition
+              <Transition
                 as={Fragment}
                 enter='transition ease-out duration-100'
                 enterFrom='transform opacity-0 scale-95'
@@ -109,27 +97,27 @@ export default function Header() {
                 <Menu.Items className='absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                   <Menu.Item>
                     {({ active }) => (
-                      <MyLink href={session ? `/account/${session.user._id}` : '/sign-in'}>
+                      <Link href={session ? `/account/` : '/sign-in'}>
                         <button className={classNames(active ? 'bg-stone-100' : '', 'block w-full text-left px-4 py-2 text-sm text-stone-700')}>
                           {session ? 'Account' : 'Sign in'}
                         </button>
-                      </MyLink>
+                      </Link>
                     )}
                   </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
-                      <MyLink href={session ? '#' : '/register'}>
+                      <Link href={session ? '#' : '/register'}>
                         <button
                           onClick={() => session && signOut()}
                           className={classNames(active ? 'bg-stone-100' : '', 'block w-full text-left px-4 py-2 text-sm text-stone-700')}
                         >
                           {session ? 'Sign out' : 'Register'}
                         </button>
-                      </MyLink>
+                      </Link>
                     )}
                   </Menu.Item>
                 </Menu.Items>
-              </Transition> */}
+              </Transition>
             </Menu>
             <Link href='/shopping-bag'>
               <div className='cursor-pointer relative group'>

@@ -22,9 +22,6 @@ dependencies:
   '@sanity/vision':
     specifier: ^3.10.0
     version: 3.10.0(@babel/runtime@7.21.5)(@codemirror/lint@6.2.1)(@codemirror/state@6.2.0)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.0.2)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.10)
-  bcryptjs:
-    specifier: ^2.4.3
-    version: 2.4.3
   groq:
     specifier: ^3.10.1
     version: 3.10.1
@@ -2243,10 +2240,6 @@ packages:
   /base64url@3.0.1:
     resolution: {integrity: sha512-ir1UPr3dkwexU7FdV8qBBbNDRUhMmIekYMFZfi+C/sLNnRESKPl23nB9b2pltqfOQNnGzsDdId90AEtG5tCx4A==}
     engines: {node: '>=6.0.0'}
-    dev: false
-
-  /bcryptjs@2.4.3:
-    resolution: {integrity: sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==}
     dev: false
 
   /big-integer@1.6.51:
