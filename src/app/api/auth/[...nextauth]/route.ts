@@ -4,7 +4,6 @@ import client from '@/utils/client';
 import { SanityAdapter } from '@/nextauth-sanity-adapter';
 
 export const authOptions: NextAuthOptions = {
-  // Configure one or more authentication providers
   adapter: SanityAdapter(client),
   providers: [
     EmailProvider({
@@ -18,18 +17,16 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
-  // callbacks: {
-  //   async jwt({ token }) {
-  //     // add user role to jwt. note: user is only available on first call when user sign in, not on subsequent calls
-
-  //     return token;
-  //   },
-  //   async session({ session }) {
-  //     // add user role to session
-
-  //     return session;
-  //   },
-  // },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) token.id = user.id;
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user && token.id) session.user.id = token.id;
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

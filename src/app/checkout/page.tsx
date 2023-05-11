@@ -1,11 +1,12 @@
+'use client';
 import { useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import Image from 'next/image';
 import Link from 'next/link';
-import useStore from '../store/store';
-import urlFor from '../utils/image';
-import Confirmation from '../components/Checkout/Confirmation';
+import Confirmation from './Confirmation';
 import Head from 'next/head';
+import useStore from '@/store/store';
+import urlFor from '@/utils/image';
 
 export default function Checkout() {
   const { total, items } = useStore();
@@ -74,7 +75,7 @@ export default function Checkout() {
                     <div className='flex flex-1 space-x-4'>
                       <Image
                         className='object-contain object-center w-[75px] h-[75px] sm:w-[120px] sm:h-[120px]'
-                        src={urlFor(item.images[0]).url()}
+                        src={urlFor(item.image).url()}
                         alt={item.name}
                         width='120'
                         height='120'

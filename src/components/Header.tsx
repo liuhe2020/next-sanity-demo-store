@@ -6,6 +6,7 @@ import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import useStore from '../store/store';
 import classNames from '../utils/classNames';
+import Image from 'next/image';
 
 const routes = [
   { name: 'Laptops', href: '/laptops', current: false },
@@ -19,6 +20,8 @@ export default function Header() {
   const [isToggled, setIsToggled] = useState(false);
   const totalQty = useStore((state) => state.totalQty);
   const { data: session } = useSession();
+
+  console.log(session);
 
   // lock window scroll when mobile menu is open
   useEffect(() => {
@@ -63,7 +66,13 @@ export default function Header() {
 
           {/* logo */}
           <Link href='/' className='md:mr-7'>
-            <img className='h-7 absolute top-5 left-0 right-0 mx-auto md:static md:mx-0 opacity-90' src='/images/nsds_logo.png' alt='nsds logo'></img>
+            <Image
+              className='h-7 absolute top-5 left-0 right-0 mx-auto md:static md:mx-0 opacity-90'
+              src='/images/nsds_logo.png'
+              alt='nsds logo'
+              width={28}
+              height={28}
+            />
           </Link>
 
           {/* desktop menu */}
@@ -94,28 +103,29 @@ export default function Header() {
                 leaveFrom='transform opacity-100 scale-100'
                 leaveTo='transform opacity-0 scale-95'
               >
-                <Menu.Items className='absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                <Menu.Items className='absolute left-1/2 -translate-x-1/2 z-10 mt-2 w-24 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                   <Menu.Item>
                     {({ active }) => (
-                      <Link href={session ? `/account/` : '/sign-in'}>
-                        <button className={classNames(active ? 'bg-stone-100' : '', 'block w-full text-left px-4 py-2 text-sm text-stone-700')}>
-                          {session ? 'Account' : 'Sign in'}
-                        </button>
+                      <Link
+                        href={session ? `/account/` : '/sign-in'}
+                        className={classNames(active && 'bg-stone-100', 'block w-full text-left px-4 py-2 text-sm text-stone-700')}
+                      >
+                        {session ? 'Account' : 'Sign in'}
                       </Link>
                     )}
                   </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link href={session ? '#' : '/register'}>
+                  {session && (
+                    <Menu.Item>
+                      {({ active }) => (
                         <button
-                          onClick={() => session && signOut()}
-                          className={classNames(active ? 'bg-stone-100' : '', 'block w-full text-left px-4 py-2 text-sm text-stone-700')}
+                          onClick={() => signOut()}
+                          className={classNames(active && 'bg-stone-100', 'block w-full text-left px-4 py-2 text-sm text-stone-700')}
                         >
-                          {session ? 'Sign out' : 'Register'}
+                          Sign out
                         </button>
-                      </Link>
-                    )}
-                  </Menu.Item>
+                      )}
+                    </Menu.Item>
+                  )}
                 </Menu.Items>
               </Transition>
             </Menu>

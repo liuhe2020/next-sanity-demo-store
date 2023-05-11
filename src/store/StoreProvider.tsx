@@ -10,11 +10,11 @@ export default function StoreProvider({ children }: { children: React.ReactNode 
   // const state = useStore();
   // const shoppingBag = Cookies.get('NSDS-bag');
 
-  // // SHOPPING BAG HYDRATION FLOW
-  // // if cookies -> get bag from cookies
-  // //          -> and user -> get bag from cookies
-  // // if no cookies -> no user -> do nothing
-  // //             -> and user -> get bag from sanity
+  // SHOPPING BAG HYDRATION FLOW
+  // if cookies -> get bag from cookies
+  //          -> and user -> get bag from cookies
+  // if no cookies -> no user -> do nothing
+  //             -> and user -> get bag from sanity
   // useEffect(() => {
   //   if (shoppingBag) {
   //     const parsedBag = JSON.parse(shoppingBag);
@@ -22,7 +22,7 @@ export default function StoreProvider({ children }: { children: React.ReactNode 
   //     if (session && parsedBag.total != 0) {
   //       (async function () {
   //         await client
-  //           .patch(session?.user?._id)
+  //           .patch(session.user.id)
   //           .set({ bag: JSON.stringify(parsedBag) })
   //           .commit();
   //         return;
@@ -38,10 +38,10 @@ export default function StoreProvider({ children }: { children: React.ReactNode 
   // useEffect(() => {
   //   Cookies.set('NSDS-bag', JSON.stringify(state));
   //   // update user shopping bag on sanity when signed in
-  //   if (session) {
+  //   if (session && session.user) {
   //     (async function () {
   //       await client
-  //         .patch(session.user._id)
+  //         .patch(session.user.id)
   //         .set({ bag: JSON.stringify(state) })
   //         .commit();
   //       return;
