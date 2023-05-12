@@ -21,7 +21,7 @@ export default function Header() {
   const totalQty = useStore((state) => state.totalQty);
   const { data: session } = useSession();
 
-  console.log(session);
+  // console.log(session);
 
   // lock window scroll when mobile menu is open
   useEffect(() => {

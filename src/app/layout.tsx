@@ -1,9 +1,9 @@
 import Header from '@/components/Header';
 import './globals.css';
 import { Inter } from 'next/font/google';
-import Footer from '@/components/Footer';
+import ShoppingBagProvider from '@/components/ShoppingBagProvider';
 import { Toaster } from 'react-hot-toast';
-import StoreProvider from '@/store/StoreProvider';
+import Footer from '@/components/Footer';
 import { Metadata } from 'next';
 import NextAuthProvider from '@/components/NextAuthProvider';
 import Cookie from '@/components/Cookie';
@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='en'>
       <body className={inter.className}>
         <NextAuthProvider>
-          <StoreProvider>
+          <ShoppingBagProvider>
             <PayPalProvider>
               <Header />
               {children}
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 },
               }}
             />
-          </StoreProvider>
+          </ShoppingBagProvider>
         </NextAuthProvider>
       </body>
     </html>
