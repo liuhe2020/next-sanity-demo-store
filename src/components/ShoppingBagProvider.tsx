@@ -1,63 +1,57 @@
 'use client';
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import Cookies from 'js-cookie';
 import useStore from '../store/store';
 import client from '@/utils/client';
 
 export default function ShoppingBagProvider({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession();
   const store = useStore();
-  const shoppingBag = Cookies.get('NSDS-bag');
+  const localValue = localStorage.getItem('NSDS-shopping-bag');
 
   // SHOPPING BAG HYDRATION FLOW
-  // if cookies -> get bag from cookies
-  //          -> and user -> get bag from cookies
-  // if no cookies -> no user -> do nothing
-  //             -> and user -> get bag from sanity
+  // user signed in -> no local data  -> no sanity data  -> do nothing
+  //                                  -> has sanity data -> fetch sanity data
+  //                -> has local data -> update sanity data
+  // guest user     -> get data from local storage
   useEffect(() => {
-    if (shoppingBag) {
-      const parsedBag = JSON.parse(shoppingBag);
-      // update user bag when sign in
-      if (session && parsedBag.total != 0) {
-        (async function () {
-          await client
-            .patch(session.user!.id)
-            .set({ bag: JSON.stringify(parsedBag) })
-            .commit();
-          return;
-        })();
-      }
-      // fill bag from cookies for guest user
-      return store.hydrateBag(parsedBag);
+    if (!session) {
+      if (!localValue || JSON.parse(localValue).total == 0) return;
+      return store.hydrateBag(JSON.parse(localValue));
     }
-    // no shopping bag in cookies - fill bag from sanity for signed in user
-    const getUserBag = async () => {
-      const userBag: string = await client.fetch(`*[_type == "user" && _id == "${session?.user?.id}"]{bag}[0]`);
-      console.log(userBag);
-      store.hydrateBag(JSON.parse(userBag));
+    // user signed in
+    if (!localValue || JSON.parse(localValue).total == 0) {
+      // no shopping bag locally - fill bag from sanity for signed in user
+      const getUserBag = async () => {
+        const data: { bag: string } = await client.fetch(`*[_type == "user" && _id == "${session?.user?.id}"]{bag}[0]`);
+        data && store.hydrateBag(JSON.parse(data.bag));
+      };
+      getUserBag();
+      return;
+    }
+    // shopping bag exists locally, update to sanity
+    const overwriteUserBag = async () => {
+      await client
+        .patch(session.user!.id)
+        .set({ bag: JSON.stringify(JSON.parse(localValue)) })
+        .commit();
     };
-    getUserBag();
-    // if (session.user.bag) store.hydrateBag(JSON.parse(session.user.bag));
+    overwriteUserBag();
   }, [session]);
 
-  const unsub = useStore.subscribe((state) => {
-    Cookies.set('NSDS-bag', JSON.stringify(state));
+  useEffect(() => {
+    localStorage.setItem('NSDS-shopping-bag', JSON.stringify(store));
     // update user shopping bag on sanity when signed in
     if (session) {
-      (async function () {
+      const updateUserBag = async () => {
         await client
           .patch(session.user!.id)
-          .set({ bag: JSON.stringify(state) })
+          .set({ bag: JSON.stringify(store) })
           .commit();
-      })();
+      };
+      updateUserBag();
     }
-  });
-
-  useEffect(() => {
-    // unsub on component dismount
-    return () => unsub();
-  }, []);
+  }, [store]);
 
   return <>{children}</>;
 }

@@ -45,6 +45,16 @@ type Product = {
   numReviews: number;
 };
 
+type Order = {
+  name: string;
+  orderItems: {
+    product: Product;
+    quantity: number;
+  }[];
+  orderTotal: number;
+  _createdAt: string;
+};
+
 // zustand store
 interface ShoppingBagItem {
   _id: string;

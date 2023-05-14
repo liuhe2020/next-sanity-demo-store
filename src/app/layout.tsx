@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {children}
               <Footer />
             </PayPalProvider>
-            <Cookie />
+            {/* <Cookie /> */}
             <Toaster
               position='bottom-center'
               toastOptions={{
