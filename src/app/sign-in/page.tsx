@@ -1,17 +1,10 @@
 'use client';
 // require('@tailwindcss/forms')
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Metadata } from 'next';
 import { getCsrfToken } from 'next-auth/react';
 
-export const metadata: Metadata = {
-  title: 'DS | Sign In',
-  description: 'Next Sanity Demo Store sign in page',
-};
-
-export default function SignIn() {
+export default function SignInPage() {
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
 

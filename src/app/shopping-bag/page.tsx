@@ -1,14 +1,9 @@
 'use client';
 import Link from 'next/link';
-import { Metadata } from 'next';
 import ShoppingBagItem from './ShoppingBagItem';
 import useStore from '@/store/store';
 
-export const metadata: Metadata = {
-  title: 'DS | Shopping Bag',
-};
-
-export default function ShoppingBag() {
+export default function ShoppingBagPage() {
   const { total, items, clearBag } = useStore();
 
   return (

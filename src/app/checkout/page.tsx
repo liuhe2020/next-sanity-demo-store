@@ -6,14 +6,8 @@ import Link from 'next/link';
 import Confirmation from './Confirmation';
 import useStore from '@/store/store';
 import urlFor from '@/utils/image';
-import { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'DS | Checkout',
-  description: 'Next Sanity Demo Store checkout page',
-};
-
-export default function Checkout() {
+export default function CheckoutPage() {
   const { total, items } = useStore();
   const [order, setOrder] = useState<ConfirmationOrder>();
 

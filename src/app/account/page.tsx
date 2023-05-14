@@ -5,16 +5,10 @@ import classNames from '@/utils/classNames';
 import client from '@/utils/client';
 import Orders from './Order';
 import Profile from './Profile';
-import { Metadata } from 'next';
 
 const sideNav = ['Orders', 'Profile'];
 
-export const metadata: Metadata = {
-  title: 'DS | Account',
-  description: 'Next Sanity Demo Store user account page',
-};
-
-export default function Account() {
+export default function AccountPage() {
   const [orders, setOrders] = useState<Order[] | []>([]);
   const [view, setView] = useState('Orders');
 
