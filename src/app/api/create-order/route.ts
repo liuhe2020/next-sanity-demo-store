@@ -1,20 +1,22 @@
-import client from '../../utils/client';
-import generateAccessToken from '../../utils/accessToken';
+import generateAccessToken from '@/utils/accessToken';
+import client from '@/utils/client';
+import { NextResponse } from 'next/server';
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).send('Not allowed');
+export async function POST(request: Request) {
+  if (!request.body) return NextResponse.json('No request body.');
 
-  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
-  const clientSecret = process.env.PAYPAL_SECRET;
+  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!;
+  const clientSecret = process.env.PAYPAL_SECRET!;
   const base = 'https://api-m.sandbox.paypal.com';
-  const clientOrder = req.body;
+  const clientOrder: {
+    id: string;
+    quantity: number;
+  }[] = await request.json();
 
   // check items from client and match prices from sanity
   const items = await Promise.all(
     clientOrder.map(async (item) => {
-      const product = await client.fetch(
-        `*[_type == 'product' && _id == '${item.id}'][0]`
-      );
+      const product = await client.fetch(`*[_type == 'product' && _id == '${item.id}'][0]`);
       return {
         ...product,
         quantity: item.quantity,
@@ -36,14 +38,9 @@ export default async function handler(req, res) {
   }));
 
   // calculate total
-  const total = paypalItems
-    .reduce(
-      (a, item) => a + item.quantity * parseInt(item.unit_amount.value),
-      0
-    )
-    .toString();
+  const total = paypalItems.reduce((a, item) => a + item.quantity * parseInt(item.unit_amount.value), 0).toString();
 
-  const response = await fetch(`${base}/v2/checkout/orders`, {
+  const paypalRes = await fetch(`${base}/v2/checkout/orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -70,10 +67,10 @@ export default async function handler(req, res) {
     }),
   });
 
-  if (response.status === 200 || response.status === 201) {
-    const order = await response.json();
-    return res.status(200).json(order);
+  if (paypalRes.ok) {
+    const order = await paypalRes.json();
+    return NextResponse.json(order);
   }
 
-  return res.status(500).send('Failed to create Paypal order');
+  return NextResponse.json('Failed to create Paypal order');
 }

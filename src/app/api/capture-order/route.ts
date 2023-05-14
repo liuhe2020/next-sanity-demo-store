@@ -1,22 +1,23 @@
 import { v4 as uuidv4 } from 'uuid';
-import generateAccessToken from '../../utils/accessToken';
-import client from '../../utils/client';
-import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from './auth/[...nextauth]';
+import { getServerSession } from 'next-auth/next';
+import { NextResponse } from 'next/server';
+import { authOptions } from '../auth/[...nextauth]/route';
+import generateAccessToken from '@/utils/accessToken';
+import client from '@/utils/client';
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).send('Not allowed');
+export async function POST(request: Request) {
+  if (!request.body) return NextResponse.json('No request body.');
 
-  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
-  const clientSecret = process.env.PAYPAL_SECRET;
+  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!;
+  const clientSecret = process.env.PAYPAL_SECRET!;
   const base = 'https://api-m.sandbox.paypal.com';
-  const orderId = req.body;
+  const orderId: string = await request.json();
 
   // get user/session
-  const session = await unstable_getServerSession(req, res, authOptions);
+  const session = await getServerSession(authOptions);
 
   // helper to output order object for sanity
-  const sanityOrder = (order, capture) => {
+  const sanityOrder = (order: PaypalOrder, capture: CaptureOrder) => {
     const orderObj = {
       _type: 'order',
       name: orderId, //paypal order/capture id (not transaction id)
@@ -28,9 +29,7 @@ export default async function handler(req, res) {
         quantity: parseInt(item.quantity),
         _key: uuidv4(),
       })),
-      orderTotal: parseInt(
-        capture.purchase_units[0].payments.captures[0].amount.value
-      ),
+      orderTotal: parseInt(capture.purchase_units[0].payments.captures[0].amount.value),
       deliveryAddress: {
         fullName: capture.purchase_units[0].shipping.name.full_name,
         address: `${capture.purchase_units[0].shipping.address.address_line_1}, ${capture.purchase_units[0].shipping.address.address_line_2}`,
@@ -53,7 +52,7 @@ export default async function handler(req, res) {
       ...orderObj,
       user: {
         _type: 'reference',
-        _ref: session ? session.user._id : null,
+        _ref: session.user?.id,
       },
     };
   };
@@ -61,41 +60,37 @@ export default async function handler(req, res) {
   // paypal payment capture
   const accessToken = await generateAccessToken(clientId, clientSecret, base);
 
-  const orderRes = await fetch(`${base}/v2/checkout/orders/${orderId}`, {
-    method: 'GET',
+  const captureRes = await fetch(`${base}/v2/checkout/orders/${orderId}/capture`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
   });
 
-  const orderData = await orderRes.json();
+  if (captureRes.ok) {
+    const captureData: CaptureOrder = await captureRes.json();
 
-  const captureRes = await fetch(
-    `${base}/v2/checkout/orders/${orderId}/capture`,
-    {
-      method: 'POST',
+    // get order details from paypal
+    const orderRes = await fetch(`${base}/v2/checkout/orders/${orderId}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
-    }
-  );
+    });
 
-  if (captureRes.status === 200 || captureRes.status === 201) {
-    const captureData = await captureRes.json();
+    if (!orderRes.ok) return NextResponse.json('Failed to find Paypal order');
+
+    const orderData: PaypalOrder = await orderRes.json();
 
     // store new order in sanity database
-    const newSanityOrder = await client.create(
-      sanityOrder(orderData, captureData)
-    );
+    const newSanityOrder = await client.create(sanityOrder(orderData, captureData));
 
     // fetch order with orderItems ref expanded and return to client side
-    const newSanityOrderProjection = await client.fetch(
-      `*[_id == '${newSanityOrder._id}'][0]{..., orderItems[]{product->, quantity}}`
-    );
-    return res.status(200).json(newSanityOrderProjection);
+    const newSanityOrderProjection = await client.fetch(`*[_id == '${newSanityOrder._id}'][0]{..., orderItems[]{product->, quantity}}`);
+    return NextResponse.json(newSanityOrderProjection);
   }
 
-  return res.status(500).send('Failed to capture Paypal order');
+  return NextResponse.json('Failed to capture Paypal order');
 }

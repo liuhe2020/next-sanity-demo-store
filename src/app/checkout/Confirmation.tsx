@@ -1,6 +1,6 @@
 import urlFor from '../../utils/image';
 
-export default function Confirmation({ order }) {
+export default function Confirmation({ order }: { order: ConfirmationOrder }) {
   return (
     <main className='bg-white px-4 pt-16 pb-24 sm:px-6 sm:pt-24 lg:px-8 lg:py-32'>
       <div className='max-w-3xl mx-auto'>
