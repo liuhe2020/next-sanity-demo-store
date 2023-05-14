@@ -7,7 +7,6 @@ import client from '@/utils/client';
 export default function ShoppingBagProvider({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession();
   const store = useStore();
-  const localValue = localStorage.getItem('NSDS-shopping-bag');
 
   // SHOPPING BAG HYDRATION FLOW
   // user signed in -> no local data  -> no sanity data  -> do nothing
@@ -15,6 +14,8 @@ export default function ShoppingBagProvider({ children }: { children: React.Reac
   //                -> has local data -> update sanity data
   // guest user     -> get data from local storage
   useEffect(() => {
+    const localValue = localStorage.getItem('NSDS-shopping-bag');
+
     if (!session) {
       if (!localValue || JSON.parse(localValue).total == 0) return;
       return store.hydrateBag(JSON.parse(localValue));
