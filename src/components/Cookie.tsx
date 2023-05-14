@@ -4,7 +4,7 @@ import CookieConsent from 'react-cookie-consent';
 export default function Cookie() {
   return (
     <CookieConsent
-      debug={true}
+      // debug={true}
       location='bottom'
       buttonText='Ok'
       cookieName='NSDS-cookies-tc'
