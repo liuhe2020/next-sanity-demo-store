@@ -1,4 +1,4 @@
-export default {
+const account = {
   name: 'account',
   title: 'Account',
   type: 'document',
@@ -35,3 +35,5 @@ export default {
     },
   ],
 };
+
+export default account;

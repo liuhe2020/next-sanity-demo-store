@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 
-export default function FooterLinks({ link }) {
+export default function FooterLinks({ link }: { link: FooterLink }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

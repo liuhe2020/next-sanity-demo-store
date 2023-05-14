@@ -1,3 +1,11 @@
+type FooterLink = {
+  name: string;
+  subLinks: {
+    name: string;
+    href: string;
+  }[];
+};
+
 type Category = {
   _rev: string;
   _type: string;
@@ -74,6 +82,8 @@ type ShoppingBag = {
   clearBag: () => void;
   hydrateBag: (arg: ShoppingBag) => void;
 };
+
+// paypal
 
 type ConfirmationOrder = {
   name: string;

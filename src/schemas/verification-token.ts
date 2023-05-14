@@ -1,4 +1,4 @@
-export default {
+const verificationToken = {
   name: 'verification-token',
   title: 'Verification Token',
   type: 'document',
@@ -20,3 +20,5 @@ export default {
     },
   ],
 };
+
+export default verificationToken;

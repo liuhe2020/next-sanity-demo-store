@@ -1,4 +1,3 @@
-'use client';
 import FooterLinks from './FooterLinks';
 
 const links = [

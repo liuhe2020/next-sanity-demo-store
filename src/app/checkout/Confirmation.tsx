@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import urlFor from '../../utils/image';
 
 export default function Confirmation({ order }: { order: ConfirmationOrder }) {
@@ -19,10 +20,12 @@ export default function Confirmation({ order }: { order: ConfirmationOrder }) {
           <h3 className='sr-only'>Items</h3>
           {order.orderItems.map((item) => (
             <div key={item.product._id} className='py-10 border-b border-gray-200 flex space-x-6'>
-              <img
+              <Image
                 src={urlFor(item.product.images[0]).url()}
                 alt={item.product.name}
                 className='flex-none w-20 h-20 object-center object-cover bg-gray-100 rounded-lg sm:w-40 sm:h-40'
+                width={160}
+                height={160}
               />
               <div className='flex-auto flex flex-col'>
                 <div>

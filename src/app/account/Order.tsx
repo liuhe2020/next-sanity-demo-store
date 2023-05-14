@@ -1,4 +1,4 @@
-'use client';
+import Image from 'next/image';
 import urlFor from '../../utils/image';
 
 export default function Orders({ orders }: { orders: Order[] }) {
@@ -48,10 +48,12 @@ export default function Orders({ orders }: { orders: Order[] }) {
                         <tr key={item.product._id}>
                           <td className='pt-5'>
                             <div className='flex items-center'>
-                              <img
+                              <Image
                                 src={urlFor(item.product.images[0]).url()}
                                 alt={item.product.name}
                                 className='w-16 h-16 object-center object-contain rounded mr-6'
+                                width={64}
+                                height={64}
                               />
                               <div>
                                 <div className='text-stone-900'>{item.product.name}</div>

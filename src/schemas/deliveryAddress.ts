@@ -1,4 +1,4 @@
-export default {
+const deliveryAddress = {
   title: 'Delivery Address',
   name: 'deliveryAddress',
   type: 'object',
@@ -45,3 +45,5 @@ export default {
     },
   ],
 };
+
+export default deliveryAddress;

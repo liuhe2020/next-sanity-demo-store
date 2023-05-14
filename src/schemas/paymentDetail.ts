@@ -1,4 +1,4 @@
-export default {
+const paymentDetail = {
   title: 'Payment Detail',
   name: 'paymentDetail',
   type: 'object',
@@ -25,3 +25,5 @@ export default {
     },
   ],
 };
+
+export default paymentDetail;
