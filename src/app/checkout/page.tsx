@@ -59,7 +59,7 @@ export default function CheckoutPage() {
   };
 
   useEffect(() => {
-    router.replace('/shopping-bag');
+    total === 0 && router.replace('/shopping-bag');
   }, [total]);
 
   if (total === 0) return null;
