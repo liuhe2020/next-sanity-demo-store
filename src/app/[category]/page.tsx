@@ -23,12 +23,10 @@ export default async function CategoryPage({ params }: { params: { category: str
   const products: Product[] = await client.fetch(`*[category == '${params.category}']`);
 
   return (
-    <section className='pt-16'>
-      <div className='max-w-screen-lg grid grid-cols-1 gap-4 p-4 mx-auto min-[550px]:grid-cols-2 min-[550px]:gap-2.5 lg:grid-cols-3'>
-        {products.map((product) => (
-          <ProductCard product={product} key={product._id} />
-        ))}
-      </div>
+    <section className='max-w-screen-lg grid grid-cols-1 gap-4 p-4 mx-auto min-[550px]:grid-cols-2 min-[550px]:gap-2.5 lg:grid-cols-3'>
+      {products.map((product) => (
+        <ProductCard product={product} key={product._id} />
+      ))}
     </section>
   );
 }

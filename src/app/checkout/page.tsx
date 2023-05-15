@@ -1,15 +1,17 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import Image from 'next/image';
 import Link from 'next/link';
 import Confirmation from './Confirmation';
 import useStore from '@/store/store';
 import urlFor from '@/utils/image';
+import { useRouter } from 'next/navigation';
 
 export default function CheckoutPage() {
   const { total, items } = useStore();
   const [order, setOrder] = useState<ConfirmationOrder>();
+  const router = useRouter();
 
   // send order to backend
   const createOrder = async () => {
@@ -27,7 +29,7 @@ export default function CheckoutPage() {
     });
 
     if (response.status !== 200) {
-      console.log('Failed to submit payment to backend');
+      console.log('Failed to create paypal order.');
       return;
     }
 
@@ -45,7 +47,7 @@ export default function CheckoutPage() {
     });
 
     if (!response.ok) {
-      console.log('Failed to approve payment');
+      console.log('Failed to approve payment.');
       return;
     }
 
@@ -54,11 +56,16 @@ export default function CheckoutPage() {
     setOrder(captureData);
   };
 
+  if (total === 0) {
+    router.push('/shopping-bag');
+    return null;
+  }
+
   if (order) return <Confirmation order={order} />;
 
   return (
-    <div className='max-w-screen-lg mx-auto pt-16'>
-      <div className='relative pt-10 grid grid-cols-1 gap-x-20 max-w-7xl mx-auto lg:px-2 lg:grid-cols-2'>
+    <div className='max-w-screen-lg mx-auto pt-10 sm:pt-16'>
+      <div className='relative grid grid-cols-1 gap-x-20 max-w-7xl mx-auto lg:px-2 lg:grid-cols-2'>
         <section className='pb-4 px-4 sm:px-6 sm:pb-10 lg:px-0 lg:pb-0 lg:row-start-1 lg:col-start-1'>
           <div className='max-w-screen-md mx-auto lg:max-w-none'>
             <h2 className='text-xl font-medium mb-2 text-stone-900'>Order summary</h2>

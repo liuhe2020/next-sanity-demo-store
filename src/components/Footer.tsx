@@ -54,7 +54,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className='max-w-screen-lg mx-auto mt-20 text-stone-900 px-4 md:px-6 xl:px-0'>
+    <footer className='max-w-screen-lg mx-auto pt-20 text-stone-900 px-4 md:px-6 xl:px-0'>
       {/* mobile footer links */}
       <div className='border-t-[1px] py-6 md:hidden'>
         {links.map((link) => (

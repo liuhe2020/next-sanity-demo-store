@@ -24,9 +24,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <NextAuthProvider>
           <ShoppingBagProvider>
             <PayPalProvider>
-              <Header />
-              {children}
-              <Footer />
+              <main className='flex flex-col h-[100dvh]'>
+                <Header />
+                <div className='grow pt-16'>{children}</div>
+                <Footer />
+              </main>
             </PayPalProvider>
             <Cookie />
             <Toaster
