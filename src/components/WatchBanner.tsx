@@ -28,7 +28,7 @@ export default function WatchBanner() {
         </div>
       </div>
       <div className='w-[360px] md:w-[660px] lg:w-[900px]'>
-        <Image className='object-contain object-top' src='/images/hero_watch.png' alt='hero watch' width='900' height='0' />
+        <Image className='object-contain object-top' src='/images/hero_watch.png' alt='hero watch' width={900} height={551} />
       </div>
     </section>
   );

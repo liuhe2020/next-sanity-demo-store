@@ -27,7 +27,7 @@ export default function LaptopBanner() {
           </Link>
         </div>
       </div>
-      <Image className='w-[500px] md:w-[1280px]' src='/images/hero_laptop.jpg' alt='hero laptop' width='1280' height='0' />
+      <Image className='w-[500px] md:w-[1280px]' src='/images/hero_laptop.jpg' alt='hero laptop' width={1280} height={552.5} />
     </section>
   );
 }

@@ -57,7 +57,7 @@ export default function Grid() {
             </div>
           </div>
 
-          <Image className='mx-auto w-[260px] h-[260px] xl:w-[330px] xl:h-[330px]' src={i.url} alt={i.title} width='330' height='330' />
+          <Image className='mx-auto w-[260px] h-[260px] xl:w-[330px] xl:h-[330px]' src={i.url} alt={i.title} width={330} height={330} />
         </div>
       ))}
     </section>
