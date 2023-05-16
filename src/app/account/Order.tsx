@@ -3,15 +3,15 @@ import urlFor from '../../utils/image';
 
 export default function Orders({ orders }: { orders: Order[] }) {
   return (
-    <section className='divide-y divide-stone-200 md:flex-1'>
+    <section className='divide-y divide-stone-300 md:flex-1'>
       <div className='py-6 px-4 sm:p-6 lg:pb-8'>
         <h2 className='text-lg leading-6 font-medium text-stone-900'>Order history</h2>
         <div className='mx-auto py-6'>
           <div className=''>
             <div className='space-y-6'>
               {orders.map((order) => (
-                <div key={order.name} className='bg-stone-100 rounded-lg p-6'>
-                  <dl className='space-y-3 text-sm text-stone-600 pb-6 border-b border-stone-200'>
+                <div key={order.name} className='bg-stone-50 rounded-lg p-6'>
+                  <dl className='space-y-3 text-sm text-stone-600 pb-6 border-b border-stone-300'>
                     <div className='flex'>
                       <dt className='w-28 font-medium'>Order number</dt>
                       <dd className='ml-2 text-stone-900'>{order.name}</dd>

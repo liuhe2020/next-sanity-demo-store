@@ -19,7 +19,7 @@ export default function Profile({ user }: { user: User | undefined }) {
   };
 
   return (
-    <form className='divide-y divide-stone-200 md:flex-1' onSubmit={handleSubmit}>
+    <form className='divide-y divide-stone-300 md:flex-1' onSubmit={handleSubmit}>
       {/* Profile section */}
       <div className='py-6 px-4 sm:p-6 lg:pb-8'>
         <h2 className='text-lg leading-6 font-medium text-stone-900'>Profile</h2>
