@@ -1,5 +1,5 @@
-import Header from '@/components/Header';
 import './globals.css';
+import Header from '@/components/Header';
 import { Inter } from 'next/font/google';
 import ShoppingBagProvider from '@/components/ShoppingBagProvider';
 import { Toaster } from 'react-hot-toast';

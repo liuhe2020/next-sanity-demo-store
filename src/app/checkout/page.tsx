@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import Image from 'next/image';
@@ -13,7 +12,6 @@ export default function CheckoutPage() {
   const { total, items } = useStore();
   const [order, setOrder] = useState<ConfirmationOrder>();
   const router = useRouter();
-  console.log(router);
 
   // send order to backend
   const createOrder = async () => {

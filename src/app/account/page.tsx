@@ -12,9 +12,7 @@ export default function AccountPage() {
   const [orders, setOrders] = useState<Order[] | []>([]);
   const [view, setView] = useState('Orders');
 
-  const { data: session } = useSession({
-    required: true,
-  });
+  const { data: session, status } = useSession({ required: true });
 
   useEffect(() => {
     const getOrders = async () => {
@@ -25,6 +23,8 @@ export default function AccountPage() {
     };
     getOrders();
   }, [session]);
+
+  if (status === 'loading') return null;
 
   return (
     <section className='max-w-screen-lg p-4 pt-10 sm:pt-16 relative w-full mx-auto lg:px-8'>
