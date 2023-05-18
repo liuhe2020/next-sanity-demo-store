@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import useStore from '../store/store';
 import client from '@/utils/client';
@@ -13,7 +13,8 @@ export default function ShoppingBagProvider({ children }: { children: React.Reac
   //                                  -> has sanity data -> fetch sanity data
   //                -> has local data -> update sanity data
   // guest user     -> get data from local storage
-  useEffect(() => {
+
+  const shoppingBagCallback = useCallback(() => {
     const localValue = localStorage.getItem('NSDS-shopping-bag');
 
     if (!session) {
@@ -39,6 +40,8 @@ export default function ShoppingBagProvider({ children }: { children: React.Reac
     };
     overwriteUserBag();
   }, [session]);
+
+  useEffect(shoppingBagCallback, [shoppingBagCallback]);
 
   useEffect(() => {
     localStorage.setItem('NSDS-shopping-bag', JSON.stringify(store));
