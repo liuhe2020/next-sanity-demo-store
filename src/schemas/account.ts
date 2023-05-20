@@ -4,6 +4,10 @@ const account = {
   type: 'document',
   fields: [
     {
+      name: 'userName',
+      type: 'string',
+    },
+    {
       name: 'providerType',
       type: 'string',
     },
@@ -25,7 +29,7 @@ const account = {
     },
     {
       name: 'accessTokenExpires',
-      type: 'string',
+      type: 'number',
     },
     {
       name: 'user',

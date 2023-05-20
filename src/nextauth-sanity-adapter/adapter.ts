@@ -48,8 +48,14 @@ export function SanityAdapter(
     },
 
     async linkAccount({ provider, providerAccountId, refresh_token, access_token, expires_at, userId, type }) {
+      const user = await client.fetch(getUserByIdQuery, {
+        userSchema: options.schemas.user,
+        userId,
+      });
+
       await client.create({
         _type: options.schemas.account,
+        userName: user.name,
         providerId: provider,
         providerType: type,
         providerAccountId: `${providerAccountId}`,
