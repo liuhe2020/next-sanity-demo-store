@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const bgCSS =
-  'before:w-full before:h-full before:bg-stone-100 before:absolute before:bottom-0 before:left-0 before:-z-10 before:transition-all before:duration-500 before:ease-[in-out] hover:before:bg-stone-200';
+  'before:w-full before:h-full before:bg-stone-50 before:absolute before:bottom-0 before:left-0 before:-z-10 before:transition-all before:duration-500 before:ease-[in-out] hover:before:bg-stone-100';
 
 export default function ProductCard({ product }: { product: Product }) {
   return (

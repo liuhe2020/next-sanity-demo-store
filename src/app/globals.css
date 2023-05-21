@@ -31,7 +31,7 @@ a {
 
 /* react image gallery customisation */
 .image-gallery-slides {
-  background-color: rgb(245 245 244);
+  background-color: #fafaf9;
   border-radius: 1rem;
   display: flex;
   align-items: center;
@@ -54,16 +54,14 @@ a {
   width: 23.8%;
   aspect-ratio: 1/1;
   padding: 2%;
-  background-color: rgb(245 245 244);
+  background-color: #fafaf9;
   border-radius: 0.5rem;
-  /* border: 4px solid transparent; */
   border: none;
-  transition: border 0.3s ease-out;
+  transition: background-color 0.2s ease-in-out;
 }
 
 @media (max-width: 768px) {
   .image-gallery-thumbnail {
-    /* border: 3px solid transparent; */
     border: none;
   }
 }
@@ -76,14 +74,14 @@ a {
 .image-gallery-thumbnail:focus {
   outline: none;
   border: none;
-  background-color: rgb(231 229 228);
+  background-color: #f5f5f4;
 }
 
 @media (max-width: 768px) {
   .image-gallery-thumbnail.active,
   .image-gallery-thumbnail:focus {
     border: none;
-    background-color: rgb(231 229 228);
+    background-color: #f5f5f4;
   }
 }
 
@@ -91,13 +89,13 @@ a {
   .image-gallery-thumbnail:hover {
     outline: none;
     border: none;
-    background-color: rgb(231 229 228);
+    background-color: #f5f5f4;
   }
 }
 
 @media (hover: hover) and (pointer: fine) and (max-width: 768px) {
   .image-gallery-thumbnail:hover {
     border: none;
-    background-color: rgb(231 229 228);
+    background-color: #f5f5f4;
   }
 }
