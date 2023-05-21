@@ -58,7 +58,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     total === 0 && router.replace('/shopping-bag');
-  }, [total]);
+  }, [total, router]);
 
   if (total === 0) return null;
 

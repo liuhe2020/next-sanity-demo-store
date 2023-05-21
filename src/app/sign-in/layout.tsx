@@ -11,5 +11,6 @@ export const metadata: Metadata = {
 export default async function SignInPageLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
   session && redirect('/account');
+
   return <>{children}</>;
 }
