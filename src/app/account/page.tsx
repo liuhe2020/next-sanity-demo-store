@@ -12,19 +12,17 @@ export default function AccountPage() {
   const [orders, setOrders] = useState<Order[] | []>([]);
   const [view, setView] = useState('Orders');
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     const getOrders = async () => {
       const data: Order[] = await client.fetch(
-        `*[_type == 'order' && user._ref == '${session?.user!.id}']{name, _createdAt, orderTotal, orderItems[]{product->,quantity}}`
+        `*[_type == 'order' && user._ref == '${session?.user!.id}']{name, _createdAt, orderTotal, orderItems[]{product->,quantity}} | order(_createdAt desc)`
       );
       setOrders(data);
     };
     getOrders();
   }, [session]);
-
-  // if (status === 'loading') return null;
 
   return (
     <section className='max-w-screen-lg px-4 pt-10 sm:pt-16 relative w-full mx-auto lg:px-8'>
