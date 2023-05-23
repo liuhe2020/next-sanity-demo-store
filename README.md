@@ -16,6 +16,6 @@ Live site: [https://nsds.vercel.app/](https://nsds.vercel.app/)
 - Statically generated category pages
 - Statically generated individual product pages
 - Paypal payment integration
-- User account page showing order history and user profile
-- Cached shopping basket locally and in database
+- User account page with order history and user profile
+- Cached shopping basket locally and stored in the database
 - Protected pages and routes with middleware
