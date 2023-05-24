@@ -11,9 +11,9 @@ export default function ProductCard({ product }: { product: Product }) {
     <Link href={`/${product.category}/${product.slug.current}`}>
       <div className={`${bgCSS} relative cursor-pointer overflow-hidden rounded-2xl flex flex-col items-center px-[10%] pb-[10%] lg:p-10 h-full`}>
         <Image className='object-contain object-center' src={urlFor(product.images[0]).url()} alt={product.name} width='420' height='420' />
-        <div className='flex flex-col justify-between h-full'>
-          <h3 className='font-medium text-base mb-4 min-[400px]:max-[549px]:text-xl md:text-lg lg:mb-8'>{product.name}</h3>
-          <ul className=''>
+        <div className='flex flex-col h-full gap-4 lg:gap-6'>
+          <h3 className='font-medium text-base min-[400px]:max-[549px]:text-xl md:text-lg'>{product.name}</h3>
+          <ul>
             {product.description.map((el, index) => (
               <li className='flex mb-1 lg:mb-2' key={index}>
                 <svg className='mr-2 mt-1.5' xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24'>
@@ -23,7 +23,7 @@ export default function ProductCard({ product }: { product: Product }) {
               </li>
             ))}
           </ul>
-          <p className='font-medium mt-4 min-[400px]:max-[549px]:text-xl md:text-lg lg:text-base lg:mt-6'>£{product.price.toFixed(2)}</p>
+          <p className='font-medium mt-auto min-[400px]:max-[549px]:text-xl md:text-lg lg:text-base'>£{product.price.toFixed(2)}</p>
         </div>
       </div>
     </Link>
