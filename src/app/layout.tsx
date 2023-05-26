@@ -7,7 +7,6 @@ import Footer from '@/components/Footer';
 import { Metadata } from 'next';
 import NextAuthProvider from '@/components/NextAuthProvider';
 import Cookie from '@/components/Cookie';
-import PayPalProvider from '@/components/PayPalProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,13 +22,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <NextAuthProvider>
           <ShoppingBagProvider>
-            <PayPalProvider>
-              <main className='flex flex-col h-[100dvh]'>
-                <Header />
-                <div className='grow pt-16'>{children}</div>
-                <Footer />
-              </main>
-            </PayPalProvider>
+            <main className='flex flex-col h-[100dvh]'>
+              <Header />
+              <div className='grow pt-16'>{children}</div>
+              <Footer />
+            </main>
             <Cookie />
             <Toaster
               position='bottom-center'
