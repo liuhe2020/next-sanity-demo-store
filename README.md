@@ -1,6 +1,6 @@
 # Next Sanity Demo Store
 
-![Next Sanity Demo Store](images/nsds.jpg)
+![Next Sanity Demo Store](public/images/nsds.jpg)
 
 Next Sanity Demo Store is an example ecommerce store website for educational purposes only. It is built on Next.js 13 with the app router. Pages and components are server side rendered wherever possible. It is coupled with Sanity headless CMS to handle all data. Nextauth with custom Sanity adapter is used for authentication flow. Paypal integration for payment processing, with server side verification for orders and payments in Next API routes. Global state is managed by Zustand and localstorage is used to store insensitive data.
 
