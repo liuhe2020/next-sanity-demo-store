@@ -14,7 +14,7 @@ const data = [
     subtitle: 'Imagination beyond galaxies',
     url: '/images/grid_tablet.png',
     bgColor: 'bg-sky-50',
-    slug: '/',
+    slug: '/tablets/unknown-milkyway-tab-x',
   },
   {
     title: 'Soho Blast',
