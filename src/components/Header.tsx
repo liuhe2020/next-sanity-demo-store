@@ -2,7 +2,7 @@
 // hamburger menu https://github.com/theMosaad/tailwindcss-delicious-hamburgers
 import { Fragment, useEffect, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
-import { Menu, Transition } from '@headlessui/react';
+import { Menu, Transition, Dialog } from '@headlessui/react';
 import Link from 'next/link';
 import useStore from '../store/store';
 import classNames from '../utils/classNames';
@@ -17,6 +17,7 @@ const routes = [
 ];
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(true);
   const [isToggled, setIsToggled] = useState(false);
   const totalQty = useStore((state) => state.totalQty);
   const { data: session } = useSession();
@@ -84,8 +85,72 @@ export default function Header() {
             ))}
           </ul>
 
-          <div className='flex mt-1.5'>
-            <Menu as='div' className='relative mr-1.5'>
+          <div className='flex mt-1.5 gap-x-1.5'>
+            <>
+              <svg
+                className='hover:fill-white mt-[2.5px] cursor-pointer'
+                fill='#d6d3d1'
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                onClick={() => setIsOpen(true)}
+              >
+                <path d='M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z' />
+              </svg>
+
+              <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as='div' className='relative z-10' onClose={() => setIsOpen(false)}>
+                  <Transition.Child
+                    as={Fragment}
+                    enter='ease-out duration-300'
+                    enterFrom='opacity-0'
+                    enterTo='opacity-100'
+                    leave='ease-in duration-200'
+                    leaveFrom='opacity-100'
+                    leaveTo='opacity-0'
+                  >
+                    <div className='fixed inset-0 bg-black bg-opacity-25' />
+                  </Transition.Child>
+
+                  <div className='fixed inset-0 overflow-y-auto'>
+                    <div className='flex min-h-full items-center justify-center p-4 text-center'>
+                      <Transition.Child
+                        as={Fragment}
+                        enter='ease-out duration-300'
+                        enterFrom='opacity-0 scale-95'
+                        enterTo='opacity-100 scale-100'
+                        leave='ease-in duration-200'
+                        leaveFrom='opacity-100 scale-100'
+                        leaveTo='opacity-0 scale-95'
+                      >
+                        <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
+                          <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-gray-900'>
+                            Payment successful
+                          </Dialog.Title>
+                          <div className='mt-2'>
+                            <p className='text-sm text-gray-500'>
+                              Your payment has been successfully submitted. We’ve sent you an email with all of the details of your order.
+                            </p>
+                          </div>
+
+                          <div className='mt-4'>
+                            <button
+                              type='button'
+                              className='inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
+                              onClick={() => setIsOpen(false)}
+                            >
+                              Got it, thanks!
+                            </button>
+                          </div>
+                        </Dialog.Panel>
+                      </Transition.Child>
+                    </div>
+                  </div>
+                </Dialog>
+              </Transition>
+            </>
+            <Menu as='div' className='relative'>
               <div>
                 <Menu.Button className=''>
                   <span className='sr-only'>Open user menu</span>
