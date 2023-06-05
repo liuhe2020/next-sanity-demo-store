@@ -17,36 +17,34 @@ const routes = [
 ];
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(true);
-  const [isToggled, setIsToggled] = useState(false);
+  const [isSearchToggled, setIsSearchToggled] = useState(false);
+  const [isMenuToggled, setIsMenuToggled] = useState(false);
   const totalQty = useStore((state) => state.totalQty);
   const { data: session } = useSession();
 
-  // console.log(session);
-
   // lock window scroll when mobile menu is open
   useEffect(() => {
-    if (isToggled) {
+    if (isMenuToggled) {
       document.querySelector('body')?.classList.add('overflow-y-hidden');
     }
     return () => {
       document.querySelector('body')?.classList.remove('overflow-y-hidden');
     };
-  }, [isToggled]);
+  }, [isMenuToggled]);
 
   return (
-    <header className='fixed top-0 h-16 z-10 w-full'>
+    <header className='sticky top-0 z-10'>
       {/* mobile menu */}
       <div
         className={classNames(
-          !isToggled && '-translate-y-full bg-transparent',
+          !isMenuToggled && '-translate-y-full bg-transparent',
           'absolute w-full h-[100vh] bg-black top-0 pt-16 transition duration-500 ease-in-out md:hidden'
         )}
       >
         <ul className='flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500'>
           {routes.map((el, index) => (
             <li key={index} className={classNames(el.current ? 'text-white' : 'text-stone-300', 'hover:text-white font-medium text-center py-4')}>
-              <Link href={el.href} onClick={() => setIsToggled(false)}>
+              <Link href={el.href} onClick={() => setIsMenuToggled(false)}>
                 {el.name}
               </Link>
             </li>
@@ -54,10 +52,13 @@ export default function Header() {
         </ul>
       </div>
 
-      <nav className='relative bg-black/[.8] backdrop-blur-lg h-full z-20'>
-        <div className='w-full max-w-screen-lg h-full flex justify-between items-center mx-auto px-4 lg:px-2 xl:px-0'>
+      <nav className='relative bg-black/[.8] backdrop-blur-lg z-20'>
+        <div className='relative w-full max-w-screen-lg h-16 flex justify-between items-center mx-auto px-4 lg:px-2 xl:px-0'>
           {/* hamburger menu icon*/}
-          <div className={classNames(isToggled && 'active', 'c-hamburger c-hamburger--chop', 'md:hidden')} onClick={() => setIsToggled((prev) => !prev)}>
+          <div
+            className={classNames(isMenuToggled && 'active', 'c-hamburger c-hamburger--chop', 'md:hidden')}
+            onClick={() => setIsMenuToggled((prev) => !prev)}
+          >
             <div className='c-hamburger-inner'>
               <span className='c-hamburger-bar'></span>
               <span className='c-hamburger-bar'></span>
@@ -77,7 +78,7 @@ export default function Header() {
           </Link>
 
           {/* desktop menu */}
-          <ul className='hidden md:flex space-x-8'>
+          <ul className='hidden absolute left-1/2 -translate-x-1/2 md:flex space-x-8'>
             {routes.map((el, index) => (
               <li key={index} className={classNames(el.current ? 'text-white' : 'text-stone-300', 'hover:text-white font-medium')}>
                 <Link href={el.href}>{el.name}</Link>
@@ -94,13 +95,13 @@ export default function Header() {
                 width='24'
                 height='24'
                 viewBox='0 0 24 24'
-                onClick={() => setIsOpen(true)}
+                onClick={() => setIsSearchToggled(true)}
               >
                 <path d='M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z' />
               </svg>
 
-              <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as='div' className='relative z-10' onClose={() => setIsOpen(false)}>
+              <Transition appear show={isSearchToggled} as={Fragment}>
+                <Dialog as='div' className='relative z-10' onClose={() => setIsSearchToggled(false)}>
                   <Transition.Child
                     as={Fragment}
                     enter='ease-out duration-300'
@@ -138,7 +139,7 @@ export default function Header() {
                             <button
                               type='button'
                               className='inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
-                              onClick={() => setIsOpen(false)}
+                              onClick={() => setIsSearchToggled(false)}
                             >
                               Got it, thanks!
                             </button>
