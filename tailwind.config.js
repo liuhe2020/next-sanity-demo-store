@@ -13,7 +13,7 @@ module.exports = {
     // options: https://github.com/theMosaad/tailwindcss-delicious-hamburgers/blob/main/src/index.js
     deliciousHamburgers: {
       size: '24px', // must be in px.
-      color: '#fff',
+      color: '#d6d3d1',
       colorLight: '#fff8f4',
       padding: '0px', // must be in px.
       barSpacing: '7px',

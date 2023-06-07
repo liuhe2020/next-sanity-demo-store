@@ -54,7 +54,7 @@ export default function Header() {
       </div>
 
       <nav className='relative bg-black/[.8] backdrop-blur-lg z-20'>
-        <div className='relative w-full max-w-screen-lg h-16 flex justify-between items-center mx-auto px-4 lg:px-2 xl:px-0'>
+        <div className='relative w-full max-w-screen-lg h-16 flex flex-row-reverse gap-x-1 items-center mx-auto px-4 lg:px-2 xl:px-0'>
           {/* hamburger menu icon*/}
           <div
             className={classNames(isMenuToggled && 'active', 'c-hamburger c-hamburger--chop', 'md:hidden')}
@@ -68,14 +68,8 @@ export default function Header() {
           </div>
 
           {/* logo */}
-          <Link href='/' className='md:mr-7'>
-            <Image
-              className='h-7 absolute top-5 left-0 right-0 mx-auto md:static md:mx-0 opacity-90'
-              src='/images/nsds_logo.png'
-              alt='nsds logo'
-              width={28}
-              height={28}
-            />
+          <Link href='/'>
+            <Image className='h-7 absolute top-[18px] left-4 opacity-90' src='/images/nsds_logo.png' alt='nsds logo' width={28} height={28} />
           </Link>
 
           {/* desktop menu */}
@@ -87,29 +81,25 @@ export default function Header() {
             ))}
           </ul>
 
-          <div className='flex mt-1.5 gap-x-1.5'>
-            <>
-              <svg
-                className='hover:fill-white mt-[2.5px] cursor-pointer'
-                fill='#d6d3d1'
-                xmlns='http://www.w3.org/2000/svg'
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                onClick={() => setIsSearchToggled((prev) => !prev)}
-              >
-                <path d='M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z' />
-              </svg>
-            </>
-            <Menu as='div' className='relative'>
-              <div>
-                <Menu.Button className=''>
-                  <span className='sr-only'>Open user menu</span>
-                  <svg className='hover:fill-white mt-[2.5px]' fill='#d6d3d1' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
-                    <path d='M12 2c3.032 0 5.5 2.467 5.5 5.5 0 1.458-.483 3.196-3.248 5.59 4.111 1.961 6.602 5.253 7.482 8.909h-19.486c.955-4.188 4.005-7.399 7.519-8.889-1.601-1.287-3.267-3.323-3.267-5.61 0-3.033 2.468-5.5 5.5-5.5zm0-2c-4.142 0-7.5 3.357-7.5 7.5 0 2.012.797 3.834 2.086 5.182-5.03 3.009-6.586 8.501-6.586 11.318h24c0-2.791-1.657-8.28-6.59-11.314 1.292-1.348 2.09-3.172 2.09-5.186 0-4.143-3.358-7.5-7.5-7.5z' />
-                  </svg>
-                </Menu.Button>
-              </div>
+          <div className='flex gap-x-2 items-end'>
+            <svg
+              className='hover:fill-white cursor-pointer'
+              fill='#d6d3d1'
+              xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
+              viewBox='0 0 24 24'
+              onClick={() => setIsSearchToggled((prev) => !prev)}
+            >
+              <path d='M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z' />
+            </svg>
+            <Menu as='div' className='relative max-h-6'>
+              <Menu.Button>
+                <svg className='hover:fill-white' fill='#d6d3d1' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
+                  <path d='M12 2c3.032 0 5.5 2.467 5.5 5.5 0 1.458-.483 3.196-3.248 5.59 4.111 1.961 6.602 5.253 7.482 8.909h-19.486c.955-4.188 4.005-7.399 7.519-8.889-1.601-1.287-3.267-3.323-3.267-5.61 0-3.033 2.468-5.5 5.5-5.5zm0-2c-4.142 0-7.5 3.357-7.5 7.5 0 2.012.797 3.834 2.086 5.182-5.03 3.009-6.586 8.501-6.586 11.318h24c0-2.791-1.657-8.28-6.59-11.314 1.292-1.348 2.09-3.172 2.09-5.186 0-4.143-3.358-7.5-7.5-7.5z' />
+                </svg>
+              </Menu.Button>
+
               <Transition
                 as={Fragment}
                 enter='transition ease-out duration-100'
