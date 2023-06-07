@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <NextAuthProvider>
           <ShoppingBagProvider>
-            <main className='flex flex-col min-h-[100dvh]'>
+            <main className='flex flex-col min-h-[100dvh] pt-16'>
               <Header />
               <div className='grow'>{children}</div>
               <Footer />
