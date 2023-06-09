@@ -21,9 +21,9 @@ export default function Header() {
   const [isSearchToggled, setIsSearchToggled] = useState(false);
   const [isMenuToggled, setIsMenuToggled] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const { data: session } = useSession();
   const inputRef = useRef<HTMLInputElement>(null);
   const totalQty = useStore((state) => state.totalQty);
-  const { data: session } = useSession();
 
   // lock window scroll when mobile menu is open
   useEffect(() => {
@@ -99,7 +99,10 @@ export default function Header() {
               width='24'
               height='24'
               viewBox='0 0 24 24'
-              onClick={() => setIsSearchToggled((prev) => !prev)}
+              onClick={() => {
+                setIsSearchToggled(!isSearchToggled);
+                setIsMenuToggled(!isMenuToggled);
+              }}
             >
               <path d='M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z' />
             </svg>
@@ -160,7 +163,9 @@ export default function Header() {
           </div>
         </div>
         {/* desktop search */}
-        <div className={classNames(isSearchToggled && 'max-h-64', 'overflow-hidden max-h-0 w-full z-10 text-white transition-all duration-500')}>
+        <div
+          className={classNames(isSearchToggled && 'max-h-64', 'overflow-hidden max-h-0 w-full z-10 text-white transition-all duration-500 hidden md:block')}
+        >
           <div className='mx-auto max-w-[440px] p-4 flex items-center gap-2'>
             <svg
               className='hover:fill-white cursor-pointer shrink-0'
