@@ -25,6 +25,15 @@ export default function Header() {
   const inputRef = useRef<HTMLInputElement>(null);
   const totalQty = useStore((state) => state.totalQty);
 
+  const handleMenuToggle = () => {
+    if (isSearchToggled) {
+      setIsMenuToggled(false);
+      setIsSearchToggled(false);
+      return;
+    }
+    setIsMenuToggled(!isMenuToggled);
+  };
+
   // lock window scroll when mobile menu is open
   useEffect(() => {
     if (isMenuToggled) {
@@ -46,11 +55,9 @@ export default function Header() {
       <div
         className={classNames(
           !isMenuToggled && '-translate-y-full bg-transparent',
-          'absolute w-full h-[100vh] bg-black top-0 pt-16 transition duration-500 ease-in-out md:hidden'
+          'absolute w-full min-h-[100dvh] bg-black top-0 pt-16 transition duration-500 ease-in-out md:hidden'
         )}
       >
-        {isSearchToggled && <MobileSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />}
-
         <ul className='flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500'>
           {routes.map((el, index) => (
             <li key={index} className={classNames(el.current ? 'text-white' : 'text-stone-300', 'hover:text-white font-medium text-center py-4')}>
@@ -62,14 +69,21 @@ export default function Header() {
         </ul>
       </div>
 
+      {/* mobile search */}
+      <div
+        className={classNames(
+          !isSearchToggled && '-translate-y-full bg-transparent',
+          'absolute w-full min-h-[100dvh] bg-black top-0 pt-16 transition duration-500 ease-in-out md:hidden'
+        )}
+      >
+        <MobileSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      </div>
+
       {/* desktop menu */}
       <nav className={classNames(isSearchToggled && 'bg-stone-900', 'relative bg-black/[.8] backdrop-blur-lg z-20 transition-all duration-500')}>
         <div className='relative w-full max-w-screen-lg h-16 flex flex-row-reverse gap-x-1 items-center mx-auto px-4 lg:px-2 xl:px-0'>
           {/* hamburger menu icon*/}
-          <div
-            className={classNames(isMenuToggled && 'active', 'c-hamburger c-hamburger--chop', 'md:hidden')}
-            onClick={() => setIsMenuToggled((prev) => !prev)}
-          >
+          <div className={classNames((isMenuToggled || isSearchToggled) && 'active', 'c-hamburger c-hamburger--chop', 'md:hidden')} onClick={handleMenuToggle}>
             <div className='c-hamburger-inner'>
               <span className='c-hamburger-bar'></span>
               <span className='c-hamburger-bar'></span>
@@ -78,7 +92,7 @@ export default function Header() {
           </div>
 
           {/* logo */}
-          <Link href='/'>
+          <Link href='/' onClick={() => setIsMenuToggled(false)}>
             <Image className='h-7 absolute top-[18px] left-4 opacity-90' src='/images/nsds_logo.png' alt='nsds logo' width={28} height={28} />
           </Link>
 
@@ -101,7 +115,7 @@ export default function Header() {
               viewBox='0 0 24 24'
               onClick={() => {
                 setIsSearchToggled(!isSearchToggled);
-                setIsMenuToggled(!isMenuToggled);
+                setIsMenuToggled(false);
               }}
             >
               <path d='M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z' />
@@ -148,7 +162,7 @@ export default function Header() {
                 </Menu.Items>
               </Transition>
             </Menu>
-            <Link href='/shopping-bag'>
+            <Link href='/shopping-bag' onClick={() => setIsMenuToggled(false)}>
               <div className='cursor-pointer relative group'>
                 <svg className='group-hover:fill-white' fill='#d6d3d1' xmlns='http://www.w3.org/2000/svg' width='26.5' height='26.5' viewBox='0 0 24 24'>
                   <path d='M16 6v-2c0-2.209-1.791-4-4-4s-4 1.791-4 4v2h-5v18h18v-18h-5zm-7-2c0-1.654 1.346-3 3-3s3 1.346 3 3v2h-6v-2zm10 18h-14v-14h3v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h6v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h3v14z' />
