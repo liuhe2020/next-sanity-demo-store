@@ -10,11 +10,11 @@ import Image from 'next/image';
 import MobileSearch from './MobileSearch';
 
 const routes = [
-  { name: 'Laptops', href: '/laptops', current: false },
-  { name: 'Phones', href: '/phones', current: false },
-  { name: 'Tablets', href: '/tablets', current: false },
-  { name: 'Audio', href: '/audios', current: false },
-  { name: 'Accessories', href: '/accessories', current: false },
+  { name: 'Laptops', href: '/laptops' },
+  { name: 'Phones', href: '/phones' },
+  { name: 'Tablets', href: '/tablets' },
+  { name: 'Audio', href: '/audios' },
+  { name: 'Accessories', href: '/accessories' },
 ];
 
 export default function Header() {
@@ -46,7 +46,7 @@ export default function Header() {
 
   // focus on input when search toggled
   useEffect(() => {
-    if (isSearchToggled && inputRef.current) inputRef.current.focus();
+    isSearchToggled && inputRef.current && inputRef.current.focus();
   }, [isSearchToggled]);
 
   return (
@@ -54,13 +54,18 @@ export default function Header() {
       {/* mobile menu */}
       <div
         className={classNames(
-          !isMenuToggled && '-translate-y-full bg-transparent',
+          !isMenuToggled && '-translate-y-full opacity-0',
           'absolute w-full min-h-[100dvh] bg-black top-0 pt-16 transition duration-500 ease-in-out md:hidden'
         )}
       >
-        <ul className='flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500'>
+        <ul
+          className={classNames(
+            !isMenuToggled ? 'scale-y-75' : 'scale-y-100',
+            'flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500 origin-top transition duration-300 delay-300'
+          )}
+        >
           {routes.map((el, index) => (
-            <li key={index} className={classNames(el.current ? 'text-white' : 'text-stone-300', 'hover:text-white font-medium text-center py-4')}>
+            <li key={index} className='text-stone-300 hover:text-white font-medium text-center py-4'>
               <Link href={el.href} onClick={() => setIsMenuToggled(false)}>
                 {el.name}
               </Link>
@@ -70,14 +75,7 @@ export default function Header() {
       </div>
 
       {/* mobile search */}
-      <div
-        className={classNames(
-          !isSearchToggled && '-translate-y-full bg-transparent',
-          'absolute w-full min-h-[100dvh] bg-black top-0 pt-16 transition duration-500 ease-in-out md:hidden'
-        )}
-      >
-        <MobileSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      </div>
+      <MobileSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} isSearchToggled={isSearchToggled} />
 
       {/* desktop menu */}
       <nav className={classNames(isSearchToggled && 'bg-stone-900', 'relative bg-black/[.8] backdrop-blur-lg z-20 transition-all duration-500')}>
@@ -98,7 +96,7 @@ export default function Header() {
 
           <ul className='hidden absolute left-1/2 -translate-x-1/2 md:flex space-x-8'>
             {routes.map((el, index) => (
-              <li key={index} className={classNames(el.current ? 'text-white' : 'text-stone-300', 'hover:text-white font-medium')}>
+              <li key={index} className='text-stone-300 hover:text-white font-medium'>
                 <Link href={el.href}>{el.name}</Link>
               </li>
             ))}
