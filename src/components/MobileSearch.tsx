@@ -1,6 +1,7 @@
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import classNames from '@/utils/classNames';
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import { cubicBezier, motion } from 'framer-motion';
 
 type Props = {
   searchTerm: string;
@@ -19,13 +20,20 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
   }, [isSearchToggled]);
 
   return (
-    <div
-      className={classNames(
-        !isSearchToggled && '-translate-y-full bg-transparent',
-        'absolute w-full min-h-[100dvh] bg-black top-0 pt-16 transition duration-500 ease-in-out md:hidden'
-      )}
+    <motion.div
+      layout
+      className='absolute w-full top-0 bg-black overflow-hidden md:hidden'
+      key='mobile search'
+      initial={{ height: 0 }}
+      animate={{ height: isSearchToggled ? '100dvh' : 0 }}
+      transition={{ duration: 0.5, ease: cubicBezier(0.4, 0, 0.6, 1) }}
     >
-      <div className='flex px-2 py-6 items-center gap-2'>
+      <div
+        className={classNames(
+          !isSearchToggled ? '-translate-y-5 opacity-0 delay-0' : 'delay-300',
+          'flex px-2 py-6 items-center gap-2 mt-16 duration-200 ease-[cubic-bezier(.4,0,.6,1)]'
+        )}
+      >
         <input
           type='text'
           className='grow bg-transparent border-none text-white text-xl font-semibold focus:ring-0'
@@ -56,8 +64,12 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
         )}
       </div>
       <ul className='text-stone-300 font-medium flex flex-col gap-y-2 px-4'>
-        {results?.map((i) => (
-          <li className='' key={i._id}>
+        {results?.map((i, idx) => (
+          <li
+            className={classNames(!isSearchToggled && '-translate-y-5 opacity-0 delay-0', 'transition-all duration-200 ease-[cubic-bezier(.4,0,.6,1)]')}
+            style={!isSearchToggled ? {} : { transitionDelay: `calc(300ms + ${idx}*15ms)` }}
+            key={i._id}
+          >
             <Link href={`${i.category}/${i.slug.current}`} className='flex items-center gap-x-2' onClick={() => setIsSearchToggled(false)}>
               <svg
                 width='16'
@@ -81,6 +93,6 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
         ))}
         {results?.length === 0 && <p>{`No result matching '${searchTerm}'.`}</p>}
       </ul>
-    </div>
+    </motion.div>
   );
 }
