@@ -79,6 +79,7 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
             </Link>
           </li>
         ))}
+        {results?.length === 0 && <p>{`No result matching '${searchTerm}'.`}</p>}
       </ul>
     </div>
   );

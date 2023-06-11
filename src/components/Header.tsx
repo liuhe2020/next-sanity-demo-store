@@ -61,7 +61,7 @@ export default function Header() {
     return products;
   };
 
-  const { data: results, status } = useQuery(['search', debouncedSearchTerm], () => fetcher(debouncedSearchTerm), {
+  const { data: results } = useQuery(['search', debouncedSearchTerm], () => fetcher(debouncedSearchTerm), {
     select: (data) => data && [...data?.filter((i) => i.name.includes(debouncedSearchTerm)), ...data?.filter((i) => !i.name.includes(debouncedSearchTerm))],
     staleTime: 1000 * 60 * 60,
   });
