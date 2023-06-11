@@ -27,6 +27,7 @@
     "react-hot-toast": "^2.4.1",
     "react-image-gallery": "^1.2.11",
     "react-is": "^18.2.0",
+    "react-query": "^3.39.3",
     "sanity": "^3.10.3",
     "styled-components": "^5.3.10",
     "tailwindcss-delicious-hamburgers": "^1.0.3",

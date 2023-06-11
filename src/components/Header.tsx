@@ -8,6 +8,9 @@ import useStore from '../store/store';
 import classNames from '../utils/classNames';
 import Image from 'next/image';
 import MobileSearch from './MobileSearch';
+import client from '@/utils/client';
+import useDebounce from '@/utils/useDebounce';
+import { useQuery } from 'react-query';
 
 const routes = [
   { name: 'Laptops', href: '/laptops' },
@@ -24,6 +27,7 @@ export default function Header() {
   const { data: session } = useSession();
   const inputRef = useRef<HTMLInputElement>(null);
   const totalQty = useStore((state) => state.totalQty);
+  const debouncedSearchTerm = useDebounce(searchTerm);
 
   const handleMenuToggle = () => {
     if (isSearchToggled) {
@@ -36,18 +40,31 @@ export default function Header() {
 
   // lock window scroll when mobile menu is open
   useEffect(() => {
-    if (isMenuToggled) {
+    if (isMenuToggled || isSearchToggled) {
       document.querySelector('body')?.classList.add('overflow-y-hidden');
     }
     return () => {
       document.querySelector('body')?.classList.remove('overflow-y-hidden');
     };
-  }, [isMenuToggled]);
+  }, [isMenuToggled, isSearchToggled]);
 
   // focus on input when search toggled
   useEffect(() => {
     isSearchToggled && inputRef.current && inputRef.current.focus();
   }, [isSearchToggled]);
+
+  const fetcher = async (input: string) => {
+    if (!input) return undefined;
+    const products: Product[] = await client.fetch(
+      `*[_type == 'product' && (name match '*${input}*' || category match '*${input}*' || description match '*${input}*')]`
+    );
+    return products;
+  };
+
+  const { data: results, status } = useQuery(['search', debouncedSearchTerm], () => fetcher(debouncedSearchTerm), {
+    select: (data) => data && [...data?.filter((i) => i.name.includes(debouncedSearchTerm)), ...data?.filter((i) => !i.name.includes(debouncedSearchTerm))],
+    staleTime: 1000 * 60 * 60,
+  });
 
   return (
     <header className='fixed w-full top-0 z-10'>
@@ -75,7 +92,13 @@ export default function Header() {
       </div>
 
       {/* mobile search */}
-      <MobileSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} isSearchToggled={isSearchToggled} />
+      <MobileSearch
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        isSearchToggled={isSearchToggled}
+        results={results}
+        setIsSearchToggled={setIsSearchToggled}
+      />
 
       {/* desktop menu */}
       <nav className={classNames(isSearchToggled && 'bg-stone-900', 'relative bg-black/[.8] backdrop-blur-lg z-20 transition-all duration-500')}>
@@ -204,10 +227,10 @@ export default function Header() {
                 fill='#d6d3d1'
                 width='22'
                 height='22'
-                clip-rule='evenodd'
-                fill-rule='evenodd'
-                stroke-linejoin='round'
-                stroke-miterlimit='2'
+                clipRule='evenodd'
+                fillRule='evenodd'
+                strokeLinejoin='round'
+                strokeMiterlimit='2'
                 viewBox='0 2 20 20'
                 xmlns='http://www.w3.org/2000/svg'
               >
