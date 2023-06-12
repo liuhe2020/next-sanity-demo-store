@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import classNames from '@/utils/classNames';
 import Link from 'next/link';
-import { cubicBezier, motion } from 'framer-motion';
+import { motion, stagger } from 'framer-motion';
 
 type Props = {
   searchTerm: string;
@@ -10,6 +10,8 @@ type Props = {
   results: Product[] | undefined;
   setIsSearchToggled: Dispatch<SetStateAction<boolean>>;
 };
+
+const ease = [[0.4, 0, 0.6, 1]];
 
 export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggled, results, setIsSearchToggled }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,16 +25,15 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
     <motion.div
       layout
       className='absolute w-full top-0 bg-black overflow-hidden md:hidden'
-      key='mobile search'
       initial={{ height: 0 }}
       animate={{ height: isSearchToggled ? '100dvh' : 0 }}
-      transition={{ duration: 0.5, ease: cubicBezier(0.4, 0, 0.6, 1) }}
+      transition={{ duration: 0.5, ease }}
     >
-      <div
-        className={classNames(
-          !isSearchToggled ? '-translate-y-5 opacity-0 delay-0' : 'delay-300',
-          'flex px-2 py-6 items-center gap-2 mt-16 duration-200 ease-[cubic-bezier(.4,0,.6,1)]'
-        )}
+      <motion.div
+        className='flex px-2 py-6 items-center gap-2 mt-16'
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: isSearchToggled ? 0 : -20, opacity: isSearchToggled ? 1 : 0 }}
+        transition={{ duration: 0.2, delay: isSearchToggled ? 0.3 : 0, ease }}
       >
         <input
           type='text'
@@ -62,12 +63,13 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
             />
           </svg>
         )}
-      </div>
+      </motion.div>
       <ul className='text-stone-300 font-medium flex flex-col gap-y-2 px-4'>
         {results?.map((i, idx) => (
-          <li
-            className={classNames(!isSearchToggled && '-translate-y-5 opacity-0 delay-0', 'transition-all duration-200 ease-[cubic-bezier(.4,0,.6,1)]')}
-            style={!isSearchToggled ? {} : { transitionDelay: `calc(300ms + ${idx}*15ms)` }}
+          <motion.li
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: isSearchToggled ? 0 : -20, opacity: isSearchToggled ? 1 : 0 }}
+            transition={{ duration: 0.2, delay: isSearchToggled ? 0.3 + idx * 0.01 : 0, ease }}
             key={i._id}
           >
             <Link href={`${i.category}/${i.slug.current}`} className='flex items-center gap-x-2' onClick={() => setIsSearchToggled(false)}>
@@ -89,7 +91,7 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
               </svg>
               <span>{i.name}</span>
             </Link>
-          </li>
+          </motion.li>
         ))}
         {results?.length === 0 && <p>{`No result matching '${searchTerm}'.`}</p>}
       </ul>
