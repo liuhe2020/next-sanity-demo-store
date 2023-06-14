@@ -1,7 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
-import classNames from '@/utils/classNames';
 import Link from 'next/link';
-import { motion, stagger } from 'framer-motion';
+import { motion, stagger, useAnimate } from 'framer-motion';
 
 type Props = {
   searchTerm: string;
@@ -15,11 +14,24 @@ const ease = [[0.4, 0, 0.6, 1]];
 
 export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggled, results, setIsSearchToggled }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [scope, animate] = useAnimate();
 
   // focus on input when search toggled
   useEffect(() => {
     isSearchToggled && inputRef.current && inputRef.current.focus();
+
+    // search toggle animation
+    results &&
+      animate('li', isSearchToggled ? { y: 0, opacity: 1 } : { y: -20, opacity: 0 }, {
+        duration: 0.2,
+        delay: isSearchToggled ? stagger(0.01, { startDelay: 0.3 }) : 0,
+      });
   }, [isSearchToggled]);
+
+  // search results change animation
+  // useEffect(() => {
+  //   results && animate(scope.current, { opacity: 1 }, { duration: 4 });
+  // }, [results]);
 
   return (
     <motion.div
@@ -64,14 +76,9 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
           </svg>
         )}
       </motion.div>
-      <ul className='text-stone-300 font-medium flex flex-col gap-y-2 px-4'>
-        {results?.map((i, idx) => (
-          <motion.li
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: isSearchToggled ? 0 : -20, opacity: isSearchToggled ? 1 : 0 }}
-            transition={{ duration: 0.2, delay: isSearchToggled ? 0.3 + idx * 0.01 : 0, ease }}
-            key={i._id}
-          >
+      <ul className='text-stone-300 font-medium flex flex-col gap-y-2 px-4 opacity-0' ref={scope}>
+        {results?.map((i) => (
+          <li key={i._id}>
             <Link href={`${i.category}/${i.slug.current}`} className='flex items-center gap-x-2' onClick={() => setIsSearchToggled(false)}>
               <svg
                 width='16'
@@ -91,7 +98,7 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
               </svg>
               <span>{i.name}</span>
             </Link>
-          </motion.li>
+          </li>
         ))}
         {results?.length === 0 && <p>{`No result matching '${searchTerm}'.`}</p>}
       </ul>
