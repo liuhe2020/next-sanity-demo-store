@@ -11,6 +11,7 @@ import MobileSearch from './MobileSearch';
 import client from '@/utils/client';
 import useDebounce from '@/utils/useDebounce';
 import { useQuery } from 'react-query';
+import { motion } from 'framer-motion';
 
 const routes = [
   { name: 'Laptops', href: '/laptops' },
@@ -19,6 +20,8 @@ const routes = [
   { name: 'Audio', href: '/audios' },
   { name: 'Accessories', href: '/accessories' },
 ];
+
+const ease = [[0.4, 0, 0.6, 1]];
 
 export default function Header() {
   const [isSearchToggled, setIsSearchToggled] = useState(false);
@@ -69,27 +72,26 @@ export default function Header() {
   return (
     <header className='fixed w-full top-0 z-10'>
       {/* mobile menu */}
-      <div
-        className={classNames(
-          !isMenuToggled && '-translate-y-full opacity-0',
-          'absolute w-full min-h-[100dvh] bg-black top-0 pt-16 transition duration-500 ease-in-out md:hidden'
-        )}
+      <motion.div
+        className='absolute w-full h-0 bg-black top-0 pt-16 md:hidden'
+        animate={{ height: isMenuToggled ? '100dvh' : 0, overflow: isMenuToggled ? 'auto' : 'hidden' }}
+        transition={{ duration: 0.5, ease }}
       >
-        <ul
-          className={classNames(
-            !isMenuToggled ? 'scale-y-75' : 'scale-y-100',
-            'flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500 origin-top transition duration-300 delay-300'
-          )}
-        >
+        <ul className='flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500 origin-top transition duration-300 delay-300'>
           {routes.map((el, index) => (
-            <li key={index} className='text-stone-300 hover:text-white font-medium text-center py-4'>
+            <motion.li
+              key={index}
+              className='text-stone-300 hover:text-white font-medium text-center py-4'
+              animate={{ opacity: isMenuToggled ? 1 : 0, y: isMenuToggled ? 0 : -20 }}
+              transition={{ duration: 0.25, delay: isMenuToggled ? 0.3 + 0.02 * index : 0, ease }}
+            >
               <Link href={el.href} onClick={() => setIsMenuToggled(false)}>
                 {el.name}
               </Link>
-            </li>
+            </motion.li>
           ))}
         </ul>
-      </div>
+      </motion.div>
 
       {/* mobile search */}
       <MobileSearch

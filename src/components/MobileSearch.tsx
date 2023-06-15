@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, stagger, useAnimate } from 'framer-motion';
+import classNames from '@/utils/classNames';
 
 type Props = {
   searchTerm: string;
@@ -24,7 +25,7 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
     results &&
       animate('li', isSearchToggled ? { y: 0, opacity: 1 } : { y: -20, opacity: 0 }, {
         duration: 0.2,
-        delay: isSearchToggled ? stagger(0.01, { startDelay: 0.3 }) : 0,
+        delay: isSearchToggled ? stagger(0.015, { startDelay: 0.3 }) : 0,
       });
   }, [isSearchToggled]);
 
@@ -36,9 +37,9 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
   return (
     <motion.div
       layout
-      className='absolute w-full top-0 bg-black overflow-hidden md:hidden'
+      className={classNames('absolute w-full top-0 bg-black md:hidden')}
       initial={{ height: 0 }}
-      animate={{ height: isSearchToggled ? '100dvh' : 0 }}
+      animate={{ height: isSearchToggled ? '100dvh' : 0, overflow: isSearchToggled ? 'auto' : 'hidden' }}
       transition={{ duration: 0.5, ease }}
     >
       <motion.div
@@ -76,7 +77,7 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
           </svg>
         )}
       </motion.div>
-      <ul className='text-stone-300 font-medium flex flex-col gap-y-2 px-4 opacity-0' ref={scope}>
+      <ul className='text-stone-300 font-medium flex flex-col gap-y-2 px-4 pb-10' ref={scope}>
         {results?.map((i) => (
           <li key={i._id}>
             <Link href={`${i.category}/${i.slug.current}`} className='flex items-center gap-x-2' onClick={() => setIsSearchToggled(false)}>
