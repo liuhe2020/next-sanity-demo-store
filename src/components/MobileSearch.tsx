@@ -37,14 +37,12 @@ export default function MobileSearch({ searchTerm, setSearchTerm, isSearchToggle
   return (
     <motion.div
       layout
-      className={classNames('absolute w-full top-0 bg-black md:hidden')}
-      initial={{ height: 0 }}
+      className='absolute bg-stone-900 w-full top-0 h-0 overflow-hidden md:hidden'
       animate={{ height: isSearchToggled ? '100dvh' : 0, overflow: isSearchToggled ? 'auto' : 'hidden' }}
       transition={{ duration: 0.5, ease }}
     >
       <motion.div
         className='flex px-2 py-6 items-center gap-2 mt-16'
-        initial={{ y: -20, opacity: 0 }}
         animate={{ y: isSearchToggled ? 0 : -20, opacity: isSearchToggled ? 1 : 0 }}
         transition={{ duration: 0.2, delay: isSearchToggled ? 0.3 : 0, ease }}
       >
