@@ -24,5 +24,10 @@ module.exports = {
   variants: {
     fill: ['hover', 'focus'],
   },
-  plugins: [require('@tailwindcss/aspect-ratio'), require('@tailwindcss/forms'), require('tailwindcss-delicious-hamburgers')],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/forms'),
+    require('tailwindcss-delicious-hamburgers'),
+    require('tailwind-scrollbar')({ nocompatible: true }),
+  ],
 };

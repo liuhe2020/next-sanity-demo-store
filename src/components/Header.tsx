@@ -10,7 +10,9 @@ import Image from 'next/image';
 import client from '@/utils/client';
 import useDebounce from '@/utils/useDebounce';
 import { useQuery } from 'react-query';
-import { AnimatePresence, animate, motion, stagger, useAnimate } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import useWindowSize from '@/utils/useWindowSize';
+import { useNavigationEvent } from '@/utils/useNavigationEvent';
 
 const routes = [
   { name: 'Laptops', href: '/laptops' },
@@ -30,7 +32,7 @@ export default function Header() {
   const inputRef = useRef<HTMLInputElement>(null);
   const totalQty = useStore((state) => state.totalQty);
   const debouncedSearchTerm = useDebounce(searchTerm);
-  const [scope, animate] = useAnimate();
+  const windowWidth = useWindowSize();
 
   const fetcher = async (input: string) => {
     if (!input) return undefined;
@@ -55,38 +57,25 @@ export default function Header() {
   };
 
   // lock window scroll when mobile menu is open
-  useEffect(() => {
-    if (isMenuToggled) {
-      document.querySelector('body')?.classList.add('overflow-y-hidden');
-    }
-    return () => {
-      document.querySelector('body')?.classList.remove('overflow-y-hidden');
-    };
-  }, [isMenuToggled]);
+  // useEffect(() => {
+  //   if (isMenuToggled) {
+  //     document.querySelector('body')?.classList.add('overflow-y-hidden');
+  //   }
+  //   return () => {
+  //     document.querySelector('body')?.classList.remove('overflow-y-hidden');
+  //   };
+  // }, [isMenuToggled]);
 
+  // focus on input when search toggled
   useEffect(() => {
-    // focus on input when search toggled
     isSearchToggled && inputRef.current && inputRef.current.focus();
-    // animate search box and result list on toggle
-    if (results) {
-      isSearchToggled
-        ? animate(
-            'li',
-            { y: [-20, 0], opacity: [0, 1] },
-            {
-              duration: 0.25,
-              delay: stagger(0.015, { startDelay: 0.25 }),
-            }
-          )
-        : animate(
-            'li',
-            { y: [0, -20], opacity: [1, 0] },
-            {
-              duration: 0.25,
-            }
-          );
-    }
   }, [isSearchToggled]);
+
+  // toggle menu and search off on route change
+  useNavigationEvent(() => {
+    setIsSearchToggled(false);
+    setIsMenuToggled(false);
+  });
 
   return (
     <motion.header className='fixed w-full top-0 z-10'>
@@ -109,7 +98,7 @@ export default function Header() {
           </div>
 
           {/* logo */}
-          <Link href='/' onClick={() => setIsMenuToggled(false)}>
+          <Link href='/'>
             <Image className='h-7 absolute top-[18px] left-4 opacity-90' src='/images/nsds_logo.png' alt='nsds logo' width={28} height={28} />
           </Link>
           <ul className='hidden absolute left-1/2 -translate-x-1/2 md:flex space-x-8'>
@@ -173,7 +162,7 @@ export default function Header() {
                 </Menu.Items>
               </Transition>
             </Menu>
-            <Link href='/shopping-bag' onClick={() => setIsMenuToggled(false)}>
+            <Link href='/shopping-bag'>
               <div className='cursor-pointer relative group'>
                 <svg className='group-hover:fill-white' fill='#d6d3d1' xmlns='http://www.w3.org/2000/svg' width='26.5' height='26.5' viewBox='0 0 24 24'>
                   <path d='M16 6v-2c0-2.209-1.791-4-4-4s-4 1.791-4 4v2h-5v18h18v-18h-5zm-7-2c0-1.654 1.346-3 3-3s3 1.346 3 3v2h-6v-2zm10 18h-14v-14h3v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h6v1.5c0 .276.224.5.5.5s.5-.224.5-.5v-1.5h3v14z' />
@@ -188,89 +177,67 @@ export default function Header() {
           </div>
         </div>
       </nav>
-      {/* mobile menu */}
+      {/* slide down menu */}
       <AnimatePresence>
         {isMenuToggled && (
-          <motion.section
-            layout
-            className='bg-stone-900'
-            initial={{ height: 0 }}
-            animate={{ height: 'calc(100dvh - 64px)' }}
-            exit={{ height: 0 }}
-            transition={{ duration: 0.5, ease }}
-          >
-            {!isSearchToggled && (
-              <ul className='flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500 md:hidden'>
-                {routes.map((i, index) => (
-                  <motion.li
-                    key={index}
-                    className='text-stone-300 hover:text-white font-medium text-center py-4'
+          <>
+            <motion.section
+              layout
+              key='menu'
+              className='bg-stone-900'
+              initial={{ height: 0 }}
+              animate={{ height: windowWidth <= 768 ? 'calc(100dvh - 64px)' : '360px' }}
+              exit={{ height: 0 }}
+              transition={{ duration: 0.5, ease }}
+            >
+              {!isSearchToggled && (
+                <ul className='flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500 md:hidden'>
+                  {routes.map((i, index) => (
+                    <motion.li
+                      key={index}
+                      className='text-stone-300 hover:text-white font-medium text-center py-4'
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0, transition: { duration: 0.25, delay: 0.25 + 0.02 * index, ease } }}
+                      exit={{ opacity: 0, y: -20, transition: { duration: 0.25, delay: 0, ease } }}
+                    >
+                      <Link
+                        href={i.href}
+                        onClick={() => {
+                          setIsSearchToggled(false);
+                          setIsMenuToggled(false);
+                        }}
+                      >
+                        {i.name}
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
+              )}
+              {/* search component */}
+              {isSearchToggled && (
+                <div>
+                  <motion.div
+                    className='w-full md:max-w-[472px] md:mx-auto'
                     initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0, transition: { duration: 0.25, delay: 0.25 + 0.02 * index, ease } }}
+                    animate={{ opacity: 1, y: 0, transition: { duration: 0.25, delay: 0.25, ease } }}
                     exit={{ opacity: 0, y: -20, transition: { duration: 0.25, delay: 0, ease } }}
                   >
-                    <Link href={i.href} onClick={() => setIsMenuToggled(false)}>
-                      {i.name}
-                    </Link>
-                  </motion.li>
-                ))}
-              </ul>
-            )}
-            {/* search component */}
-            {isSearchToggled && (
-              <div
-                className='w-full'
-                // animate={{ height: isSearchToggled ? '100dvh' : 0, overflow: isSearchToggled ? 'auto' : 'hidden' }}
-                // transition={{ duration: 0.5, ease }}
-              >
-                <motion.div
-                  className='flex px-2 py-6 items-center gap-2'
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0, transition: { duration: 0.25, delay: 0.25, ease } }}
-                  exit={{ opacity: 0, y: -20, transition: { duration: 0.25, delay: 0, ease } }}
-                >
-                  <input
-                    type='text'
-                    className='grow bg-transparent border-none text-white text-xl font-semibold focus:ring-0'
-                    ref={inputRef}
-                    placeholder='Search products'
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                  {searchTerm && (
-                    <svg
-                      onClick={() => setSearchTerm('')}
-                      className='hover:fill-white cursor-pointer shrink-0 mr-2'
-                      fill='#d6d3d1'
-                      width='24'
-                      height='24'
-                      clipRule='evenodd'
-                      fillRule='evenodd'
-                      strokeLinejoin='round'
-                      strokeMiterlimit='2'
-                      viewBox='0 1 24 24'
-                      xmlns='http://www.w3.org/2000/svg'
-                    >
-                      <path
-                        d='m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z'
-                        fillRule='nonzero'
+                    <div className='flex px-2 pt-4 pb-6 items-center gap-2'>
+                      <input
+                        type='text'
+                        className='w-full bg-transparent border-none text-white text-xl font-semibold focus:ring-0 py-0 px-2'
+                        ref={inputRef}
+                        placeholder='Search products'
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                       />
-                    </svg>
-                  )}
-                </motion.div>
-                <ul className='text-stone-300 font-medium flex flex-col gap-y-2 px-4 pb-10' ref={scope}>
-                  {results?.map((i, index) => (
-                    <motion.li
-                      key={i._id}
-                      // initial={{ opacity: 0, y: -20 }}
-                      // animate={{ opacity: 1, y: 0, transition: { duration: 0.25, delay: 0.25 + 0.02 * index, ease } }}
-                      // exit={{ opacity: 0, y: -20, transition: { duration: 0.25, delay: 0, ease } }}
-                    >
-                      <Link href={`${i.category}/${i.slug.current}`} className='flex items-center gap-x-2' onClick={() => setIsSearchToggled(false)}>
+                      {searchTerm && (
                         <svg
-                          width='16'
-                          height='16'
+                          onClick={() => setSearchTerm('')}
+                          className='hover:fill-white cursor-pointer shrink-0 mr-2 md:mr-1'
                           fill='#d6d3d1'
+                          width='24'
+                          height='24'
                           clipRule='evenodd'
                           fillRule='evenodd'
                           strokeLinejoin='round'
@@ -279,37 +246,59 @@ export default function Header() {
                           xmlns='http://www.w3.org/2000/svg'
                         >
                           <path
-                            d='m14.523 18.787s4.501-4.505 6.255-6.26c.146-.146.219-.338.219-.53s-.073-.383-.219-.53c-1.753-1.754-6.255-6.258-6.255-6.258-.144-.145-.334-.217-.524-.217-.193 0-.385.074-.532.221-.293.292-.295.766-.004 1.056l4.978 4.978h-14.692c-.414 0-.75.336-.75.75s.336.75.75.75h14.692l-4.979 4.979c-.289.289-.286.762.006 1.054.148.148.341.222.533.222.19 0 .378-.072.522-.215z'
+                            d='m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z'
                             fillRule='nonzero'
                           />
                         </svg>
-                        <span>{i.name}</span>
-                      </Link>
-                    </motion.li>
-                  ))}
-                  {results?.length === 0 && <p>{`No result matching '${searchTerm}'.`}</p>}
-                </ul>
-              </div>
-            )}
-          </motion.section>
+                      )}
+                    </div>
+                    <ul className='text-stone-300 font-medium flex flex-col gap-y-2 px-4 pb-6 md:pb-0 md:mr-[21px] md:max-h-64 md:overflow-y-auto md:scrollbar md:scrollbar-thumb-stone-300 md:scrollbar-track-stone-700 md:scrollbar-w-1 md:scrollbar-thumb-rounded-full md:scrollbar-track-rounded-full'>
+                      {results?.map((i) => (
+                        <li key={i._id}>
+                          <Link
+                            href={`${i.category}/${i.slug.current}`}
+                            className='inline-flex items-center gap-x-2 hover:text-white'
+                            onClick={() => {
+                              setIsSearchToggled(false);
+                              setIsMenuToggled(false);
+                            }}
+                          >
+                            <svg
+                              width='16'
+                              height='16'
+                              fill='#d6d3d1'
+                              clipRule='evenodd'
+                              fillRule='evenodd'
+                              strokeLinejoin='round'
+                              strokeMiterlimit='2'
+                              viewBox='0 0 24 24'
+                              xmlns='http://www.w3.org/2000/svg'
+                            >
+                              <path
+                                d='m14.523 18.787s4.501-4.505 6.255-6.26c.146-.146.219-.338.219-.53s-.073-.383-.219-.53c-1.753-1.754-6.255-6.258-6.255-6.258-.144-.145-.334-.217-.524-.217-.193 0-.385.074-.532.221-.293.292-.295.766-.004 1.056l4.978 4.978h-14.692c-.414 0-.75.336-.75.75s.336.75.75.75h14.692l-4.979 4.979c-.289.289-.286.762.006 1.054.148.148.341.222.533.222.19 0 .378-.072.522-.215z'
+                                fillRule='nonzero'
+                              />
+                            </svg>
+                            <span>{i.name}</span>
+                          </Link>
+                        </li>
+                      ))}
+                      {results?.length === 0 && <p>{`No result matching '${searchTerm}'.`}</p>}
+                    </ul>
+                  </motion.div>
+                  <motion.div
+                    key='overlay'
+                    className='fixed w-full h-[100dvh] top-0 left-0 -z-10'
+                    initial={{ backdropFilter: 'blur(0px)' }}
+                    animate={{ backdropFilter: 'blur(16px)', transition: { duration: 0.3, delay: 0.2, ease } }}
+                    exit={{ backdropFilter: 'blur(0px)', transition: { duration: 0.3, ease } }}
+                  />
+                </div>
+              )}
+            </motion.section>
+          </>
         )}
       </AnimatePresence>
-      {/* mobile search */}
-      {/* <MobileSearch
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        isSearchToggled={isSearchToggled}
-        results={results}
-        setIsSearchToggled={setIsSearchToggled}
-      /> */}
-      {/* desktop search */}
-      {/* <DesktopSearch
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        isSearchToggled={isSearchToggled}
-        results={results}
-        setIsSearchToggled={setIsSearchToggled}
-      /> */}
     </motion.header>
   );
 }
