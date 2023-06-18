@@ -31,10 +31,11 @@ export default async function Product({ params }: { params: { product: string } 
         <ProductGallery product={product} />
         {/* client component */}
       </div>
-      <div className='flex-1 max-w-xl mx-auto'>
+      <div className='grow max-w-xl mx-auto'>
         <div className='w-full h-full flex flex-col lg:pt-[9%] lg:pl-[10%]'>
           <h3 className='font-medium text-xl mb-1 min-[400px]:max-[1023px]:mx-4 lg:text-2xl lg:mb-2'>{product.name}</h3>
-          <div className='flex space-x-2 mb-8 text-xs min-[400px]:max-[1023px]:mx-4 lg:text-sm lg:mb-10'>
+
+          <div className='flex items-center gap-x-1 mb-8 text-xs min-[400px]:max-[1023px]:mx-4 lg:text-sm lg:mb-10'>
             <div className='flex relative flex-nowrap space-x-1' title={product.rating.toString()}>
               {[1, 2, 3, 4, 5].map((el) => (
                 <svg
@@ -44,13 +45,14 @@ export default async function Product({ params }: { params: { product: string } 
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='2.57 2.24 14.87 14.24'
                 >
-                  <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path>
+                  <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
                 </svg>
               ))}
-              <div style={{ width: `${(1 - product.rating / 5) * 100}%` }} className='absolute top-0 right-0 h-full bg-white mix-blend-color'></div>
+              <div style={{ width: `${(1 - product.rating / 5) * 100}%` }} className='absolute top-0 right-0 h-full bg-white' />
             </div>
             <span className=''>{`(${product.numReviews})`}</span>
           </div>
+
           <ul className='min-[400px]:max-[1023px]:mx-4'>
             {product.description.map((el, index) => (
               <li className='flex mb-1 lg:mb-2' key={index}>
