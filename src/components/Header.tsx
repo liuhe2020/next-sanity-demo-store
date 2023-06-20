@@ -108,7 +108,7 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          {/* desktop nav icons */}
+          {/* nav icons */}
           <div className='flex gap-x-2 items-end'>
             <svg
               className='hover:fill-white cursor-pointer'
@@ -190,6 +190,7 @@ export default function Header() {
               exit={{ height: 0 }}
               transition={{ duration: 0.5, ease }}
             >
+              {/* mobile menu links */}
               {!isSearchToggled && (
                 <ul className='flex flex-col py-4 px-12 divide-y-[1px] divide-stone-500 md:hidden'>
                   {routes.map((i, index) => (

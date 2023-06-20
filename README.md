@@ -11,13 +11,15 @@ Live site: [https://nsds.vercel.app](https://nsds.vercel.app)
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)
+![Framer](https://img.shields.io/badge/Framer-black?style=for-the-badge&logo=framer&logoColor=blue)
 
 ## Key Features
 
 - Fully intergrated with Sanity CMS
-- Statically generated category pages
-- Statically generated individual product pages
 - Paypal payment integration
+- Full text search on product's name and description
 - User account page with order history and user profile
 - Cached shopping basket locally and stored in the database
 - Protected pages and routes with middleware
+- Statically generated category pages
+- Statically generated individual product pages
