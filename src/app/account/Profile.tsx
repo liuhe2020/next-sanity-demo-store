@@ -1,10 +1,9 @@
 'use client';
 import { User } from 'next-auth';
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 
 export default function Profile({ user }: { user: User | undefined }) {
   const [isUpdate, setIsUpdate] = useState(false);
-
   const [values, setValues] = useState({
     name: '',
     email: '',
@@ -14,9 +13,24 @@ export default function Profile({ user }: { user: User | undefined }) {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const res = await fetch('/api/update-profile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    });
+    if (res.status !== 200) alert('failed');
+    const data = await res.json();
+    console.log(data);
+    alert('success');
   };
+
+  useEffect(() => {
+    user && user.name && user.email && setValues({ name: user.name, email: user.email });
+  }, []);
 
   return (
     <form className='divide-y divide-stone-300 md:flex-1' onSubmit={handleSubmit}>
@@ -35,7 +49,7 @@ export default function Profile({ user }: { user: User | undefined }) {
               id='name'
               autoComplete='name'
               className='focus:ring-indigo-500 focus:border-indigo-500 flex-grow block w-full rounded sm:text-sm border-stone-300 mt-2 shadow-sm'
-              defaultValue={user?.name!}
+              value={values.name}
               onChange={handleChange}
             />
           ) : (
@@ -54,7 +68,7 @@ export default function Profile({ user }: { user: User | undefined }) {
               id='email'
               autoComplete='email'
               className='focus:ring-indigo-500 focus:border-indigo-500 flex-grow block w-full rounded sm:text-sm border-stone-300 mt-2 shadow-sm'
-              defaultValue={user?.email!}
+              value={values.email}
               onChange={handleChange}
             />
           ) : (
