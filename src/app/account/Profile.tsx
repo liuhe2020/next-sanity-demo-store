@@ -20,11 +20,9 @@ export default function Profile({ user }: { user: User | undefined }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(values),
+      body: JSON.stringify({ name: values.name.trim(), email: values.email.trim().toLocaleLowerCase() }),
     });
     if (res.status !== 200) alert('failed');
-    const data = await res.json();
-    console.log(data);
     alert('success');
   };
 
@@ -51,6 +49,7 @@ export default function Profile({ user }: { user: User | undefined }) {
               className='focus:ring-indigo-500 focus:border-indigo-500 flex-grow block w-full rounded sm:text-sm border-stone-300 mt-2 shadow-sm'
               value={values.name}
               onChange={handleChange}
+              required
             />
           ) : (
             <p className='mt-2 text-sm font-medium text-stone-700'>{user?.name}</p>
@@ -70,6 +69,7 @@ export default function Profile({ user }: { user: User | undefined }) {
               className='focus:ring-indigo-500 focus:border-indigo-500 flex-grow block w-full rounded sm:text-sm border-stone-300 mt-2 shadow-sm'
               value={values.email}
               onChange={handleChange}
+              required
             />
           ) : (
             <p className='mt-2 text-sm font-medium text-stone-700'>{user?.email}</p>
