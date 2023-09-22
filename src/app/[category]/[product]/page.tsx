@@ -13,7 +13,10 @@ export async function generateStaticParams() {
 }
 
 export function generateMetadata({ params }: { params: { product: string } }): Metadata {
-  const title = `${params.product.charAt(0).toUpperCase()}${params.product.slice(1)}`; // capitalize title
+  const title = `${params.product
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')}`;
 
   return {
     title: `DS | ${title}`,
