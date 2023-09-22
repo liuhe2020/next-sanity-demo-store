@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import client from '@/utils/client';
 import ProductCard from './ProductCard';
+import Sort from './Sort';
 
 export async function generateStaticParams() {
   const categories: Category[] = await client.fetch(`*[_type == "category"]`);
@@ -23,10 +24,13 @@ export default async function CategoryPage({ params }: { params: { category: str
   const products: Product[] = await client.fetch(`*[category == '${params.category}']`);
 
   return (
-    <section className='max-w-screen-lg grid grid-cols-1 gap-4 p-4 mx-auto min-[550px]:grid-cols-2 min-[550px]:gap-2.5 lg:grid-cols-3'>
-      {products.map((product) => (
-        <ProductCard product={product} key={product._id} />
-      ))}
+    <section>
+      <Sort />
+      <div className='max-w-screen-lg grid grid-cols-1 gap-4 p-4 mx-auto min-[550px]:grid-cols-2 min-[550px]:gap-2.5 lg:grid-cols-3'>
+        {products.map((product) => (
+          <ProductCard product={product} key={product._id} />
+        ))}
+      </div>
     </section>
   );
 }
