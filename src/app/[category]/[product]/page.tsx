@@ -57,7 +57,7 @@ export default async function Product({ params }: { params: { product: string } 
           </div>
 
           <ul className='min-[400px]:max-[1023px]:mx-4'>
-            {product.description.map((el, index) => (
+            {product?.description.map((el, index) => (
               <li className='flex mb-1 lg:mb-2' key={index}>
                 <svg className='mr-2 mt-1.5' xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24'>
                   <path d='M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 6c-3.313 0-6 2.687-6 6s2.687 6 6 6c3.314 0 6-2.687 6-6s-2.686-6-6-6z' />

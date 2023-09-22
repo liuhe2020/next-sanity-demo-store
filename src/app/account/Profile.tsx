@@ -28,7 +28,7 @@ export default function Profile({ user }: { user: User | undefined }) {
 
   useEffect(() => {
     user && user.name && user.email && setValues({ name: user.name, email: user.email });
-  }, []);
+  }, [user]);
 
   return (
     <form className='divide-y divide-stone-300 md:flex-1' onSubmit={handleSubmit}>
