@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     // define screens to enable max-width and dynamic breakpoints https://tailwindcss.com/blog/tailwindcss-v3-2
     screens: {
+      xs: '550px',
       sm: '640px',
       md: '768px',
       lg: '1024px',

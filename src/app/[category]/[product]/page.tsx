@@ -37,13 +37,12 @@ export default async function Product({ params }: { params: { product: string } 
       <div className='grow max-w-xl mx-auto'>
         <div className='w-full h-full flex flex-col lg:pt-[9%] lg:pl-[10%]'>
           <h3 className='font-medium text-xl mb-1 min-[400px]:max-[1023px]:mx-4 lg:text-2xl lg:mb-2'>{product.name}</h3>
-
-          <div className='flex items-center gap-x-1 mb-8 text-xs min-[400px]:max-[1023px]:mx-4 lg:text-sm lg:mb-10'>
-            <div className='flex relative flex-nowrap space-x-1' title={product.rating.toString()}>
-              {[1, 2, 3, 4, 5].map((el) => (
+          <div className='flex items-center gap-x-1 mb-8 text-sm min-[400px]:max-[1023px]:mx-4 lg:mb-10'>
+            <div className='flex relative flex-nowrap gap-1' title={product.rating.toString()}>
+              {[1, 2, 3, 4, 5].map((i) => (
                 <svg
-                  key={el}
-                  className='text-yellow-400 h-[18px] w-[18px]'
+                  key={i}
+                  className='text-yellow-400 h-[16px] w-[16px]'
                   fill='currentColor'
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='2.57 2.24 14.87 14.24'
@@ -53,7 +52,7 @@ export default async function Product({ params }: { params: { product: string } 
               ))}
               <div style={{ width: `${(1 - product.rating / 5) * 100}%` }} className='absolute top-0 right-0 h-full bg-white' />
             </div>
-            <span className=''>{`(${product.numReviews})`}</span>
+            <span className='mt-1'>{`(${product.numReviews})`}</span>
           </div>
 
           <ul className='min-[400px]:max-[1023px]:mx-4'>

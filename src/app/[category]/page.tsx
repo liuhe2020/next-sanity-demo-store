@@ -24,9 +24,9 @@ export default async function CategoryPage({ params }: { params: { category: str
   const products: Product[] = await client.fetch(`*[category == '${params.category}']`);
 
   return (
-    <section>
+    <section className='max-w-screen-lg pt-4 px-4 space-y-4 mx-auto md:pt-10'>
       <Sort />
-      <div className='max-w-screen-lg grid grid-cols-1 gap-4 p-4 mx-auto min-[550px]:grid-cols-2 min-[550px]:gap-2.5 lg:grid-cols-3'>
+      <div className='grid grid-cols-1 gap-4 mx-auto xs:grid-cols-2 xs:gap-2.5 lg:grid-cols-3'>
         {products.map((product) => (
           <ProductCard product={product} key={product._id} />
         ))}

@@ -81,10 +81,10 @@ export default function Header() {
     <motion.header className='fixed w-full top-0 z-10'>
       {/* nav bar */}
       <nav className={classNames(isMenuToggled ? 'bg-stone-900' : 'bg-black/[.8] backdrop-blur-lg', 'relative transition-all duration-500')}>
-        <div className='relative w-full max-w-screen-lg h-16 flex flex-row-reverse gap-x-1 items-center mx-auto px-4 lg:px-2 xl:px-0'>
+        <div className='relative w-full max-w-screen-lg h-16 flex flex-row-reverse gap-x-1 items-center mx-auto px-4 lg:px-2'>
           {/* hamburger menu icon*/}
           <div
-            className={classNames(isMenuToggled && 'active', 'c-hamburger c-hamburger--chop', 'md:hidden')}
+            className={classNames(isMenuToggled && 'active', 'c-hamburger c-hamburger--chop', 'mr-0.5 md:hidden')}
             onClick={() => {
               setIsMenuToggled(!isMenuToggled);
               setIsSearchToggled(false);
@@ -109,7 +109,7 @@ export default function Header() {
             ))}
           </ul>
           {/* nav icons */}
-          <div className='flex gap-x-2 items-end'>
+          <div className='flex gap-x-2 items-end md:-mr-1.5 lg:mr-0'>
             <svg
               className='hover:fill-white cursor-pointer'
               fill='#d6d3d1'
