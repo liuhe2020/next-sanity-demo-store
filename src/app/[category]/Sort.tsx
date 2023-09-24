@@ -2,7 +2,7 @@
 
 import { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import classNames from '@/utils/classNames';
 
@@ -17,6 +17,7 @@ export default function Sort() {
   const searchParams = useSearchParams();
   const p = searchParams.get('sort');
   const order = list.find((i) => i.param === p)?.order;
+  const router = useRouter();
 
   return (
     <Popover className='relative flex'>
@@ -35,9 +36,13 @@ export default function Sort() {
               {list.map((i) => (
                 <Link
                   href={`?sort=${i.param}`}
+                  replace={true}
                   key={i.order}
                   className={classNames(p === i.param && 'bg-sky-50', 'block relative select-none py-2 px-5 cursor-pointer')}
-                  onClick={() => close()}
+                  onClick={() => {
+                    close();
+                    router.refresh();
+                  }}
                 >
                   {i.order}
                 </Link>

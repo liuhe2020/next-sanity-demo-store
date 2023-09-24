@@ -78,7 +78,7 @@ export default function Header() {
   });
 
   return (
-    <motion.header className='fixed w-full top-0 z-10'>
+    <motion.header className='fixed w-full top-0 z-20'>
       {/* nav bar */}
       <nav className={classNames(isMenuToggled ? 'bg-stone-900' : 'bg-black/[.8] backdrop-blur-lg', 'relative transition-all duration-500')}>
         <div className='relative w-full max-w-screen-lg h-16 flex flex-row-reverse gap-x-1 items-center mx-auto px-4 lg:px-2'>
