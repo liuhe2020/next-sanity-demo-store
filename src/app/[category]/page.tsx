@@ -20,14 +20,38 @@ export function generateMetadata({ params }: { params: { category: string } }): 
   };
 }
 
-export default async function CategoryPage({ params }: { params: { category: string } }) {
+export default async function CategoryPage({
+  params,
+  searchParams,
+}: {
+  params: { category: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const products: Product[] = await client.fetch(`*[category == '${params.category}']`);
+
+  const productsSorted = () => {
+    if (searchParams && searchParams.sort) {
+      switch (searchParams.sort) {
+        case 'name_asc':
+          return products.slice().sort((a, b) => a.name.localeCompare(b.name));
+        case 'name_desc':
+          return products.slice().sort((a, b) => b.name.localeCompare(a.name));
+        case 'price_asc':
+          return products.slice().sort((a, b) => a.price - b.price);
+        case 'price_desc':
+          return products.slice().sort((a, b) => b.price - a.price);
+        default:
+          return products;
+      }
+    }
+    return products;
+  };
 
   return (
     <section className='max-w-screen-lg pt-4 px-4 space-y-4 mx-auto md:pt-10'>
       <Sort />
       <div className='grid grid-cols-1 gap-4 mx-auto xs:grid-cols-2 xs:gap-2.5 lg:grid-cols-3'>
-        {products.map((product) => (
+        {productsSorted().map((product) => (
           <ProductCard product={product} key={product._id} />
         ))}
       </div>

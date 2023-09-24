@@ -9,8 +9,8 @@ import classNames from '@/utils/classNames';
 const list = [
   { order: 'Name - A to Z', param: 'name_asc' },
   { order: 'Name - Z to A', param: 'name_desc' },
-  { order: 'Price - low to high', param: 'prcie_asc' },
-  { order: 'Price - high to low', param: 'prcie_desc' },
+  { order: 'Price - low to high', param: 'price_asc' },
+  { order: 'Price - high to low', param: 'price_desc' },
 ];
 
 export default function Sort() {
