@@ -1,29 +1,27 @@
 'use client';
 // require('@tailwindcss/forms')
-import { useEffect, useState } from 'react';
-import { getCsrfToken, signIn } from 'next-auth/react';
+import { type FormEvent, useState } from 'react';
+import { signIn } from 'next-auth/react';
+import useRouteStore from '@/store/routeStore';
 
 export default function SignInPage() {
   const [email, setEmail] = useState('');
-  const [token, setToken] = useState('');
+  const { routes } = useRouteStore();
 
-  useEffect(() => {
-    const getToken = async () => {
-      const token = await getCsrfToken();
-      token && setToken(token);
-    };
-    getToken();
-  }, []);
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    signIn('email', { email: email.trim(), callbackUrl: routes.previousRoute });
+  };
 
   return (
     <section className='flex flex-col justify-center px-4 pt-10 sm:pt-16 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
-        <h2 className='text-center text-2xl sm:text-3xl font-extrabold text-stone-800'>Sign in to Next Sanity Demo Store</h2>
+        <h2 className='text-center text-2xl text-balance sm:text-3xl font-extrabold text-stone-800'>Sign in to Next Sanity Demo Store</h2>
       </div>
       <div className='mt-10 sm:mt-16 sm:mx-auto sm:w-full sm:max-w-md'>
         <div className='border border-stone-50 px-4 py-8 shadow sm:rounded-lg sm:p-10'>
-          <form method='post' action='/api/auth/signin/email'>
-            <input name='csrfToken' type='hidden' defaultValue={token} />
+          <form onSubmit={handleSubmit}>
+            {/* <input name='csrfToken' type='hidden' defaultValue={token} /> */}
             <div>
               <label htmlFor='email' className='block text-sm font-medium text-stone-700'>
                 Email address
@@ -60,7 +58,7 @@ export default function SignInPage() {
               <div className='mt-6'>
                 <button
                   className='w-full inline-flex justify-center items-center gap-2 py-2 px-4 border border-stone-300 rounded-md shadow-sm bg-white text-sm font-medium text-stone-500 hover:bg-stone-100'
-                  onClick={() => signIn('google')}
+                  onClick={() => signIn('google', { callbackUrl: routes.previousRoute })}
                 >
                   <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='24' height='24' viewBox='0 0 48 48'>
                     <path

@@ -252,3 +252,13 @@ type CaptureOrder = {
     method: string;
   }[];
 };
+
+type Routes = {
+  previousRoute: string;
+  currentRoute: string;
+};
+
+type RoutesStore = {
+  routes: Routes;
+  setRoutes: (arg: Routes) => void;
+};
