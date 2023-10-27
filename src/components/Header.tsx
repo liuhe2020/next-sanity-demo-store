@@ -1,5 +1,5 @@
 'use client';
-// hamburger menu https://github.com/theMosaad/tailwindcss-delicious-hamburgers
+
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { Menu, Transition } from '@headlessui/react';
@@ -56,16 +56,6 @@ export default function Header() {
     setIsMenuToggled(true);
   };
 
-  // lock window scroll when mobile menu is open
-  // useEffect(() => {
-  //   if (isMenuToggled) {
-  //     document.querySelector('body')?.classList.add('overflow-y-hidden');
-  //   }
-  //   return () => {
-  //     document.querySelector('body')?.classList.remove('overflow-y-hidden');
-  //   };
-  // }, [isMenuToggled]);
-
   // focus on input when search toggled
   useEffect(() => {
     isSearchToggled && inputRef.current && inputRef.current.focus();
@@ -78,7 +68,7 @@ export default function Header() {
   });
 
   return (
-    <motion.header className='fixed w-full top-0 z-20'>
+    <header className='fixed w-full top-0 z-20'>
       {/* nav bar */}
       <nav className={classNames(isMenuToggled ? 'bg-stone-900' : 'bg-black/[.8] backdrop-blur-lg', 'relative transition-all duration-500')}>
         <div className='relative w-full max-w-screen-lg h-16 flex flex-row-reverse gap-x-1 items-center mx-auto px-4 lg:px-2'>
@@ -182,7 +172,6 @@ export default function Header() {
         {isMenuToggled && (
           <>
             <motion.section
-              layout
               key='menu'
               className='bg-stone-900'
               initial={{ height: 0 }}
@@ -196,13 +185,13 @@ export default function Header() {
                   {routes.map((i, index) => (
                     <motion.li
                       key={index}
-                      className='text-stone-300 hover:text-white font-medium text-center py-4'
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0, transition: { duration: 0.25, delay: 0.25 + 0.02 * index, ease } }}
                       exit={{ opacity: 0, y: -20, transition: { duration: 0.25, delay: 0, ease } }}
                     >
                       <Link
                         href={i.href}
+                        className='text-stone-300 hover:text-white font-medium text-center py-4'
                         onClick={() => {
                           setIsSearchToggled(false);
                           setIsMenuToggled(false);
@@ -300,6 +289,6 @@ export default function Header() {
           </>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }
