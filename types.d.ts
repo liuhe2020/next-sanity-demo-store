@@ -26,6 +26,8 @@ type SanityImage = {
     _ref: string;
     _type: string;
   };
+  url: string;
+  blurDataURL?: string;
 };
 
 type Product = {

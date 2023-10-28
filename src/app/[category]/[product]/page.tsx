@@ -25,7 +25,7 @@ export function generateMetadata({ params }: { params: { product: string } }): M
 }
 
 export default async function Product({ params }: { params: { product: string } }) {
-  const product: Product = await client.fetch(`*[slug.current == '${params.product}'][0]`);
+  const product: Product = await client.fetch(`*[slug.current == '${params.product}'][0]{..., 'images':images[]{...,'url':asset->url}}`);
 
   return (
     <section className='max-w-screen-lg pt-4 px-4 space-y-12 lg:space-y-0 sm:pt-12 lg:flex lg:mx-auto lg:space-x-6 lg:px-10 lg:pt-20'>

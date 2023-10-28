@@ -1,5 +1,3 @@
-// require @tailwindcss/aspect-ratio for next Image to fill container responsively without setting width & height
-import urlFor from '@/utils/image';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,7 +8,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link href={`/${product.category}/${product.slug.current}`}>
       <div className={`${bgCSS} relative cursor-pointer overflow-hidden rounded-2xl flex flex-col items-center px-[10%] pb-[10%] lg:p-10 h-full`}>
-        <Image className='object-contain object-center' src={urlFor(product.images[0]).url()} alt={product.name} width='420' height='420' />
+        <Image className='object-contain object-center' src={product.images[0].url} alt={product.name} width='420' height='420' />
         <div className='flex flex-col h-full gap-4 lg:gap-6'>
           <h3 className='font-medium text-base min-[400px]:max-[549px]:text-xl md:text-lg'>{product.name}</h3>
           <ul>

@@ -12,7 +12,7 @@ export async function generateStaticParams() {
 }
 
 export function generateMetadata({ params }: { params: { category: string } }): Metadata {
-  const title = `${params.category.charAt(0).toUpperCase()}${params.category.slice(1)}`; // capitalize title
+  const title = `${params.category.charAt(0).toUpperCase()}${params.category.slice(1)}`;
 
   return {
     title: `DS | ${title}`,
@@ -27,7 +27,7 @@ export default async function CategoryPage({
   params: { category: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const products: Product[] = await client.fetch(`*[category == '${params.category}']`);
+  const products: Product[] = await client.fetch(`*[category == '${params.category}']{..., 'images':images[]{...,'url':asset->url}}`);
 
   const productsSorted = () => {
     if (searchParams && searchParams.sort) {
