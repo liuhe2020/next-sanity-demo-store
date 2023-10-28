@@ -1,7 +1,6 @@
 'use client';
 import { useState, type ChangeEvent, type FocusEvent } from 'react';
 import Image from 'next/image';
-import urlFor from '@/utils/image';
 import useStore from '@/store/store';
 
 export default function ShoppingBagItem({ item }: { item: ShoppingBagItem }) {
@@ -42,7 +41,7 @@ export default function ShoppingBagItem({ item }: { item: ShoppingBagItem }) {
       <h3 className='text-base font-medium text-stone-900 col-span-2 self-center min-[450px]:row-span-2 min-[450px]:justify-self-start'>{item.name}</h3>
       <Image
         className='object-contain object-center row-span-2 w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] min-[450px]:col-span-1 min-[450px]:row-start-1'
-        src={urlFor(item.image).url()}
+        src={item.image.url}
         alt={item.name}
         width='150'
         height='150'

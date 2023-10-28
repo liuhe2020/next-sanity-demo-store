@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import urlFor from '../../utils/image';
 
 export default function Orders({ orders }: { orders: Order[] }) {
   return (
@@ -49,7 +48,7 @@ export default function Orders({ orders }: { orders: Order[] }) {
                           <td className='pt-5'>
                             <div className='flex items-center'>
                               <Image
-                                src={urlFor(item.product.images[0]).url()}
+                                src={item.product.images[0].url}
                                 alt={item.product.name}
                                 className='w-16 h-16 object-center object-contain rounded mr-6'
                                 width={64}
