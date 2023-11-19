@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import client from '@/utils/client';
+import { client } from '@/utils/client';
 import AddToBag from './AddToBag';
 import ProductGallery from './ProductGallery';
 

@@ -1,5 +1,5 @@
 import generateAccessToken from '@/utils/accessToken';
-import client from '@/utils/client';
+import { client } from '@/utils/client';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {

@@ -1,11 +1,11 @@
 import NextAuth, { type NextAuthOptions } from 'next-auth';
 import EmailProvider from 'next-auth/providers/email';
 import GoogleProvider from 'next-auth/providers/google';
-import client from '@/utils/client';
+import { serverClient } from '@/utils/client';
 import { SanityAdapter } from '@/nextauth-sanity-adapter';
 
 export const authOptions: NextAuthOptions = {
-  adapter: SanityAdapter(client),
+  adapter: SanityAdapter(serverClient),
   providers: [
     EmailProvider({
       server: process.env.EMAIL_SERVER!,

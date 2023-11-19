@@ -1,8 +1,9 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import classNames from '@/utils/classNames';
-import client from '@/utils/client';
+import { client } from '@/utils/client';
 import Orders from './Order';
 import Profile from './Profile';
 

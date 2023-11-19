@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { NextResponse } from 'next/server';
 import { authOptions } from '../auth/[...nextauth]/route';
 import generateAccessToken from '@/utils/accessToken';
-import client from '@/utils/client';
+import { serverClient } from '@/utils/client';
 
 export async function POST(request: Request) {
   if (!request.body) return NextResponse.json('No request body.');
@@ -85,10 +85,10 @@ export async function POST(request: Request) {
     const orderData: PaypalOrder = await orderRes.json();
 
     // store new order in sanity database
-    const newSanityOrder = await client.create(sanityOrder(orderData, captureData));
+    const newSanityOrder = await serverClient.create(sanityOrder(orderData, captureData));
 
     // fetch order with orderItems ref expanded and return to client side
-    const newSanityOrderProjection = await client.fetch(`*[_id == '${newSanityOrder._id}'][0]{..., orderItems[]{product->, quantity}}`);
+    const newSanityOrderProjection = await serverClient.fetch(`*[_id == '${newSanityOrder._id}'][0]{..., orderItems[]{product->, quantity}}`);
     return NextResponse.json(newSanityOrderProjection);
   }
 

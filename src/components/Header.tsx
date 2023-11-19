@@ -7,7 +7,7 @@ import Link from 'next/link';
 import useStore from '../store/store';
 import classNames from '../utils/classNames';
 import Image from 'next/image';
-import client from '@/utils/client';
+import { client } from '@/utils/client';
 import useDebounce from '@/utils/useDebounce';
 import { useQuery } from 'react-query';
 import { AnimatePresence, motion } from 'framer-motion';
