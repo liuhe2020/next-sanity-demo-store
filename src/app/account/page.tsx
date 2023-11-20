@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import classNames from '@/utils/classNames';
+import classNames from '@/utils/classnames';
 import { client } from '@/utils/client';
-import Orders from './Order';
-import Profile from './Profile';
+import Orders from './order';
+import Profile from './profile';
 
 const sideNav = ['Orders', 'Profile'];
 

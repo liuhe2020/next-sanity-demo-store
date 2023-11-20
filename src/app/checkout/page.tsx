@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import Image from 'next/image';
 import Link from 'next/link';
-import Confirmation from './Confirmation';
+import Confirmation from './confirmation';
 import useStore from '@/store/store';
 import { useRouter } from 'next/navigation';
-import PayPalProvider from '@/components/PayPalProvider';
+import PayPalProvider from '@/components/paypal-provider';
 
 export default function CheckoutPage() {
   const { total, items } = useStore();

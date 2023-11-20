@@ -24,9 +24,4 @@ export const theme = {
 export const variants = {
   fill: ['hover', 'focus'],
 };
-export const plugins = [
-  require('@tailwindcss/aspect-ratio'),
-  require('@tailwindcss/forms'),
-  require('tailwindcss-delicious-hamburgers'),
-  require('tailwind-scrollbar')({ nocompatible: true }),
-];
+export const plugins = [require('@tailwindcss/forms'), require('tailwindcss-delicious-hamburgers'), require('tailwind-scrollbar')({ nocompatible: true })];

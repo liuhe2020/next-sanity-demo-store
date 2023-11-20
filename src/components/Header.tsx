@@ -5,14 +5,14 @@ import { useSession, signOut } from 'next-auth/react';
 import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import useStore from '../store/store';
-import classNames from '../utils/classNames';
+import classNames from '../utils/classnames';
 import Image from 'next/image';
 import { client } from '@/utils/client';
-import useDebounce from '@/utils/useDebounce';
+import useDebounce from '@/utils/debounce';
 import { useQuery } from 'react-query';
 import { AnimatePresence, motion } from 'framer-motion';
-import useWindowSize from '@/utils/useWindowSize';
-import { useNavigationEvent } from '@/utils/useNavigationEvent';
+import useWindowSize from '@/utils/window-size';
+import { useNavigationEvent } from '@/utils/navigation-event';
 
 const routes = [
   { name: 'Laptops', href: '/laptops' },

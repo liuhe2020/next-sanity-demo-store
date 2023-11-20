@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { client } from '@/utils/client';
-import AddToBag from './AddToBag';
-import ProductGallery from './ProductGallery';
+import AddToBag from './add-to-bag';
+import ProductGallery from './product-gallery';
 
 export async function generateStaticParams() {
   const products: Product[] = await client.fetch(`*[_type == "product"]`);

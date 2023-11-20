@@ -6,7 +6,7 @@
  * You can learn more about the next-sanity package here:
  * https://github.com/sanity-io/next-sanity
  */
-import { Studio } from './Studio';
+import { Studio } from './studio';
 
 // Ensures the Studio route is statically generated
 export const dynamic = 'force-static';

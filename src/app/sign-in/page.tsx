@@ -2,7 +2,7 @@
 
 import { type FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
-import useRouteStore from '@/store/routeStore';
+import useRouteStore from '@/store/route-store';
 
 export default function SignInPage() {
   const [email, setEmail] = useState('');

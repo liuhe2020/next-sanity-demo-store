@@ -1,14 +1,14 @@
 import './globals.css';
-import Header from '@/components/Header';
+import Header from '@/components/header';
 import { Inter } from 'next/font/google';
-import ShoppingBagProvider from '@/components/ShoppingBagProvider';
+import ShoppingBagProvider from '@/components/shopping-bag-provider';
 import { Toaster } from 'react-hot-toast';
-import Footer from '@/components/Footer';
+import Footer from '@/components/footer';
 import { Metadata } from 'next';
-import NextAuthProvider from '@/components/NextAuthProvider';
-import Cookie from '@/components/Cookie';
-import ReactQueryProvider from '@/components/ReactQueryProvider';
-import RouteHistoryProvider from '@/components/RouteHistoryProvider';
+import NextAuthProvider from '@/components/next-auth-provider';
+import Cookie from '@/components/cookie';
+import ReactQueryProvider from '@/components/reactquery-provider';
+import RouteHistoryProvider from '@/components/route-history-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 

@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import ShoppingBagItem from './ShoppingBagItem';
+import ShoppingBagItem from './shopping-bag-Item';
 import useStore from '@/store/store';
 
 export default function ShoppingBagPage() {

@@ -1,6 +1,6 @@
 'use client';
 
-import useRouteStore from '@/store/routeStore';
+import useRouteStore from '@/store/route-store';
 import { usePathname } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 

@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import classNames from '@/utils/classNames';
+import classNames from '@/utils/classnames';
 
 const list = [
   { order: 'Name - A to Z', param: 'name_asc' },

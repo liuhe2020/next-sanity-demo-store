@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { getServerSession } from 'next-auth/next';
 import { NextResponse } from 'next/server';
 import { authOptions } from '../auth/[...nextauth]/route';
-import generateAccessToken from '@/utils/accessToken';
+import generateAccessToken from '@/utils/access-token';
 import { serverClient } from '@/utils/client';
 
 export async function POST(request: Request) {

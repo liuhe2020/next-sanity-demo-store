@@ -1,4 +1,4 @@
-import generateAccessToken from '@/utils/accessToken';
+import generateAccessToken from '@/utils/access-token';
 import { client } from '@/utils/client';
 import { NextResponse } from 'next/server';
 
