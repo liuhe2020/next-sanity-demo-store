@@ -1,6 +1,6 @@
+import { authOptions } from '@/components/auth-options';
 import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {

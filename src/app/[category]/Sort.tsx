@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import classNames from '@/utils/classnames';
+import cn from '@/utils/cn';
 
 const list = [
   { order: 'Name - A to Z', param: 'name_asc' },
@@ -38,7 +38,7 @@ export default function Sort() {
                   href={`?sort=${i.param}`}
                   replace={true}
                   key={i.order}
-                  className={classNames(p === i.param && 'bg-sky-50', 'block relative select-none py-2 px-5 cursor-pointer')}
+                  className={cn(p === i.param && 'bg-sky-50', 'block relative select-none py-2 px-5 cursor-pointer')}
                   onClick={() => {
                     close();
                     router.refresh();

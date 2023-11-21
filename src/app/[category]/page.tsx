@@ -1,4 +1,4 @@
-import { client } from '@/utils/client';
+import { sanityClient } from '@/utils/client';
 import Products from './products';
 import Skeleton from './skeleton';
 import { Suspense } from 'react';
@@ -15,7 +15,7 @@ export function generateMetadata({ params }: { params: { category: string } }) {
 }
 
 export async function generateStaticParams() {
-  const categories: Category[] = await client.fetch(`*[_type == "category"]`);
+  const categories: Category[] = await sanityClient.fetch(`*[_type == "category"]`);
 
   return categories.map((category) => ({
     category: category.slug.current,
@@ -29,7 +29,7 @@ export default async function CategoryPage({
   params: { category: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const promise: Promise<Product[]> = client.fetch(`*[category == '${params.category}']{..., 'images':images[]{...,'url':asset->url}}`);
+  const promise: Promise<Product[]> = sanityClient.fetch(`*[category == '${params.category}']{..., 'images':images[]{...,'url':asset->url}}`);
 
   return (
     <section className='max-w-screen-lg pt-4 px-4 space-y-4 mx-auto md:pt-10' key={searchParams.sort as string}>

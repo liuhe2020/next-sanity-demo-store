@@ -1,4 +1,4 @@
-export default function classNames(...classes: (string | boolean)[]) {
+export default function cn(...classes: (string | boolean)[]) {
   return classes
     .filter(Boolean)
     .map((className) => {

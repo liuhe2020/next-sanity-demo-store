@@ -5,14 +5,14 @@ import { useSession, signOut } from 'next-auth/react';
 import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import useStore from '../store/store';
-import classNames from '../utils/classnames';
+import cn from '../utils/cn';
 import Image from 'next/image';
-import { client } from '@/utils/client';
 import useDebounce from '@/utils/debounce';
 import { useQuery } from 'react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import useWindowSize from '@/utils/window-size';
 import { useNavigationEvent } from '@/utils/navigation-event';
+import { getSearch } from '@/app/actions';
 
 const routes = [
   { name: 'Laptops', href: '/laptops' },
@@ -36,9 +36,7 @@ export default function Header() {
 
   const fetcher = async (input: string) => {
     if (!input) return undefined;
-    const products: Product[] = await client.fetch(
-      `*[_type == 'product' && (name match '*${input}*' || category match '*${input}*' || description match '*${input}*')]`
-    );
+    const products: Product[] = await getSearch(input);
     return products;
   };
 
@@ -70,11 +68,11 @@ export default function Header() {
   return (
     <header className='fixed w-full top-0 z-20'>
       {/* nav bar */}
-      <nav className={classNames(isMenuToggled ? 'bg-stone-900' : 'bg-black/[.8] backdrop-blur-lg', 'relative transition-all duration-500')}>
+      <nav className={cn(isMenuToggled ? 'bg-stone-900' : 'bg-black/[.8] backdrop-blur-lg', 'relative transition-all duration-500')}>
         <div className='relative w-full max-w-screen-lg h-16 flex flex-row-reverse gap-x-1 items-center mx-auto px-4 lg:px-2'>
           {/* hamburger menu icon*/}
           <div
-            className={classNames(isMenuToggled && 'active', 'c-hamburger c-hamburger--chop', 'mr-0.5 md:hidden')}
+            className={cn(isMenuToggled && 'active', 'c-hamburger c-hamburger--chop', 'mr-0.5 md:hidden')}
             onClick={() => {
               setIsMenuToggled(!isMenuToggled);
               setIsSearchToggled(false);
@@ -131,7 +129,7 @@ export default function Header() {
                     {({ active }) => (
                       <Link
                         href={session ? `/account/` : '/sign-in'}
-                        className={classNames(active && 'bg-stone-100', 'block w-full text-left px-4 py-2 text-sm text-stone-700')}
+                        className={cn(active && 'bg-stone-100', 'block w-full text-left px-4 py-2 text-sm text-stone-700')}
                       >
                         {session ? 'Account' : 'Sign in'}
                       </Link>
@@ -140,10 +138,7 @@ export default function Header() {
                   {session && (
                     <Menu.Item>
                       {({ active }) => (
-                        <button
-                          onClick={() => signOut()}
-                          className={classNames(active && 'bg-stone-100', 'block w-full text-left px-4 py-2 text-sm text-stone-700')}
-                        >
+                        <button onClick={() => signOut()} className={cn(active && 'bg-stone-100', 'block w-full text-left px-4 py-2 text-sm text-stone-700')}>
                           Sign out
                         </button>
                       )}

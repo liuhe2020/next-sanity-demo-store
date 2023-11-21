@@ -1,6 +1,17 @@
+import { authOptions } from '@/components/auth-options';
+import { sanityClient } from '@/utils/client';
+import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 
-export default function Orders({ orders }: { orders: Order[] }) {
+export default async function Orders() {
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user) return null;
+
+  const orders: Order[] = await sanityClient.fetch(
+    ` *[_type == 'order' && user._ref == '${session.user.id}'] { name, _createdAt, orderTotal, orderItems[] { product-> { ..., images[] { ..., 'url': asset->url } }, quantity } } | order(_createdAt desc) `
+  );
+
   return (
     <section className='divide-y divide-stone-300 md:flex-1'>
       <div className='py-6 px-4 sm:p-6 lg:pb-8'>

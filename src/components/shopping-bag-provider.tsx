@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import useStore from '../store/store';
-import { serverClient } from '@/utils/client';
+import { getUserBag, updateUserBag } from '@/app/actions';
 
 export default function ShoppingBagProvider({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession();
@@ -13,6 +13,7 @@ export default function ShoppingBagProvider({ children }: { children: React.Reac
   //                                  -> has sanity data -> fetch sanity data
   //                -> has local data -> update sanity data
   // guest user     -> get data from local storage
+
   useEffect(() => {
     const localValue = localStorage.getItem('NSDS-shopping-bag');
 
@@ -23,35 +24,25 @@ export default function ShoppingBagProvider({ children }: { children: React.Reac
     // user signed in
     if (!localValue || JSON.parse(localValue).total == 0) {
       // no shopping bag locally - fill bag from sanity for signed in user
-      const getUserBag = async () => {
-        const data: { bag: string } = await serverClient.fetch(`*[_type == "user" && _id == "${session?.user?.id}"]{bag}[0]`);
-        data && store.hydrateBag(JSON.parse(data.bag));
+      const getBag = async () => {
+        const bag = await getUserBag();
+        console.log(bag);
+        if (bag) {
+          store.hydrateBag(bag);
+          localStorage.setItem('NSDS-shopping-bag', JSON.stringify(store));
+        }
       };
-      getUserBag();
-      return;
+      getBag();
+    } else {
+      // shopping bag exists locally, update to sanity
+      updateUserBag(JSON.stringify(JSON.parse(localValue)));
     }
-    // shopping bag exists locally, update to sanity
-    const overwriteUserBag = async () => {
-      await serverClient
-        .patch(session.user!.id)
-        .set({ bag: JSON.stringify(JSON.parse(localValue)) })
-        .commit();
-    };
-    overwriteUserBag();
   }, [session]);
 
   useEffect(() => {
     localStorage.setItem('NSDS-shopping-bag', JSON.stringify(store));
     // update user shopping bag on sanity when signed in
-    if (session) {
-      const updateUserBag = async () => {
-        await serverClient
-          .patch(session.user!.id)
-          .set({ bag: JSON.stringify(store) })
-          .commit();
-      };
-      updateUserBag();
-    }
+    updateUserBag(JSON.stringify(store));
   }, [store]);
 
   return <>{children}</>;

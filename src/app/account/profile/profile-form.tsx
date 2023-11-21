@@ -1,13 +1,16 @@
 'use client';
-import { User } from 'next-auth';
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 
-export default function Profile({ user }: { user: User | undefined }) {
+import { User } from 'next-auth';
+import { useRouter } from 'next/navigation';
+import { useState, type ChangeEvent, type FormEvent, useEffect } from 'react';
+
+export default function ProfileForm({ user }: { user: User | undefined }) {
   const [isUpdate, setIsUpdate] = useState(false);
   const [values, setValues] = useState({
     name: '',
     email: '',
   });
+  const router = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -24,6 +27,8 @@ export default function Profile({ user }: { user: User | undefined }) {
     });
     if (res.status !== 200) alert('failed');
     alert('success');
+    setIsUpdate(false);
+    router.refresh();
   };
 
   useEffect(() => {
