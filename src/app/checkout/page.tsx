@@ -1,15 +1,16 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import Image from 'next/image';
 import Link from 'next/link';
 import Confirmation from './confirmation';
-import useStore from '@/store/store';
 import { useRouter } from 'next/navigation';
 import PayPalProvider from '@/components/paypal-provider';
+import useShoppingBagStore from '@/store/shopping-bag-store';
 
 export default function CheckoutPage() {
-  const { total, items } = useStore();
+  const { total, items } = useShoppingBagStore();
   const [order, setOrder] = useState<ConfirmationOrder>();
   const router = useRouter();
 

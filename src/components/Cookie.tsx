@@ -7,7 +7,7 @@ export default function Cookie() {
       // debug={true}
       location='bottom'
       buttonText='Ok'
-      cookieName='NSDS-cookies-tc'
+      cookieName='nsds-cookies-tc'
       disableStyles={true}
       expires={150}
       containerClasses='bg-[#333] w-full py-6 text-white text-sm fixed left-0 bottom-0 z-100'

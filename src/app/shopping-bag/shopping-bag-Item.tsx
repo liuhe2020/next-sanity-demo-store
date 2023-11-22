@@ -1,12 +1,13 @@
 'use client';
+
 import { useState, type ChangeEvent, type FocusEvent } from 'react';
 import Image from 'next/image';
-import useStore from '@/store/store';
+import useShoppingBagStore from '@/store/shopping-bag-store';
 
 export default function ShoppingBagItem({ item }: { item: ShoppingBagItem }) {
   // quantity local state for component level change and then update to store state
   const [quantity, setQuantity] = useState<number | string>(item.quantity);
-  const { addToBag, reduceFromBag, updateQuantity } = useStore();
+  const { addToBag, reduceFromBag, updateQuantity } = useShoppingBagStore();
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     // e.target.value is type string when there is no input

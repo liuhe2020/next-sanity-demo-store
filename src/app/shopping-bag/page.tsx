@@ -1,10 +1,10 @@
 'use client';
 import Link from 'next/link';
 import ShoppingBagItem from './shopping-bag-Item';
-import useStore from '@/store/store';
+import useShoppingBagStore from '@/store/shopping-bag-store';
 
 export default function ShoppingBagPage() {
-  const { total, items, clearBag } = useStore();
+  const { total, items } = useShoppingBagStore();
 
   return (
     <section className='px-4 pt-10 sm:pt-16 mx-auto max-w-screen-md lg:max-w-screen-lg'>

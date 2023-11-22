@@ -1,10 +1,10 @@
 'use client';
 
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { useSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
-import useStore from '../store/store';
+import useShoppingBagStore from '../store/shopping-bag-store';
 import cn from '../utils/cn';
 import Image from 'next/image';
 import useDebounce from '@/utils/debounce';
@@ -13,6 +13,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import useWindowSize from '@/utils/window-size';
 import { useNavigationEvent } from '@/utils/navigation-event';
 import { getSearch } from '@/app/actions';
+import { type Session } from 'next-auth';
 
 const routes = [
   { name: 'Laptops', href: '/laptops' },
@@ -24,13 +25,12 @@ const routes = [
 
 const ease = [[0.4, 0, 0.6, 1]];
 
-export default function Header() {
+export default function Header({ session }: { session: Session | null }) {
   const [isSearchToggled, setIsSearchToggled] = useState(false);
   const [isMenuToggled, setIsMenuToggled] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const { data: session } = useSession();
   const inputRef = useRef<HTMLInputElement>(null);
-  const totalQty = useStore((state) => state.totalQty);
+  const totalQty = useShoppingBagStore((state) => state.totalQty);
   const debouncedSearchTerm = useDebounce(searchTerm);
   const windowWidth = useWindowSize();
 

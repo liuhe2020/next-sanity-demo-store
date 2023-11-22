@@ -1,9 +1,10 @@
 'use client';
-import useStore from '@/store/store';
+
+import useShoppingBagStore from '@/store/shopping-bag-store';
 import toast from 'react-hot-toast';
 
 export default function AddToBag({ product }: { product: Product }) {
-  const addToBag = useStore((state) => state.addToBag);
+  const addToBag = useShoppingBagStore((state) => state.addToBag);
 
   const handleAddToBag = () => {
     addToBag({
