@@ -1,5 +1,5 @@
 import generateAccessToken from '@/utils/access-token';
-import { client } from '@/utils/client';
+import { sanityClient } from '@/utils/client';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   // check items from client and match prices from sanity
   const items = await Promise.all(
     clientOrder.map(async (item) => {
-      const product = await client.fetch(`*[_type == 'product' && _id == '${item.id}'][0]`);
+      const product = await sanityClient.fetch(`*[_type == 'product' && _id == '${item.id}'][0]`);
       return {
         ...product,
         quantity: item.quantity,

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { sanityClient } from '@/utils/client';
 import AddToBag from './add-to-bag';
 import ProductGallery from './product-gallery';
+import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {
   const products: Product[] = await sanityClient.fetch(`*[_type == "product"]`);
@@ -26,6 +27,8 @@ export function generateMetadata({ params }: { params: { product: string } }): M
 
 export default async function Product({ params }: { params: { product: string } }) {
   const product: Product = await sanityClient.fetch(`*[slug.current == '${params.product}'][0]{..., 'images':images[]{...,'url':asset->url}}`);
+
+  if (!product) return notFound();
 
   return (
     <section className='max-w-screen-lg pt-4 px-4 space-y-12 lg:space-y-0 sm:pt-12 lg:flex lg:mx-auto lg:space-x-6 lg:px-10 lg:pt-20'>

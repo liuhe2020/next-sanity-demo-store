@@ -1,7 +1,6 @@
 'use client';
 
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
 
 const handleAddToBag = (items: ShoppingBagItem[] | [], nextItem: ShoppingBagItem) => {
   // check if item to be added already exists
@@ -35,72 +34,34 @@ const handleUpdateQuantity = (items: ShoppingBagItem[] | [], nextItem: ShoppingB
   };
 };
 
-// const useShoppingBagStore = create<ShoppingBag>((set, get) => ({
-//   total: 0,
-//   totalQty: 0,
-//   items: [],
+const useShoppingBagStore = create<ShoppingBag>((set, get) => ({
+  total: 0,
+  totalQty: 0,
+  items: [],
 
-//   addToBag: (nextItem: ShoppingBagItem) => {
-//     set((state) => ({
-//       totalQty: state.totalQty + 1,
-//       total: state.total + nextItem.price,
-//       items: handleAddToBag(state.items, nextItem),
-//     }));
-//   },
+  addToBag: (nextItem: ShoppingBagItem) => {
+    set((state) => ({
+      totalQty: state.totalQty + 1,
+      total: state.total + nextItem.price,
+      items: handleAddToBag(state.items, nextItem),
+    }));
+  },
 
-//   reduceFromBag: (nextItem: ShoppingBagItem) => {
-//     set((state) => ({
-//       totalQty: state.totalQty - 1,
-//       total: state.total - nextItem.price,
-//       items: handleReduceFromBag(state.items, nextItem),
-//     }));
-//   },
+  reduceFromBag: (nextItem: ShoppingBagItem) => {
+    set((state) => ({
+      totalQty: state.totalQty - 1,
+      total: state.total - nextItem.price,
+      items: handleReduceFromBag(state.items, nextItem),
+    }));
+  },
 
-//   updateQuantity: (nextItem: ShoppingBagItem, qty: number) => {
-//     set((state) => handleUpdateQuantity(state.items, nextItem, qty));
-//   },
+  updateQuantity: (nextItem: ShoppingBagItem, qty: number) => {
+    set((state) => handleUpdateQuantity(state.items, nextItem, qty));
+  },
 
-//   clearBag: () => set(() => ({ totalQty: 0, total: 0, items: [] })),
+  clearBag: () => set(() => ({ totalQty: 0, total: 0, items: [] })),
 
-//   hydrateBag: (bag: ShoppingBag) => set(() => bag),
-// }));
-
-const useShoppingBagStore = create(
-  persist<ShoppingBag>(
-    (set, get) => ({
-      total: 0,
-      totalQty: 0,
-      items: [],
-
-      addToBag: (nextItem: ShoppingBagItem) => {
-        set((state) => ({
-          totalQty: state.totalQty + 1,
-          total: state.total + nextItem.price,
-          items: handleAddToBag(state.items, nextItem),
-        }));
-      },
-
-      reduceFromBag: (nextItem: ShoppingBagItem) => {
-        set((state) => ({
-          totalQty: state.totalQty - 1,
-          total: state.total - nextItem.price,
-          items: handleReduceFromBag(state.items, nextItem),
-        }));
-      },
-
-      updateQuantity: (nextItem: ShoppingBagItem, qty: number) => {
-        set((state) => handleUpdateQuantity(state.items, nextItem, qty));
-      },
-
-      clearBag: () => set(() => ({ totalQty: 0, total: 0, items: [] })),
-
-      hydrateBag: (bag: ShoppingBag) => set(() => bag),
-    }),
-    {
-      name: 'nsds-shopping-bag', // name of the item in the storage (must be unique)
-      storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
-    }
-  )
-);
+  hydrateBag: (bag: ShoppingBag) => set(() => bag),
+}));
 
 export default useShoppingBagStore;
