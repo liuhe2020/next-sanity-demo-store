@@ -29,14 +29,16 @@ export default function Header({ session }: { session: Session | null }) {
   const [isSearchToggled, setIsSearchToggled] = useState(false);
   const [isMenuToggled, setIsMenuToggled] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const totalQty = useShoppingBagStore((state) => state.totalQty);
   const debouncedSearchTerm = useDebounce(searchTerm);
   const windowWidth = useWindowSize();
 
   const fetcher = async (input: string) => {
+    setIsTyping(false);
     if (!input) return undefined;
-    const products: Product[] = await getSearch(input);
+    const products: Product[] | null = await getSearch(input);
     return products;
   };
 
@@ -214,7 +216,10 @@ export default function Header({ session }: { session: Session | null }) {
                         ref={inputRef}
                         placeholder='Search products'
                         value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onChange={(e) => {
+                          setSearchTerm(e.target.value);
+                          setIsTyping(true);
+                        }}
                       />
                       {searchTerm && (
                         <svg
@@ -238,37 +243,39 @@ export default function Header({ session }: { session: Session | null }) {
                       )}
                     </div>
                     <ul className='text-stone-300 font-medium flex flex-col gap-y-2 px-4 pb-6 md:pb-0 md:mr-[21px] md:max-h-64 md:overflow-y-auto md:scrollbar md:scrollbar-thumb-stone-300 md:scrollbar-track-stone-700 md:scrollbar-w-1 md:scrollbar-thumb-rounded-full md:scrollbar-track-rounded-full'>
-                      {results?.map((i) => (
-                        <li key={i._id}>
-                          <Link
-                            href={`${i.category}/${i.slug.current}`}
-                            className='inline-flex items-center gap-x-2 hover:text-white'
-                            onClick={() => {
-                              setIsSearchToggled(false);
-                              setIsMenuToggled(false);
-                            }}
-                          >
-                            <svg
-                              width='16'
-                              height='16'
-                              fill='#d6d3d1'
-                              clipRule='evenodd'
-                              fillRule='evenodd'
-                              strokeLinejoin='round'
-                              strokeMiterlimit='2'
-                              viewBox='0 0 24 24'
-                              xmlns='http://www.w3.org/2000/svg'
+                      {results &&
+                        !!results.length &&
+                        results.map((i) => (
+                          <li key={i._id}>
+                            <Link
+                              href={`${i.category}/${i.slug.current}`}
+                              className='inline-flex items-center gap-x-2 hover:text-white'
+                              onClick={() => {
+                                setIsSearchToggled(false);
+                                setIsMenuToggled(false);
+                              }}
                             >
-                              <path
-                                d='m14.523 18.787s4.501-4.505 6.255-6.26c.146-.146.219-.338.219-.53s-.073-.383-.219-.53c-1.753-1.754-6.255-6.258-6.255-6.258-.144-.145-.334-.217-.524-.217-.193 0-.385.074-.532.221-.293.292-.295.766-.004 1.056l4.978 4.978h-14.692c-.414 0-.75.336-.75.75s.336.75.75.75h14.692l-4.979 4.979c-.289.289-.286.762.006 1.054.148.148.341.222.533.222.19 0 .378-.072.522-.215z'
-                                fillRule='nonzero'
-                              />
-                            </svg>
-                            <span>{i.name}</span>
-                          </Link>
-                        </li>
-                      ))}
-                      {results?.length === 0 && <p>{`No result matching '${searchTerm}'.`}</p>}
+                              <svg
+                                width='16'
+                                height='16'
+                                fill='#d6d3d1'
+                                clipRule='evenodd'
+                                fillRule='evenodd'
+                                strokeLinejoin='round'
+                                strokeMiterlimit='2'
+                                viewBox='0 0 24 24'
+                                xmlns='http://www.w3.org/2000/svg'
+                              >
+                                <path
+                                  d='m14.523 18.787s4.501-4.505 6.255-6.26c.146-.146.219-.338.219-.53s-.073-.383-.219-.53c-1.753-1.754-6.255-6.258-6.255-6.258-.144-.145-.334-.217-.524-.217-.193 0-.385.074-.532.221-.293.292-.295.766-.004 1.056l4.978 4.978h-14.692c-.414 0-.75.336-.75.75s.336.75.75.75h14.692l-4.979 4.979c-.289.289-.286.762.006 1.054.148.148.341.222.533.222.19 0 .378-.072.522-.215z'
+                                  fillRule='nonzero'
+                                />
+                              </svg>
+                              <span>{i.name}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      {!isTyping && results?.length === 0 && <p>{`No result matching '${searchTerm}'.`}</p>}
                     </ul>
                   </motion.div>
                   <motion.div

@@ -18,8 +18,7 @@ export const updateUserBag = async (input: string) => {
 };
 
 export const getSearch = async (input: string) => {
-  const session = await getServerSession(authOptions);
-  if (!session || !session.user) return null;
+  if (!input.length) return null;
   const products = await sanityClient.fetch(
     `*[_type == 'product' && (name match '*${input}*' || category match '*${input}*' || description match '*${input}*')]`
   );

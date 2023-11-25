@@ -4,7 +4,6 @@ import { Inter } from 'next/font/google';
 import ShoppingBagProvider from '@/components/shopping-bag-provider';
 import { Toaster } from 'react-hot-toast';
 import Footer from '@/components/footer';
-import { Metadata } from 'next';
 import Cookie from '@/components/cookie';
 import ReactQueryProvider from '@/components/reactquery-provider';
 import RouteHistoryProvider from '@/components/route-history-provider';
@@ -13,7 +12,7 @@ import { getServerSession } from 'next-auth';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Next Sanity Demo Store',
   description: 'Next Sanity Demo Store',
 };

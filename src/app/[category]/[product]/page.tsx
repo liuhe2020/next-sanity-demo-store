@@ -1,32 +1,13 @@
-import { Metadata } from 'next';
 import Link from 'next/link';
 import { sanityClient } from '@/utils/client';
 import AddToBag from './add-to-bag';
 import ProductGallery from './product-gallery';
 import { notFound } from 'next/navigation';
 
-export async function generateStaticParams() {
-  const products: Product[] = await sanityClient.fetch(`*[_type == "product"]`);
-
-  return products.map((product) => ({
-    product: product.slug.current,
-  }));
-}
-
-export function generateMetadata({ params }: { params: { product: string } }): Metadata {
-  const title = `${params.product
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ')}`;
-
-  return {
-    title: `DS | ${title}`,
-    description: `${title} product detail page for Next Sanity Demo Store`,
-  };
-}
-
 export default async function Product({ params }: { params: { product: string } }) {
-  const product: Product = await sanityClient.fetch(`*[slug.current == '${params.product}'][0]{..., 'images':images[]{...,'url':asset->url}}`);
+  const product: Product | null = await sanityClient.fetch(
+    `*[_type == 'product' && slug.current == '${params.product}'][0]{..., 'images':images[]{...,'url':asset->url}}`
+  );
 
   if (!product) return notFound();
 

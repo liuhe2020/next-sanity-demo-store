@@ -30,7 +30,7 @@ export default function CheckoutPage() {
     });
 
     if (response.status !== 200) {
-      console.log('Failed to create paypal order.');
+      console.error('Failed to create paypal order.');
       return;
     }
 
@@ -48,7 +48,7 @@ export default function CheckoutPage() {
     });
 
     if (!response.ok) {
-      console.log('Failed to approve payment.');
+      console.error('Failed to approve payment.');
       return;
     }
 
