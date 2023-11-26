@@ -1,14 +1,15 @@
 'use client';
 
-import { User } from 'next-auth';
+import { updateProfile } from '@/app/actions';
 import { useRouter } from 'next/navigation';
-import { useState, type ChangeEvent, type FormEvent, useEffect } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
+import toast from 'react-hot-toast';
 
-export default function ProfileForm({ user }: { user: User | undefined }) {
+export default function ProfileForm({ user }: { user: SanityUser }) {
   const [isUpdate, setIsUpdate] = useState(false);
   const [values, setValues] = useState({
-    name: '',
-    email: '',
+    name: user.name,
+    email: user.email,
   });
   const router = useRouter();
 
@@ -18,22 +19,15 @@ export default function ProfileForm({ user }: { user: User | undefined }) {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch('/api/update-profile', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name: values.name.trim(), email: values.email.trim().toLocaleLowerCase() }),
-    });
-    if (res.status !== 200) alert('failed');
-    alert('success');
+    const success = await updateProfile(values);
+    if (!success) {
+      toast('Failed to update, please try again later');
+      return;
+    }
     setIsUpdate(false);
+    toast('Updated profile');
     router.refresh();
   };
-
-  useEffect(() => {
-    user && user.name && user.email && setValues({ name: user.name, email: user.email });
-  }, [user]);
 
   return (
     <form className='divide-y divide-stone-300 md:flex-1' onSubmit={handleSubmit}>
@@ -57,7 +51,7 @@ export default function ProfileForm({ user }: { user: User | undefined }) {
               required
             />
           ) : (
-            <p className='mt-2 text-sm font-medium text-stone-700'>{user?.name}</p>
+            <p className='mt-2 text-sm font-medium text-stone-700'>{user.name}</p>
           )}
         </div>
 
@@ -77,7 +71,7 @@ export default function ProfileForm({ user }: { user: User | undefined }) {
               required
             />
           ) : (
-            <p className='mt-2 text-sm font-medium text-stone-700'>{user?.email}</p>
+            <p className='mt-2 text-sm font-medium text-stone-700'>{user.email}</p>
           )}
         </div>
 

@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import useShoppingBagStore from '../store/shopping-bag-store';
 import { getUserBag, updateUserBag } from '@/app/actions';
 import { type Session } from 'next-auth';
 
 export default function ShoppingBagProvider({ children, session }: { children: React.ReactNode; session: Session | null }) {
   const store = useShoppingBagStore();
-  const [initialRender, setInitialRender] = useState(true);
+  const initialRender = useRef(true);
 
   // SHOPPING BAG HYDRATION FLOW
   // has localstorage -> signed in     -> no sanity data  -> push local data to sanity
@@ -21,8 +21,6 @@ export default function ShoppingBagProvider({ children, session }: { children: R
 
     if (local && JSON.parse(local).total !== 0) {
       store.hydrateBag(JSON.parse(local));
-      if (!session) return;
-      // updateUserBag(local);
     } else {
       if (!session) return;
       getUserBag().then((data) => {
@@ -34,14 +32,16 @@ export default function ShoppingBagProvider({ children, session }: { children: R
     }
   }, []);
 
+  // do not run effect on first render as it is unnecessary and interferes with the above effect
   useEffect(() => {
-    if (initialRender) {
-      setInitialRender(false);
-      return;
+    if (!initialRender.current) {
+      localStorage.setItem('nsds-shopping-bag', JSON.stringify(store));
+      // update user shopping bag on sanity when signed in
+      if (session) updateUserBag(JSON.stringify(store));
     }
-    localStorage.setItem('nsds-shopping-bag', JSON.stringify(store));
-    // update user shopping bag on sanity when signed in
-    if (session) updateUserBag(JSON.stringify(store));
+    return () => {
+      initialRender.current = false;
+    };
   }, [store]);
 
   return <>{children}</>;

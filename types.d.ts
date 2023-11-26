@@ -65,6 +65,19 @@ type Order = {
   _createdAt: string;
 };
 
+type SanityUser = {
+  name: string;
+  email: string;
+  image: string;
+  _createdAt: string;
+  _rev: string;
+  _type: string;
+  emailVerified: string;
+  bag: string;
+  _id: string;
+  _updatedAt: string;
+};
+
 // zustand store
 type ShoppingBagItem = {
   _id: string;

@@ -130,7 +130,7 @@ export default function Header({ session }: { session: Session | null }) {
                   <Menu.Item>
                     {({ active }) => (
                       <Link
-                        href={session ? `/account/` : '/sign-in'}
+                        href={session ? `/account/orders` : '/sign-in'}
                         className={cn(active && 'bg-stone-100', 'block w-full text-left px-4 py-2 text-sm text-stone-700')}
                       >
                         {session ? 'Account' : 'Sign in'}
