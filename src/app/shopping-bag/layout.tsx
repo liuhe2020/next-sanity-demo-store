@@ -1,6 +1,4 @@
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
+export const metadata = {
   title: 'DS | Shopping Bag',
   description: 'Next Sanity Demo Store shopping bag page',
 };

@@ -2,9 +2,19 @@
 import Link from 'next/link';
 import ShoppingBagItem from './shopping-bag-Item';
 import useShoppingBagStore from '@/store/shopping-bag-store';
+import { useQuery } from 'react-query';
+import Spinner from '@/components/spinner';
 
 export default function ShoppingBagPage() {
   const { total, items } = useShoppingBagStore();
+  const { status } = useQuery('getShoppingBag', () => localStorage.getItem('nsds-shopping-bag'));
+
+  if (status === 'loading')
+    return (
+      <div className='pt-10 min-h-[30vw] grid place-items-center'>
+        <Spinner />
+      </div>
+    );
 
   return (
     <section className='px-4 pt-10 sm:pt-16 mx-auto max-w-screen-md lg:max-w-screen-lg'>

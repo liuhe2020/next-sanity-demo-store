@@ -24,25 +24,25 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang='en'>
       <body className={inter.className}>
         <RouteHistoryProvider>
-          <ShoppingBagProvider session={session}>
-            <main className='flex flex-col min-h-[100svh] pt-16'>
-              <ReactQueryProvider>
+          <ReactQueryProvider>
+            <ShoppingBagProvider session={session}>
+              <main className='flex flex-col min-h-[100svh] pt-16'>
                 <Header session={session} />
-              </ReactQueryProvider>
-              <div className='grow'>{children}</div>
-              <Footer />
-            </main>
-            <Cookie />
-            <Toaster
-              position='bottom-center'
-              toastOptions={{
-                style: {
-                  background: 'rgb(0 0 0 / .8)',
-                  color: '#fff',
-                },
-              }}
-            />
-          </ShoppingBagProvider>
+                <div className='grow'>{children}</div>
+                <Footer />
+              </main>
+              <Cookie />
+              <Toaster
+                position='bottom-center'
+                toastOptions={{
+                  style: {
+                    background: 'rgb(0 0 0 / .8)',
+                    color: '#fff',
+                  },
+                }}
+              />
+            </ShoppingBagProvider>
+          </ReactQueryProvider>
         </RouteHistoryProvider>
       </body>
     </html>

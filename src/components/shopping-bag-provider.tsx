@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import useShoppingBagStore from '../store/shopping-bag-store';
 import { getUserBag, updateUserBag } from '@/app/actions';
 import { type Session } from 'next-auth';
+import { useQuery } from 'react-query';
 
 export default function ShoppingBagProvider({ children, session }: { children: React.ReactNode; session: Session | null }) {
   const store = useShoppingBagStore();
@@ -16,23 +17,22 @@ export default function ShoppingBagProvider({ children, session }: { children: R
   // no localstorage  -> signed in     -> get data from sanity
   //                     not signed in -> do nothing
 
-  useEffect(() => {
-    const local = localStorage.getItem('nsds-shopping-bag');
+  useQuery('getShoppingBag', () => localStorage.getItem('nsds-shopping-bag'), {
+    onSettled: async (localData) => {
+      if (localData && JSON.parse(localData).total !== 0) {
+        store.hydrateBag(JSON.parse(localData));
+      } else {
+        if (!session) return;
+        const { bag } = await getUserBag();
+        if (!bag || bag.total === 0) return;
+        store.hydrateBag(JSON.parse(bag));
+        localStorage.setItem('nsds-shopping-bag', bag);
+      }
+    },
+    staleTime: 1000 * 60 * 10,
+  });
 
-    if (local && JSON.parse(local).total !== 0) {
-      store.hydrateBag(JSON.parse(local));
-    } else {
-      if (!session) return;
-      getUserBag().then((data) => {
-        if (data && data.total !== 0) {
-          store.hydrateBag(JSON.parse(data.bag));
-          localStorage.setItem('nsds-shopping-bag', data.bag);
-        }
-      });
-    }
-  }, []);
-
-  // do not run effect on first render as it is unnecessary and interferes with the above effect
+  // do not run effect on first render as it is unnecessary and interferes with the above query
   useEffect(() => {
     if (!initialRender.current) {
       localStorage.setItem('nsds-shopping-bag', JSON.stringify(store));
@@ -42,7 +42,7 @@ export default function ShoppingBagProvider({ children, session }: { children: R
     return () => {
       initialRender.current = false;
     };
-  }, [store]);
+  }, [store, session]);
 
   return <>{children}</>;
 }
