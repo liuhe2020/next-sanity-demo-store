@@ -44,6 +44,7 @@
 .image-gallery-slide {
   aspect-ratio: 1/1;
   padding: 10%;
+  cursor: default;
 }
 
 .image-gallery-thumbnails .image-gallery-thumbnails-container {
