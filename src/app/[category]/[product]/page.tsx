@@ -9,8 +9,6 @@ export default async function Product({ params }: { params: { product: string } 
     `*[_type == 'product' && slug.current == '${params.product}'][0]{..., 'images':images[]{...,'url':asset->url}}`
   );
 
-  console.log(product?.description);
-
   if (!product) return notFound();
 
   return (
