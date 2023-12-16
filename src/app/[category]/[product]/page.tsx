@@ -4,6 +4,8 @@ import AddToBag from './add-to-bag';
 import ProductGallery from './product-gallery';
 import { notFound } from 'next/navigation';
 
+export const revalidate = 'true';
+
 export default async function Product({ params }: { params: { product: string } }) {
   const product: Product | null = await sanityClient.fetch(
     `*[_type == 'product' && slug.current == '${params.product}'][0]{..., 'images':images[]{...,'url':asset->url}}`

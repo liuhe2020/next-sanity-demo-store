@@ -1,5 +1,5 @@
 import { revalidatePath } from 'next/cache';
-import { type NextRequest, NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 import { parseBody } from 'next-sanity/webhook';
 
 export async function POST(req: NextRequest) {
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     revalidatePath(`/${body.category}`); // revalidate category page
     revalidatePath(`/${body.category}/${body.slug.current}`); // revalidate product details page
 
-    return NextResponse.json({ body });
+    return Response.json({ body }, { status: 200 });
   } catch (err) {
     return Response.json({ message: err }, { status: 500 });
   }

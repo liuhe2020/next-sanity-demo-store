@@ -6,6 +6,8 @@ import Await from '@/utils/await';
 import Sort from './sort';
 import { notFound } from 'next/navigation';
 
+export const revalidate = 'true';
+
 export default async function CategoryPage({
   params,
   searchParams,
