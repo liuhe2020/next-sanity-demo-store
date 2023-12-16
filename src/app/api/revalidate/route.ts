@@ -14,8 +14,8 @@ export async function POST(req: NextRequest) {
       return Response.json({ message: 'Bad Request', body }, { status: 400 });
     }
 
-    revalidatePath(`/${body.category}`); // revalidate category page
-    revalidatePath(`/${body.category}/${body.slug.current}`); // revalidate product details page
+    // revalidatePath(`/${body.category}`); // revalidate category page
+    // revalidatePath(`/${body.category}/${body.slug.current}`); // revalidate product details page
 
     return Response.json({ body }, { status: 200 });
   } catch (err) {
