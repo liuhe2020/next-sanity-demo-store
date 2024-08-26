@@ -14,6 +14,7 @@ import useWindowSize from '@/utils/window-size';
 import { useNavigationEvent } from '@/utils/navigation-event';
 import { getSearch } from '@/app/actions';
 import { type Session } from 'next-auth';
+import { useRouter } from 'next/navigation';
 
 const routes = [
   { name: 'Laptops', href: '/laptops' },
@@ -34,6 +35,7 @@ export default function Header({ session }: { session: Session | null }) {
   const totalQty = useShoppingBagStore((state) => state.totalQty);
   const debouncedSearchTerm = useDebounce(searchTerm);
   const windowWidth = useWindowSize();
+  const router = useRouter();
 
   const fetcher = async (input: string) => {
     setIsTyping(false);
@@ -70,7 +72,7 @@ export default function Header({ session }: { session: Session | null }) {
   return (
     <header className='fixed w-full top-0 z-20'>
       {/* nav bar */}
-      <nav className={cn(isMenuToggled ? 'bg-stone-900' : 'bg-black/[.8] backdrop-blur-lg', 'relative transition-all duration-500')}>
+      <nav className={cn(isMenuToggled ? 'bg-stone-900' : 'bg-black/[.8]', 'relative transition-all duration-500 backdrop-blur-lg')}>
         <div className='relative w-full max-w-screen-lg h-16 flex flex-row-reverse gap-x-1 items-center mx-auto px-4 lg:px-2'>
           {/* hamburger menu icon*/}
           <div
@@ -174,7 +176,7 @@ export default function Header({ session }: { session: Session | null }) {
               initial={{ height: 0 }}
               animate={{ height: windowWidth <= 768 ? 'calc(100dvh - 64px)' : '360px' }}
               exit={{ height: 0 }}
-              transition={{ duration: 0.5, ease }}
+              transition={{ duration: 0.3, ease }}
             >
               {/* mobile menu links */}
               {!isSearchToggled && (
@@ -183,8 +185,8 @@ export default function Header({ session }: { session: Session | null }) {
                     <motion.li
                       key={index}
                       initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0, transition: { duration: 0.25, delay: 0.25 + 0.02 * index, ease } }}
-                      exit={{ opacity: 0, y: -20, transition: { duration: 0.25, delay: 0, ease } }}
+                      animate={{ opacity: 1, y: 0, transition: { duration: 0.15, delay: 0.15 + 0.02 * index, ease } }}
+                      exit={{ opacity: 0, y: -20, transition: { duration: 0.15, delay: 0, ease } }}
                     >
                       <Link
                         href={i.href}
@@ -206,8 +208,8 @@ export default function Header({ session }: { session: Session | null }) {
                   <motion.div
                     className='w-full md:max-w-[472px] md:mx-auto'
                     initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0, transition: { duration: 0.25, delay: 0.25, ease } }}
-                    exit={{ opacity: 0, y: -20, transition: { duration: 0.25, delay: 0, ease } }}
+                    animate={{ opacity: 1, y: 0, transition: { duration: 0.15, delay: 0.15, ease } }}
+                    exit={{ opacity: 0, y: -20, transition: { duration: 0.15, delay: 0, ease } }}
                   >
                     <div className='flex px-2 pt-4 pb-6 items-center gap-2'>
                       <input
@@ -246,33 +248,32 @@ export default function Header({ session }: { session: Session | null }) {
                       {results &&
                         !!results.length &&
                         results.map((i) => (
-                          <li key={i._id}>
-                            <Link
-                              href={`${i.category}/${i.slug.current}`}
-                              className='inline-flex items-center gap-x-2 hover:text-white'
-                              onClick={() => {
-                                setIsSearchToggled(false);
-                                setIsMenuToggled(false);
-                              }}
+                          <li
+                            key={i._id}
+                            className='inline-flex self-start items-center gap-x-2 hover:text-white cursor-pointer'
+                            onClick={() => {
+                              setIsSearchToggled(false);
+                              setIsMenuToggled(false);
+                              router.push(`/${i.category}/${i.slug.current}`);
+                            }}
+                          >
+                            <svg
+                              width='16'
+                              height='16'
+                              fill='#d6d3d1'
+                              clipRule='evenodd'
+                              fillRule='evenodd'
+                              strokeLinejoin='round'
+                              strokeMiterlimit='2'
+                              viewBox='0 0 24 24'
+                              xmlns='http://www.w3.org/2000/svg'
                             >
-                              <svg
-                                width='16'
-                                height='16'
-                                fill='#d6d3d1'
-                                clipRule='evenodd'
-                                fillRule='evenodd'
-                                strokeLinejoin='round'
-                                strokeMiterlimit='2'
-                                viewBox='0 0 24 24'
-                                xmlns='http://www.w3.org/2000/svg'
-                              >
-                                <path
-                                  d='m14.523 18.787s4.501-4.505 6.255-6.26c.146-.146.219-.338.219-.53s-.073-.383-.219-.53c-1.753-1.754-6.255-6.258-6.255-6.258-.144-.145-.334-.217-.524-.217-.193 0-.385.074-.532.221-.293.292-.295.766-.004 1.056l4.978 4.978h-14.692c-.414 0-.75.336-.75.75s.336.75.75.75h14.692l-4.979 4.979c-.289.289-.286.762.006 1.054.148.148.341.222.533.222.19 0 .378-.072.522-.215z'
-                                  fillRule='nonzero'
-                                />
-                              </svg>
-                              <span>{i.name}</span>
-                            </Link>
+                              <path
+                                d='m14.523 18.787s4.501-4.505 6.255-6.26c.146-.146.219-.338.219-.53s-.073-.383-.219-.53c-1.753-1.754-6.255-6.258-6.255-6.258-.144-.145-.334-.217-.524-.217-.193 0-.385.074-.532.221-.293.292-.295.766-.004 1.056l4.978 4.978h-14.692c-.414 0-.75.336-.75.75s.336.75.75.75h14.692l-4.979 4.979c-.289.289-.286.762.006 1.054.148.148.341.222.533.222.19 0 .378-.072.522-.215z'
+                                fillRule='nonzero'
+                              />
+                            </svg>
+                            <span>{i.name}</span>
                           </li>
                         ))}
                       {!isTyping && results?.length === 0 && <p>{`No result matching '${searchTerm}'.`}</p>}
@@ -282,8 +283,8 @@ export default function Header({ session }: { session: Session | null }) {
                     key='overlay'
                     className='fixed w-full h-[100dvh] top-0 left-0 -z-10'
                     initial={{ backdropFilter: 'blur(0px)' }}
-                    animate={{ backdropFilter: 'blur(16px)', transition: { duration: 0.3, delay: 0.2, ease } }}
-                    exit={{ backdropFilter: 'blur(0px)', transition: { duration: 0.3, ease } }}
+                    animate={{ backdropFilter: 'blur(16px)', transition: { duration: 0.2, delay: 0.15, ease } }}
+                    exit={{ backdropFilter: 'blur(0px)', transition: { duration: 0.2, ease } }}
                   />
                 </div>
               )}
