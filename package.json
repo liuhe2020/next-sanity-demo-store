@@ -18,7 +18,7 @@
     "@sanity/vision": "^3.23.4",
     "framer-motion": "^10.16.16",
     "groq": "^3.23.4",
-    "next": "^14.0.4",
+    "next": "14.2.35",
     "next-auth": "^4.24.5",
     "next-sanity": "^5.5.11",
     "nodemailer": "^6.9.8",
